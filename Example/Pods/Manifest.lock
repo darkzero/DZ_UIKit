@@ -1,0 +1,21 @@
+PODS:
+  - DZ_UIKit (0.1.0)
+  - FBSnapshotTestCase (2.1.0):
+    - FBSnapshotTestCase/SwiftSupport (= 2.1.0)
+  - FBSnapshotTestCase/Core (2.1.0)
+  - FBSnapshotTestCase/SwiftSupport (2.1.0):
+    - FBSnapshotTestCase/Core
+
+DEPENDENCIES:
+  - DZ_UIKit (from `../`)
+  - FBSnapshotTestCase
+
+EXTERNAL SOURCES:
+  DZ_UIKit:
+    :path: ../
+
+SPEC CHECKSUMS:
+  DZ_UIKit: 6e66e16b0cb249d1dd4071017b375c3772d392f9
+  FBSnapshotTestCase: 366ecd378511d7716c79991cd8067d1eed23578d
+
+COCOAPODS: 0.39.0

@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
   s.name             = "DZ_UIKit"
   s.version          = "0.1.0"
-  s.summary          = "A short description of DZ_UIKit."
+  s.summary          = "Custom UIs that be used in Topeko"
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -21,12 +21,12 @@ Pod::Spec.new do |s|
 TODO: Add long description of the pod here.
                        DESC
 
-  s.homepage         = "https://github.com/<GITHUB_USERNAME>/DZ_UIKit"
+  s.homepage         = "https://github.com/darkzero/DZ_UIKit"
   # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
   s.license          = 'MIT'
-  s.author           = { "darkzero" => "darkzero_mk2@hotmail.com" }
-  s.source           = { :git => "https://github.com/<GITHUB_USERNAME>/DZ_UIKit.git", :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+  s.author           = { "darkzero" => "topeko.feedback@gmail.com" }
+  s.source           = { :git => "https://github.com/darkzero/DZ_UIKit.git", :tag => s.version.to_s }
+  # s.social_media_url = 'https://twitter.com/darkzero_mk2'
 
   s.ios.deployment_target = '8.0'
 

@@ -1,0 +1,6 @@
+framework module DZ_UIKit {
+  umbrella header "DZ_UIKit-umbrella.h"
+
+  export *
+  module * { export * }
+}
