@@ -1,16 +1,16 @@
 {
   "name": "DZ_UIKit",
-  "version": "0.1.0",
-  "summary": "A short description of DZ_UIKit.",
+  "version": "0.2.0",
+  "summary": "Custom UIs that be used in Topeko",
   "description": "TODO: Add long description of the pod here.",
-  "homepage": "https://github.com/<GITHUB_USERNAME>/DZ_UIKit",
+  "homepage": "https://github.com/darkzero/DZ_UIKit",
   "license": "MIT",
   "authors": {
-    "darkzero": "darkzero_mk2@hotmail.com"
+    "darkzero": "topeko.feedback@gmail.com"
   },
   "source": {
-    "git": "https://github.com/<GITHUB_USERNAME>/DZ_UIKit.git",
-    "tag": "0.1.0"
+    "git": "https://github.com/darkzero/DZ_UIKit.git",
+    "tag": "0.2.0"
   },
   "platforms": {
     "ios": "8.0"

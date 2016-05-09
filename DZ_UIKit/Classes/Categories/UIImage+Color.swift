@@ -12,7 +12,7 @@ extension UIImage {
     
 // MARK: - Make image from color
 
-    func imageWithColor( color:UIColor ) -> UIImage
+    class func imageWithColor( color:UIColor ) -> UIImage
     {
         let rect:CGRect = CGRectMake(0.0, 0.0, 1.0, 1.0);
         UIGraphicsBeginImageContext(rect.size);

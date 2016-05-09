@@ -80,7 +80,7 @@ public class DZActionSheet : UIView {
     
     public func addButtonWithTitle(
         bottonTitle: String,
-        ImageNormal buttonImageNormal: String,
+        ImageNormal buttonImageNormal: String?,
         ImageHighlighted buttonImageHighlighted: String?,
         ImageDisabled buttonImageDisabled: String?,
         Handler buttonBlock: DZBlock?) {
@@ -91,10 +91,17 @@ public class DZActionSheet : UIView {
             btn.setTitleColor(UIColor.darkGrayColor(), forState: UIControlState.Normal);
             btn.titleLabel?.font = UIFont(name: "Menlo", size: 14.0);
             btn.backgroundColor = UIColor.clearColor();
-            
-            let btnImage = UIImage(named: buttonImageNormal)!;
+        
+            var btnImage: UIImage;
+            if ( buttonImageNormal != nil ) {
+                btnImage = UIImage(named: buttonImageNormal!)!;
+                btn.contentMode = UIViewContentMode.ScaleAspectFill;
+            }
+            else {
+                btnImage = UIImage.imageWithColor(RGB_HEX("0066CC", 1.0));
+                btn.contentMode = UIViewContentMode.ScaleToFill;
+            }
             btn.setImage(btnImage, forState: UIControlState.Normal);
-            btn.contentMode = UIViewContentMode.ScaleAspectFill;
             
             btn.layer.cornerRadius = 8.0;
             
