@@ -56,6 +56,16 @@ extension UIColor {
             alpha: alpha
         );
     }
+    
+    // MARK: - 
+    func getGary() -> Int {
+        var r: CGFloat = 1.0;
+        var g: CGFloat = 1.0;
+        var b: CGFloat = 1.0;
+        self.getRed(&r, green: &g, blue: &b, alpha: nil);
+        let gray = Int(r*255.0*38.0 + g*255.0*75.0 + b*255.0*15.0) >> 7;
+        return gray;
+    }
 }
 
 //let RGB(r,g,b) = UIColor.colorWithDec(r,g,b);

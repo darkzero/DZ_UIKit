@@ -11,14 +11,16 @@ import UIKit
 
 public class DZActionSheet : UIView {
     
-    let BUTTON_FRAME: CGRect            = CGRectMake(0.0, 0.0, 80.0, 80.0);
+    let BUTTON_FRAME: CGRect            = CGRectMake(0.0, 0.0, 64.0, 70.0);
     let CANCEL_BUTTON_HEIGHT: CGFloat   = 44.0;
     let CANCEL_BUTTON_WIDTH: CGFloat    = SCREEN_BOUNDS.size.width - 20;
-    let BUTTON_ROW_HEIGHT: CGFloat      = 80.0;
+    let BUTTON_ROW_HEIGHT: CGFloat      = 70.0;
     let TITLE_LABEL_HEIGHT: CGFloat     = 30.0;
     
     // MARK: - public properties
     public var title: String = "";
+    public var cancelButtonBgColor: UIColor = UIColor.whiteColor();
+    public var cancelButtonTitleColor: UIColor = RGB(109, 109, 109);
     
     // MARK: - internal properties
     internal var buttonArray:NSMutableArray = NSMutableArray();
@@ -78,53 +80,101 @@ public class DZActionSheet : UIView {
         self.cancelBlock = cancelBlock;
     }
     
+    
     public func addButtonWithTitle(
-        bottonTitle: String,
-        ImageNormal buttonImageNormal: String?,
+        buttonTitle: String,
+        characterColor characterColor: UIColor,
+        Handler buttonBlock: DZBlock?) {
+        
+        self.addButtonWithTitle(buttonTitle,
+                                characterColor: characterColor,
+                                ImageNormal: nil,
+                                ImageHighlighted: nil,
+                                ImageDisabled: nil,
+                                Handler: buttonBlock);
+    }
+    
+    public func addButtonWithTitle(
+        buttonTitle: String,
+        ImageNormal buttonImageNormal: String,
         ImageHighlighted buttonImageHighlighted: String?,
         ImageDisabled buttonImageDisabled: String?,
         Handler buttonBlock: DZBlock?) {
-            
-            let btn:UIButton! = UIButton(type: UIButtonType.Custom);
-            
-            btn.setTitle(bottonTitle, forState: UIControlState.Normal);
-            btn.setTitleColor(UIColor.darkGrayColor(), forState: UIControlState.Normal);
-            btn.titleLabel?.font = UIFont(name: "Menlo", size: 14.0);
-            btn.backgroundColor = UIColor.clearColor();
         
-            var btnImage: UIImage;
-            if ( buttonImageNormal != nil ) {
-                btnImage = UIImage(named: buttonImageNormal!)!;
-                btn.contentMode = UIViewContentMode.ScaleAspectFill;
+        self.addButtonWithTitle(buttonTitle,
+                                characterColor: nil,
+                                ImageNormal: buttonImageNormal,
+                                ImageHighlighted: buttonImageHighlighted,
+                                ImageDisabled: buttonImageDisabled,
+                                Handler: buttonBlock);
+    }
+
+    ///
+    ///
+    private func addButtonWithTitle (
+        buttonTitle: String,
+        characterColor: UIColor?,
+        ImageNormal buttonImageNormal: String?,
+        ImageHighlighted buttonImageHighlighted: String?,
+        ImageDisabled buttonImageDisabled: String?, Handler buttonBlock: DZBlock?) {
+            
+        let btn:UIButton! = UIButton(type: UIButtonType.Custom);
+        
+        btn.setTitle(buttonTitle, forState: UIControlState.Normal);
+        btn.setTitleColor(UIColor.darkGrayColor(), forState: UIControlState.Normal);
+        btn.titleLabel?.font = UIFont.systemFontOfSize(12.0);
+        btn.titleLabel?.adjustsFontSizeToFitWidth = true;
+        btn.backgroundColor = UIColor.clearColor();
+    
+        btn.imageView?.frame.size = CGSizeMake(48, 48);
+        btn.imageView?.layer.cornerRadius = 24.0;
+        var btnImage: UIImage;
+        if ( buttonImageNormal != nil ) {
+            btnImage = UIImage(named: buttonImageNormal!)!;
+        }
+        else {
+            let g = characterColor?.getGary();
+            print("%d", g);
+            btnImage = UIImage.imageWithColor(characterColor!, size: CGSizeMake(48, 48));
+            let initialChar = buttonTitle.substringToIndex(buttonTitle.startIndex.advancedBy(1));
+            let lbl = UILabel(frame: CGRectMake(0, 0, 48, 48));
+            lbl.font = UIFont.boldSystemFontOfSize(28.0);
+            if g >= 175 {
+                lbl.textColor = RGB_HEX("444444", 1.0);
             }
             else {
-                btnImage = UIImage.imageWithColor(RGB_HEX("0066CC", 1.0));
-                btn.contentMode = UIViewContentMode.ScaleToFill;
+                lbl.textColor = RGB_HEX("dddddd", 1.0);
             }
-            btn.setImage(btnImage, forState: UIControlState.Normal);
-            
-            btn.layer.cornerRadius = 8.0;
-            
-            if ( buttonImageHighlighted != nil ) {
-                btn.setImage(UIImage(named: buttonImageHighlighted!), forState: UIControlState.Highlighted);
-            }
-            if ( buttonImageDisabled != nil ) {
-                btn.setImage(UIImage(named: buttonImageDisabled!), forState: UIControlState.Disabled);
-            }
-            btn.frame = BUTTON_FRAME;
-            
-            self.buttonArray.addObject(btn);
-            
-            btn.contentHorizontalAlignment  = UIControlContentHorizontalAlignment.Center;
-            btn.contentVerticalAlignment    = UIControlContentVerticalAlignment.Top;
-            btn.imageEdgeInsets             = UIEdgeInsetsMake(0.0, 10.0, 20.0, 10.0);
-            btn.titleEdgeInsets             = UIEdgeInsetsMake(62, -1*btnImage.size.width, 0, 0);
-            
-            let index:Int = self.buttonArray.indexOfObject(btn);
-            btn.tag = index;
-            btn.addTarget(self, action: #selector(DZActionSheet.buttonClicked(_:)), forControlEvents: UIControlEvents.TouchUpInside);
-            self.setHandler(buttonBlock!, forButtonAtIndex: index);
-            return;
+            lbl.textAlignment = NSTextAlignment.Center;
+            lbl.text = initialChar;
+            btn.imageView?.addSubview(lbl);
+        }
+        btn.contentMode = UIViewContentMode.ScaleAspectFill;
+        btn.setImage(btnImage, forState: UIControlState.Normal);
+        
+        btn.layer.cornerRadius = 8.0;
+        
+        if ( buttonImageHighlighted != nil ) {
+            btn.setImage(UIImage(named: buttonImageHighlighted!), forState: UIControlState.Highlighted);
+        }
+        if ( buttonImageDisabled != nil ) {
+            btn.setImage(UIImage(named: buttonImageDisabled!), forState: UIControlState.Disabled);
+        }
+        btn.frame = BUTTON_FRAME;
+        //btn.backgroundColor = UIColor.redColor();
+    
+        self.buttonArray.addObject(btn);
+        
+        btn.contentHorizontalAlignment  = UIControlContentHorizontalAlignment.Center;
+        btn.contentVerticalAlignment    = UIControlContentVerticalAlignment.Top;
+        btn.imageEdgeInsets             = UIEdgeInsetsMake(0.0, 8.0, 22.0, 8.0);
+        btn.titleEdgeInsets             = UIEdgeInsetsMake(50, -1*btnImage.size.width, 0, 0);
+        
+        let index:Int = self.buttonArray.indexOfObject(btn);
+        btn.tag = index;
+        btn.addTarget(self, action: #selector(DZActionSheet.buttonClicked(_:)), forControlEvents: UIControlEvents.TouchUpInside);
+        self.setHandler(buttonBlock!, forButtonAtIndex: index);
+        return;
     }
     
     internal func setHandler(block:DZBlock?, forButtonAtIndex index:Int) {
@@ -293,7 +343,7 @@ public class DZActionSheet : UIView {
     // MARK: - layoutSubviews
     
     override public func layoutSubviews() {
-        let rect:CGRect                 = CGRectMake(0.0, 0.0, CANCEL_BUTTON_WIDTH, TITLE_LABEL_HEIGHT);
+        let rect:CGRect = CGRectMake(0.0, 0.0, CANCEL_BUTTON_WIDTH, TITLE_LABEL_HEIGHT);
         
         // calc the height
         let titleHeight         = TITLE_LABEL_HEIGHT;
@@ -322,7 +372,7 @@ public class DZActionSheet : UIView {
         self.addSubview(self.buttonBgView);
         
         if SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO("8.0") {
-            self.buttonBgView.backgroundColor = RGB_HEX("ffffff", 0.5);
+            self.buttonBgView.backgroundColor = RGB_HEX("ffffff", 0.3);
             let effectView = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.Light))
             effectView.frame = CGRectMake(0, 0, CANCEL_BUTTON_WIDTH, buttonAreaHeight + titleHeight);
             self.buttonBgView.addSubview(effectView);
@@ -337,13 +387,16 @@ public class DZActionSheet : UIView {
         self.cancelButton.layer.cornerRadius = 4.0;
         self.addSubview(self.cancelButton);
     
+        // calc buttons' location
+        let countInOneLine = ceil(CGFloat(self.buttonArray.count) / CGFloat(lineCount));
+        let btnSpacing: CGFloat = (CANCEL_BUTTON_WIDTH - countInOneLine*BUTTON_FRAME.width) / (countInOneLine+1.0);
         for item in self.buttonArray {
             if let btn = item as? UIButton {
                 self.buttonBgView.addSubview(btn);
-                let idx:Int         = btn.tag;
+                let idx = btn.tag;
                 let btnRect:CGRect  = CGRectMake(
-                    (15.0 + CGFloat(idx) * (15.0 + BUTTON_FRAME.size.width)),
-                    titleHeight,
+                    (btnSpacing + CGFloat(idx)%countInOneLine * (btnSpacing + BUTTON_FRAME.size.width)),
+                    titleHeight + BUTTON_ROW_HEIGHT*CGFloat(idx/Int(countInOneLine)) + 5,
                     BUTTON_FRAME.size.width,
                     BUTTON_FRAME.size.height);
                 btn.frame = btnRect;

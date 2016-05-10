@@ -61,16 +61,34 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         switch indexPath.row {
         case 0: // DZActionSheet
             let actionSheet = DZActionSheet.actionSheetWithTitle("DZ_UIKit DZActionSheet");
-            actionSheet.addButtonWithTitle("A", ImageNormal: nil, ImageHighlighted: nil, ImageDisabled: nil, Handler: {
+            actionSheet.addButtonWithTitle("Action", characterColor: UIColor.redColor(), Handler: {
                 //;
             });
-            actionSheet.addButtonWithTitle("B", ImageNormal: nil, ImageHighlighted: nil, ImageDisabled: nil, Handler: {
+            actionSheet.addButtonWithTitle("Block", characterColor: UIColor.greenColor(), Handler: {
                 //;
             });
-            actionSheet.addButtonWithTitle("C", ImageNormal: nil, ImageHighlighted: nil, ImageDisabled: nil, Handler: {
+            actionSheet.addButtonWithTitle("Continue", characterColor: UIColor.cyanColor(), Handler: {
                 //;
             });
-            actionSheet.addButtonWithTitle("D", ImageNormal: nil, ImageHighlighted: nil, ImageDisabled: nil, Handler: {
+            actionSheet.addButtonWithTitle("Delete", characterColor: UIColor.orangeColor(), Handler: {
+                //;
+            });
+            actionSheet.addButtonWithTitle("Edit", characterColor: UIColor.brownColor(), Handler: {
+                //;
+            });
+            actionSheet.addButtonWithTitle("FaceToFace", characterColor: UIColor.redColor(), Handler: {
+                //;
+            });
+            actionSheet.addButtonWithTitle("Game", characterColor: UIColor.greenColor(), Handler: {
+                //;
+            });
+            actionSheet.addButtonWithTitle("Hit&Run", characterColor: UIColor.cyanColor(), Handler: {
+                //;
+            });
+            actionSheet.addButtonWithTitle("Increase", characterColor: UIColor.orangeColor(), Handler: {
+                //;
+            });
+            actionSheet.addButtonWithTitle("JoinUs", characterColor: UIColor.whiteColor(), Handler: {
                 //;
             });
             actionSheet.show();

@@ -14,7 +14,14 @@ extension UIImage {
 
     class func imageWithColor( color:UIColor ) -> UIImage
     {
-        let rect:CGRect = CGRectMake(0.0, 0.0, 1.0, 1.0);
+        let size = CGSizeMake(1, 1);
+        let image = UIImage.imageWithColor(color, size: size);
+        return image;
+    }
+    
+    class func imageWithColor( color:UIColor, size: CGSize ) -> UIImage
+    {
+        let rect:CGRect = CGRectMake(0.0, 0.0, size.width, size.height);
         UIGraphicsBeginImageContext(rect.size);
         let context:CGContextRef = UIGraphicsGetCurrentContext()!;
         
