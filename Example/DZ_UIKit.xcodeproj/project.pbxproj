@@ -16,6 +16,7 @@
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		823B4562C603C255B3D684AF /* Pods_DZ_UIKit_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 713F909DD6C9C6D816AEB8E2 /* Pods_DZ_UIKit_Example.framework */; };
 		C837FF7B1CE08C7300FD2F9D /* Controllers.plist in Resources */ = {isa = PBXBuildFile; fileRef = C837FF7A1CE08C7300FD2F9D /* Controllers.plist */; };
+		C85A29D61CE49ED50017CAC8 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85A29D51CE49ED50017CAC8 /* DetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,7 @@
 		9AB1401AE17F24C218799B47 /* DZ_UIKit.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = DZ_UIKit.podspec; path = ../DZ_UIKit.podspec; sourceTree = "<group>"; };
 		C63EC748919196F18F7F3654 /* Pods-DZ_UIKit_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DZ_UIKit_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DZ_UIKit_Tests/Pods-DZ_UIKit_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		C837FF7A1CE08C7300FD2F9D /* Controllers.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Controllers.plist; sourceTree = "<group>"; };
+		C85A29D51CE49ED50017CAC8 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		C86E3CB1E882AB5FD7C0175C /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -106,6 +108,7 @@
 			children = (
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
+				C85A29D51CE49ED50017CAC8 /* DetailViewController.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
@@ -363,6 +366,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C85A29D61CE49ED50017CAC8 /* DetailViewController.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 			);

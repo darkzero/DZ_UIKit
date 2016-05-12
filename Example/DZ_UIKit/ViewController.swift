@@ -85,7 +85,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             actionSheet.addButtonWithTitle("Hit&Run", characterColor: UIColor.cyanColor(), Handler: {
                 //;
             });
-            actionSheet.addButtonWithTitle("Increase", characterColor: UIColor.orangeColor(), Handler: {
+            actionSheet.addButtonWithTitle("Increasement", characterColor: UIColor.orangeColor(), Handler: {
                 //;
             });
             actionSheet.addButtonWithTitle("JoinUs", characterColor: UIColor.whiteColor(), Handler: {
@@ -101,13 +101,53 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             alert.addButtonWithTitle("Button 01", Handler: { 
                 //
             });
+            alert.show();
+            break;
+        case 2:
+            let alert = DZAlertView.alertViewWithTitle("DZ_UIKit", Message: "DZAlertView");
+            alert.cancelButtonColor = UIColor.redColor();
+            alert.normalButtonColor = RGB_HEX("0099FF", 1.0);
+            alert.setCancelButtonWithTitle("Cancel", CancelBlock: {
+                //
+            });
+            alert.addButtonWithTitle("Button 01", Handler: {
+                //
+            });
             alert.addButtonWithTitle("Button 02", Handler: {
                 //
             });
             alert.show();
             break;
+        case 3:
+            // DZAnnularProgress
+            self.performSegueWithIdentifier("ShowDetail", sender: "DZAnnularProgress");
+            break;
+        case 4:
+            // ButtonMenu
+            break;
+        case 5:
+            // CheckBox
+            break;
+        case 5:
+            // Switch
+            break;
         default:
             break;
+        }
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let viewController = segue.destinationViewController as! DetailViewController;
+        viewController.viewTitle = sender as! String;
+        if segue.identifier == "ShowDetail" {
+            switch sender as! String {
+            case "DZAnnularProgress":
+                //
+                break;
+            default:
+                //
+                break;
+            }
         }
     }
 }

@@ -8,7 +8,15 @@
 	</dict>
 	<dict>
 		<key>Name</key>
-		<string>DZAlertView</string>
+		<string>DZAlertView (2 Buttons)</string>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>DZAlertView (3 Buttons)</string>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>DZAnnularProgress</string>
 	</dict>
 </array>
 </plist>

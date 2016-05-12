@@ -11,13 +11,15 @@ import UIKit
 
 public class DZAlertView : UIView {
     
-    // MARK: - Class define
+// MARK: - Class define
+    
     let ONLY_ONE_BUTTON_FRAME:CGRect    = CGRectMake(10.0, 0.0, 260.0, 45.0);
     let BUTTON_FRAME:CGRect             = CGRectMake(0.0, 0.0, 125.0, 45.0);
     let ALERT_VIEW_WIDTH:CGFloat        = 280.0;
     let CANCEL_BUTTON_TAG:Int           = 0;
     
-    // MARK: - public properties
+// MARK: - public properties
+    
     public var title: String    = "";
     public var message: String  = "";
     
@@ -29,16 +31,17 @@ public class DZAlertView : UIView {
     public var normalButtonColor:UIColor        = RGB(136, 136, 136);
     public var normalButtonTextColor:UIColor    = RGB(255, 255, 255);
     
-    // MARK: - internal properties
+// MARK: - internal properties
+    
     internal var buttonArray:NSMutableArray                 = NSMutableArray();
     internal var blockDictionary:Dictionary<Int, DZBlock>   = Dictionary();
     internal var titleLabel:UILabel     = UILabel();
     internal var messageLabel:UILabel   = UILabel();
     internal var theWindow:UIWindow     = UIWindow(frame: UIScreen.mainScreen().bounds);
     
-    // MARK: - private properties
+// MARK: - private properties
     
-    // MARK: - init
+// MARK: - init
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -76,13 +79,13 @@ public class DZAlertView : UIView {
         self.message    = message;
     }
     
-    // MARK: - Class functions
+// MARK: - class functions
     
     public class func alertViewWithTitle(title: String, Message message: String) -> DZAlertView {
         return DZAlertView(title: title, Message: message);
     }
     
-    // MARK: - internal functions
+// MARK: - internal functions
     
     internal func addCancelButtonWithTitle(cancelTitle: String, CancelBlock cancelBlock:DZBlock?) {
         let btn = UIButton(type: UIButtonType.Custom);
@@ -123,7 +126,7 @@ public class DZAlertView : UIView {
         return;
     }
     
-    // MARK: - public functions
+// MARK: - public functions
     
     public func setCancelButtonWithTitle(cancelTitle: String, CancelBlock cancelBlock:DZBlock?) {
         var btn:UIButton! = self.buttonArray.objectAtIndex(CANCEL_BUTTON_TAG) as? UIButton;
@@ -261,7 +264,7 @@ public class DZAlertView : UIView {
         }
     }
     
-    // MARK: - layoutSubviews
+// MARK: - layoutSubviews
     
     public override func layoutSubviews() {
         self.layer.cornerRadius = 8.0;
