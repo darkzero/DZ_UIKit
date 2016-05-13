@@ -11,7 +11,7 @@ import UIKit
 
 public class DZActionSheet : UIView {
     
-// MARK: - - class define
+// MARK: - class define
     let BUTTON_FRAME: CGRect            = CGRectMake(0.0, 0.0, 64.0, 70.0);
     let CANCEL_BUTTON_HEIGHT: CGFloat   = 44.0;
     let CANCEL_BUTTON_WIDTH: CGFloat    = SCREEN_BOUNDS.size.width - 20;

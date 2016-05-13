@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '58F1FB10BBC3C210D173D705'
+               BlueprintIdentifier = 'A176DAAB1611B3F2FE555ADD'
                BlueprintName = 'DZ_UIKit'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'DZ_UIKit.framework'>
