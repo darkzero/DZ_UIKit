@@ -18,5 +18,9 @@
 		<key>Name</key>
 		<string>DZAnnularProgress</string>
 	</dict>
+	<dict>
+		<key>Name</key>
+		<string>DZNineImageBoxView</string>
+	</dict>
 </array>
 </plist>

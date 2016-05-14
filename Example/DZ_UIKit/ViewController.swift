@@ -123,7 +123,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             self.performSegueWithIdentifier("ShowDetail", sender: "DZAnnularProgress");
             break;
         case 4:
-            // ButtonMenu
+            // DZNineImageBoxView
+            self.performSegueWithIdentifier("ShowDetail", sender: "DZNineImageBoxView");
             break;
         case 5:
             // CheckBox
