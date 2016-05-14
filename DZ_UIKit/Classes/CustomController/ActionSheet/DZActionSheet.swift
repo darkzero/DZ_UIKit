@@ -84,7 +84,7 @@ public class DZActionSheet : UIView {
     
     public func addButtonWithTitle(
         buttonTitle: String,
-        characterColor characterColor: UIColor,
+        CharacterColor characterColor: UIColor,
         Handler buttonBlock: DZBlock?) {
         
         self.addButtonWithTitle(buttonTitle,

@@ -158,7 +158,7 @@ public class PIImageCache {
   // memory cache
   
   private func memoryCacheRead(url: NSURL) -> UIImage? {
-    for var i=0; i<memoryCache.count; i++ {
+    for var i=0; i<memoryCache.count; i+=1 {
       if url == memoryCache[i].url {
         memoryCache[i].timeStamp = now
         return memoryCache[i].image

@@ -50,7 +50,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("controllerListTableCell");
         
-        cell?.textLabel?.text = self.controllerList![indexPath.row]["Name"] as! String;
+        cell?.textLabel?.text = self.controllerList![indexPath.row]["Name"] as? String;
         
         return cell!;
     }
@@ -61,34 +61,34 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         switch indexPath.row {
         case 0: // DZActionSheet
             let actionSheet = DZActionSheet.actionSheetWithTitle("DZ_UIKit DZActionSheet");
-            actionSheet.addButtonWithTitle("Action", characterColor: UIColor.redColor(), Handler: {
+            actionSheet.addButtonWithTitle("Action", CharacterColor: UIColor.redColor(), Handler: {
                 //;
             });
-            actionSheet.addButtonWithTitle("Block", characterColor: UIColor.greenColor(), Handler: {
+            actionSheet.addButtonWithTitle("Block", CharacterColor: UIColor.greenColor(), Handler: {
                 //;
             });
-            actionSheet.addButtonWithTitle("Continue", characterColor: UIColor.cyanColor(), Handler: {
+            actionSheet.addButtonWithTitle("Continue", CharacterColor: UIColor.cyanColor(), Handler: {
                 //;
             });
-            actionSheet.addButtonWithTitle("Delete", characterColor: UIColor.orangeColor(), Handler: {
+            actionSheet.addButtonWithTitle("Delete", CharacterColor: UIColor.orangeColor(), Handler: {
                 //;
             });
-            actionSheet.addButtonWithTitle("Edit", characterColor: UIColor.brownColor(), Handler: {
+            actionSheet.addButtonWithTitle("Edit", CharacterColor: UIColor.brownColor(), Handler: {
                 //;
             });
-            actionSheet.addButtonWithTitle("FaceToFace", characterColor: UIColor.redColor(), Handler: {
+            actionSheet.addButtonWithTitle("FaceToFace", CharacterColor: UIColor.redColor(), Handler: {
                 //;
             });
-            actionSheet.addButtonWithTitle("Game", characterColor: UIColor.greenColor(), Handler: {
+            actionSheet.addButtonWithTitle("Game", CharacterColor: UIColor.greenColor(), Handler: {
                 //;
             });
-            actionSheet.addButtonWithTitle("Hit&Run", characterColor: UIColor.cyanColor(), Handler: {
+            actionSheet.addButtonWithTitle("Hit&Run", CharacterColor: UIColor.cyanColor(), Handler: {
                 //;
             });
-            actionSheet.addButtonWithTitle("Increasement", characterColor: UIColor.orangeColor(), Handler: {
+            actionSheet.addButtonWithTitle("Increasement", CharacterColor: UIColor.orangeColor(), Handler: {
                 //;
             });
-            actionSheet.addButtonWithTitle("JoinUs", characterColor: UIColor.whiteColor(), Handler: {
+            actionSheet.addButtonWithTitle("JoinUs", CharacterColor: UIColor.whiteColor(), Handler: {
                 //;
             });
             actionSheet.show();
