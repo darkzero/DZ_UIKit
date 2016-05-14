@@ -83,7 +83,7 @@ public class PIImageCache {
   }
   
   public func prefetch(url: NSURL) {
-    var op = NSOperation()
+    let op = NSOperation();
     op.completionBlock = {
       [weak self] in
       self?.downloadToDisk(url)
@@ -158,7 +158,7 @@ public class PIImageCache {
   // memory cache
   
   private func memoryCacheRead(url: NSURL) -> UIImage? {
-    for var i=0; i<memoryCache.count; i+=1 {
+    for i in 0 ..< memoryCache.count {
       if url == memoryCache[i].url {
         memoryCache[i].timeStamp = now
         return memoryCache[i].image

@@ -49,7 +49,7 @@ public class DZNineImageBoxView: UIView {
         let countInOneLine  = ceil(sqrt(CGFloat(imageCount)));              // 1 = 1, 2,3,4 = 2, 5,6,7,8,9 = 3
         let lineCount       = ceil(CGFloat(imageCount) / countInOneLine);   // 1,2 = 1, 3,4,5,6 = 2, 7,8,9 = 3
         let sideLength      = floor((self.frame.size.width-IMAGE_SPACING*(countInOneLine-1.0))/countInOneLine);
-        let sizeOfOneImage  = CGSizeMake(sideLength, sideLength);
+        //let sizeOfOneImage  = CGSizeMake(sideLength, sideLength);
         
         let width   = countInOneLine * (sideLength+IMAGE_SPACING) - IMAGE_SPACING;
         let height  = lineCount * (sideLength+IMAGE_SPACING) - IMAGE_SPACING;
@@ -66,9 +66,9 @@ public class DZNineImageBoxView: UIView {
         
         // calc frame for one imageView
         let countInOneLine  = ceil(sqrt(CGFloat(imageCount)));              // 1 = 1, 2,3,4 = 2, 5,6,7,8,9 = 3
-        let lineCount       = ceil(CGFloat(imageCount) / countInOneLine);   // 1,2 = 1, 3,4,5,6 = 2, 7,8,9 = 3
+        //let lineCount       = ceil(CGFloat(imageCount) / countInOneLine);   // 1,2 = 1, 3,4,5,6 = 2, 7,8,9 = 3
         let sideLength      = floor((self.frame.size.width-IMAGE_SPACING*(countInOneLine-1.0))/countInOneLine);
-        let sizeOfOneImage  = CGSizeMake(sideLength, sideLength);
+        //let sizeOfOneImage  = CGSizeMake(sideLength, sideLength);
         
         for i in 0 ... (imageCount-1) {
             let viewTag = TAG_BASE + i;

@@ -88,7 +88,7 @@ public class DZActionSheet : UIView {
         Handler buttonBlock: DZBlock?) {
         
         self.addButtonWithTitle(buttonTitle,
-                                characterColor: characterColor,
+                                CharacterColor: characterColor,
                                 ImageNormal: nil,
                                 ImageHighlighted: nil,
                                 ImageDisabled: nil,
@@ -103,7 +103,7 @@ public class DZActionSheet : UIView {
         Handler buttonBlock: DZBlock?) {
         
         self.addButtonWithTitle(buttonTitle,
-                                characterColor: nil,
+                                CharacterColor: nil,
                                 ImageNormal: buttonImageNormal,
                                 ImageHighlighted: buttonImageHighlighted,
                                 ImageDisabled: buttonImageDisabled,
@@ -114,7 +114,7 @@ public class DZActionSheet : UIView {
     ///
     private func addButtonWithTitle (
         buttonTitle: String,
-        characterColor: UIColor?,
+        CharacterColor characterColor: UIColor?,
         ImageNormal buttonImageNormal: String?,
         ImageHighlighted buttonImageHighlighted: String?,
         ImageDisabled buttonImageDisabled: String?, Handler buttonBlock: DZBlock?) {
