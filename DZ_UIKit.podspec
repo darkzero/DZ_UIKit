@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "DZ_UIKit"
-  s.version          = "0.2.1"
+  s.version          = "0.2.3"
   s.summary          = "Custom UIs that be used in Topeko"
 
 # This description is used to generate tags and improve search results.
