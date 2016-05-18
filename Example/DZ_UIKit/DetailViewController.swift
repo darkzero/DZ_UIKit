@@ -41,7 +41,7 @@ class DetailViewController: UIViewController, DZNineImageBoxViewDelegate {
             self.mainView.addSubview(progress2);
             break;
         case "DZNineImageBoxView":
-            let imageArray = ["http://place-hold.it/200x200", "http://place-hold.it/200x200",
+            let imageArray = ["http://place-hold.it/200x200", "http://www.featurepics.com/FI/Thumb300/20091231/Red-Fire-Hydrant-1421559.jpg",
                               "http://place-hold.it/200x200", "http://place-hold.it/200x200",
                               "http://place-hold.it/200x200", "http://place-hold.it/200x200",];
             let nineImgView = DZNineImageBoxView.nineImageBoxViewWithImages(imageArray, frame: CGRectMake(10,10,200,200));

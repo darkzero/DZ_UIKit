@@ -305,7 +305,7 @@ public class PIImageCache {
   private func folderCreate() {
     let path = "\(config.cacheRootDirectory)\(config.cacheFolderName)/"
     do {
-        try fileManager.createDirectoryAtPath(path, withIntermediateDirectories: false, attributes: nil);
+        try fileManager.createDirectoryAtPath(path, withIntermediateDirectories: true, attributes: nil);
     }
     catch {
         print("[PIImageCache] folderCreate error!!");
