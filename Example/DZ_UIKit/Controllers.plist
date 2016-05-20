@@ -22,5 +22,9 @@
 		<key>Name</key>
 		<string>DZNineImageBoxView</string>
 	</dict>
+	<dict>
+		<key>Name</key>
+		<string>DZCheckBoxGroup</string>
+	</dict>
 </array>
 </plist>

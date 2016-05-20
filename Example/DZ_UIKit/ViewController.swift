@@ -127,7 +127,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             self.performSegueWithIdentifier("ShowDetail", sender: "DZNineImageBoxView");
             break;
         case 5:
-            // CheckBox
+            // DZCheckBoxGroup
+            self.performSegueWithIdentifier("ShowDetail", sender: "DZCheckBoxGroup");
             break;
         case 5:
             // Switch

@@ -24,21 +24,30 @@ class DetailViewController: UIViewController, DZNineImageBoxViewDelegate {
             progress1.tag = 101;
             progress1.annularBackColor = UIColor.lightGrayColor();
             progress1.annularFrontColor = UIColor.orangeColor();
-            progress1.maxValue = 100;
+            progress1.maxValue = 200;
             progress1.currectValue = 49;
-            let progress1Ctrl = UISlider.init(frame: CGRectMake(10, 150, 200, 10));
-            progress1Ctrl.tag = 102;
-            progress1Ctrl.addTarget(self, action: #selector(DetailViewController.onProgressCtrlValueChanged(_:)), forControlEvents: UIControlEvents.ValueChanged);
+            let progress1Ctrl1 = UISlider.init(frame: CGRectMake(130, 50, 150, 10));
+            progress1Ctrl1.maximumValue = 200;
+            progress1Ctrl1.minimumValue = 1;
+            progress1Ctrl1.tag = 102;
+            progress1Ctrl1.addTarget(self, action: #selector(DetailViewController.onProgressCtrlValueChanged(_:)), forControlEvents: UIControlEvents.ValueChanged);
             
-            let progress2 = DZAnnularProgress(Frame: CGRectMake(10, 210, 100, 100), AnnularWidth: 4, Type: AnnularProgressType.Percent);
+            let progress2 = DZAnnularProgress(Frame: CGRectMake(10, 160, 100, 100), AnnularWidth: 4, Type: AnnularProgressType.Percent);
+            progress2.tag = 103;
             progress2.annularBackColor = UIColor.lightGrayColor();
             progress2.annularFrontColor = UIColor.orangeColor();
-            progress2.maxValue = 100;
+            progress2.maxValue = 200;
             progress2.currectValue = 29;
+            let progress1Ctrl2 = UISlider.init(frame: CGRectMake(130, 200, 150, 10));
+            progress1Ctrl2.maximumValue = 200;
+            progress1Ctrl2.minimumValue = 1;
+            progress1Ctrl2.tag = 104;
+            progress1Ctrl2.addTarget(self, action: #selector(DetailViewController.onProgressCtrlValueChanged(_:)), forControlEvents: UIControlEvents.ValueChanged);
             
             self.mainView.addSubview(progress1);
-            self.mainView.addSubview(progress1Ctrl);
+            self.mainView.addSubview(progress1Ctrl1);
             self.mainView.addSubview(progress2);
+            self.mainView.addSubview(progress1Ctrl2);
             break;
         case "DZNineImageBoxView":
             let imageArray = ["http://place-hold.it/200x200", "http://www.featurepics.com/FI/Thumb300/20091231/Red-Fire-Hydrant-1421559.jpg",
@@ -47,6 +56,14 @@ class DetailViewController: UIViewController, DZNineImageBoxViewDelegate {
             let nineImgView = DZNineImageBoxView.nineImageBoxViewWithImages(imageArray, frame: CGRectMake(10,10,200,200));
             nineImgView.delegate = self;
             self.mainView.addSubview(nineImgView);
+            break;
+        case "DZCheckBoxGroup":
+            let checkboxGroup = DZCheckBoxGroup.checkBoxgroupWithFrame(CGRectMake(10, 10, 240, 48));
+            checkboxGroup.addCheckBox(DZCheckBox.checkBoxWithFrame(CGRectMake(0, 0, 48, 48), Type: DZCheckBoxType.Circular, BorderColorOrNil: nil, UncheckedColorOrNil: nil, CheckedColorOrNil: nil));
+            checkboxGroup.addCheckBox(DZCheckBox.checkBoxWithFrame(CGRectMake(0, 0, 48, 48), Type: DZCheckBoxType.Circular, BorderColorOrNil: nil, UncheckedColorOrNil: nil, CheckedColorOrNil: nil));
+            checkboxGroup.addCheckBox(DZCheckBox.checkBoxWithFrame(CGRectMake(0, 0, 48, 48), Type: DZCheckBoxType.Circular, BorderColorOrNil: nil, UncheckedColorOrNil: nil, CheckedColorOrNil: nil));
+            checkboxGroup.addCheckBox(DZCheckBox.checkBoxWithFrame(CGRectMake(0, 0, 48, 48), Type: DZCheckBoxType.Circular, BorderColorOrNil: nil, UncheckedColorOrNil: nil, CheckedColorOrNil: nil));
+            self.view.addSubview(checkboxGroup);
             break;
         default:
             break;
@@ -74,7 +91,13 @@ class DetailViewController: UIViewController, DZNineImageBoxViewDelegate {
     func onProgressCtrlValueChanged(sender: AnyObject) {
         if ( sender.tag == 102 ) {
             let progress = self.view.viewWithTag(101) as! DZAnnularProgress;
-            progress.currectValue = sender.currectValue;
+            //if ( (sender as! UISlider).value != nil ) {
+            progress.currectValue = CGFloat(round((sender as! UISlider).value));
+            //}
+        }
+        if ( sender.tag == 104 ) {
+            let progress = self.view.viewWithTag(103) as! DZAnnularProgress;
+            progress.currectValue = CGFloat(round((sender as! UISlider).value));
         }
     }
     

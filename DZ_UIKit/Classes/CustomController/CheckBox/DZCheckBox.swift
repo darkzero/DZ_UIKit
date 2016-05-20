@@ -11,8 +11,8 @@ import UIKit
 
 //let VALUE_KEY_CHECKED   = "_checked";
 
-let DEFAULT_CHECK_COLOR     = UIColor.colorWithDec(Red: 184, Green: 208, Blue: 98, Alpha: 1.0); // (184, 208, 98);
-let DEFAULT_UNCHECK_COLOR   = UIColor.colorWithDec(Red: 230, Green: 230, Blue: 230, Alpha: 1.0);    //RGB(230, 230, 230);
+let DEFAULT_CHECKED_COLOR   = UIColor.colorWithDec(Red: 184, Green: 208, Blue: 98, Alpha: 1.0); // (184, 208, 98);
+let DEFAULT_UNCHECKED_COLOR = UIColor.colorWithDec(Red: 230, Green: 230, Blue: 230, Alpha: 1.0);    //RGB(230, 230, 230);
 
 public enum DZCheckBoxType : Int {
     case None       = 0
@@ -57,13 +57,13 @@ public class DZCheckBox : UIControl {
         }
     };
     
-    internal var uncheckedColor:UIColor! {
+    internal var uncheckedColor:UIColor! = DEFAULT_UNCHECKED_COLOR {
         didSet {
             uncheckedLayer.backgroundColor = uncheckedColor.CGColor;
         }
     };
     
-    internal var checkedColor:UIColor! {
+    internal var checkedColor:UIColor! = DEFAULT_CHECKED_COLOR {
         didSet {
             checkedLayer.backgroundColor = checkedColor.CGColor;
         }
@@ -118,8 +118,8 @@ public class DZCheckBox : UIControl {
         
         self.hasBorder = true;
         
-        self.uncheckedColor = DEFAULT_UNCHECK_COLOR;
-        self.checkedColor   = DEFAULT_CHECK_COLOR;
+        //self.uncheckedColor = DEFAULT_UNCHECKED_COLOR;
+        //self.checkedColor   = DEFAULT_CHECKED_COLOR;
         
         // for all type, calc the border width
         borderWidth = min(frame.size.width, frame.size.height)/8;
