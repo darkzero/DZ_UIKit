@@ -52,14 +52,24 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         cell?.textLabel?.text = self.controllerList![indexPath.row]["Name"] as? String;
         
+        if indexPath.row == 6 {
+            let stepper = DZStepper(frame: CGRectMake(0,0,160,40));
+            cell?.accessoryView = stepper;
+            stepper.maxValue = 100;
+            stepper.secondColor = UIColor.blueColor();
+            stepper.addTarget(self, action: #selector(ViewController.onStepperChanged(_:)), forControlEvents: .ValueChanged);
+        }
+        
         return cell!;
     }
     
     // MARK: - UITableViewDelegate
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: false);
         switch indexPath.row {
-        case 0: // DZActionSheet
+        case 0:
+            // DZActionSheet
             let actionSheet = DZActionSheet.actionSheetWithTitle("DZ_UIKit DZActionSheet");
             actionSheet.addButtonWithTitle("Action", CharacterColor: UIColor.redColor(), Handler: {
                 //;
@@ -94,6 +104,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             actionSheet.show();
             break;
         case 1:
+            // DZAlertView 2 button
             let alert = DZAlertView.alertViewWithTitle("DZ_UIKit", Message: "DZAlertView");
             alert.setCancelButtonWithTitle("Cancel", CancelBlock: { 
                 //
@@ -104,6 +115,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             alert.show();
             break;
         case 2:
+            // DZAlertView 3 button
             let alert = DZAlertView.alertViewWithTitle("DZ_UIKit", Message: "DZAlertView");
             alert.cancelButtonColor = UIColor.redColor();
             alert.normalButtonColor = RGB_HEX("0099FF", 1.0);
@@ -130,8 +142,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             // DZCheckBoxGroup
             self.performSegueWithIdentifier("ShowDetail", sender: "DZCheckBoxGroup");
             break;
-        case 5:
-            // Switch
+        case 6:
+            // DZStepper
             break;
         default:
             break;
@@ -151,6 +163,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 break;
             }
         }
+    }
+    
+    func onStepperChanged(sender: DZStepper) {
+        print("onStepperChanged ", sender.currentValue);
     }
 }
 

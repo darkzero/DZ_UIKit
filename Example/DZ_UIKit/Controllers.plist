@@ -26,5 +26,9 @@
 		<key>Name</key>
 		<string>DZCheckBoxGroup</string>
 	</dict>
+	<dict>
+		<key>Name</key>
+		<string>DZStepper</string>
+	</dict>
 </array>
 </plist>
