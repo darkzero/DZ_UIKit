@@ -53,10 +53,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         cell?.textLabel?.text = self.controllerList![indexPath.row]["Name"] as? String;
         
         if indexPath.row == 6 {
-            let stepper = DZStepper(frame: CGRectMake(0,0,160,40));
+            let stepper = DZStepper(frame: CGRectMake(0,0,120,32));
             cell?.accessoryView = stepper;
             stepper.maxValue = 100;
-            stepper.secondColor = UIColor.blueColor();
+            stepper.mainColor = UIColor.purpleColor().colorWithAlphaComponent(0.7);
             stepper.addTarget(self, action: #selector(ViewController.onStepperChanged(_:)), forControlEvents: .ValueChanged);
         }
         
@@ -166,7 +166,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func onStepperChanged(sender: DZStepper) {
-        print("onStepperChanged ", sender.currentValue);
+        //print("onStepperChanged ", sender.currentValue);
     }
 }
 

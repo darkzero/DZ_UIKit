@@ -43,6 +43,8 @@
 		C12BD0181621F463A166AE3FABB3ABCC /* DZ_UIKit-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD5483AF46DCE6B873E8552B776B932 /* DZ_UIKit-dummy.m */; };
 		C5C081A0337FC266B8C37E0D858AB743 /* UIImage+Snapshot.h in Headers */ = {isa = PBXBuildFile; fileRef = 175E07AEBDAD15ABC9427FE1FC5774C5 /* UIImage+Snapshot.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		C821C5741CF3E431006B124D /* DZStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C821C5731CF3E431006B124D /* DZStepper.swift */; };
+		C8A6E2141CF863FD00E992FE /* minus.png in Resources */ = {isa = PBXBuildFile; fileRef = C8A6E2111CF863ED00E992FE /* minus.png */; };
+		C8A6E2151CF863FD00E992FE /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = C8A6E2121CF863ED00E992FE /* plus.png */; };
 		C9AAFC56F646AFE3D329E127D3D0877F /* UIColor+RGBA.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF5E642EBD84B1A8BC79BA0190D95B1C /* UIColor+RGBA.swift */; };
 		DFD4EA015DEEEC8051AA8896F3C9694C /* DateUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B8ACFFE679BCB794582DB04FCFF0A3 /* DateUtil.swift */; };
 		E0DED9FCFD907A1CEC9BCC454978700E /* PIImageCacheExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE2924C53CB9AD3C3265A0B07ED664 /* PIImageCacheExtensions.swift */; };
@@ -139,6 +141,9 @@
 		C03A785BF978A0970D8855BDDA547712 /* Pods-DZ_UIKit_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-DZ_UIKit_Example-dummy.m"; sourceTree = "<group>"; };
 		C75CD6FCC7383C39B43225B0287D7F8B /* DZAlertView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DZAlertView.swift; sourceTree = "<group>"; };
 		C821C5731CF3E431006B124D /* DZStepper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DZStepper.swift; sourceTree = "<group>"; };
+		C8A6E2101CF863ED00E992FE /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		C8A6E2111CF863ED00E992FE /* minus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = minus.png; sourceTree = "<group>"; };
+		C8A6E2121CF863ED00E992FE /* plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plus.png; sourceTree = "<group>"; };
 		C8CC96654A940F28EF1684CB364B4103 /* DZLib.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DZLib.swift; sourceTree = "<group>"; };
 		CD9224AD343A9456F0D12695DF9141B2 /* UIApplication+StrictKeyWindow.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIApplication+StrictKeyWindow.m"; path = "FBSnapshotTestCase/Categories/UIApplication+StrictKeyWindow.m"; sourceTree = "<group>"; };
 		CF5E642EBD84B1A8BC79BA0190D95B1C /* UIColor+RGBA.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "UIColor+RGBA.swift"; sourceTree = "<group>"; };
@@ -257,6 +262,7 @@
 		51A65472B07377172A55D8685578DA90 /* DZ_UIKit */ = {
 			isa = PBXGroup;
 			children = (
+				C8A6E20F1CF863ED00E992FE /* Assets */,
 				C9E2D73AB82A3780EBCEE90FA6EACED2 /* Classes */,
 			);
 			path = DZ_UIKit;
@@ -415,6 +421,16 @@
 			path = CustomController/Stepper;
 			sourceTree = "<group>";
 		};
+		C8A6E20F1CF863ED00E992FE /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				C8A6E2101CF863ED00E992FE /* .gitkeep */,
+				C8A6E2111CF863ED00E992FE /* minus.png */,
+				C8A6E2121CF863ED00E992FE /* plus.png */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
 		C9E2D73AB82A3780EBCEE90FA6EACED2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -539,6 +555,7 @@
 				92939BDF74F5DDFFCEFE95592F9A5109 /* Sources */,
 				7232A42BEF248FF0F5C459BF7469474C /* Frameworks */,
 				8D0C8698B0515545A9741F2C55E15D5B /* Headers */,
+				C8A6E2131CF863F800E992FE /* Resources */,
 			);
 			buildRules = (
 			);
@@ -631,6 +648,18 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C8A6E2131CF863F800E992FE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C8A6E2141CF863FD00E992FE /* minus.png in Resources */,
+				C8A6E2151CF863FD00E992FE /* plus.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		3390145A4A02FCE6BA96AD09E8146D06 /* Sources */ = {
