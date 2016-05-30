@@ -49,7 +49,7 @@ public class DZStepper: UIControl {
     
     func increase() {
         self.pushedDur += 0.5;
-        print("self.pushedDur =  ", self.pushedDur);
+        DebugLog("self.pushedDur =  ", self.pushedDur);
         if  self.pushedDur > 5.0 {
             self.stepLength = max(self.maxValue/20, 5);
         }
@@ -124,7 +124,7 @@ public class DZStepper: UIControl {
     }
     
     override public func layoutSubviews() {
-        print("DZStepper layoutSubviews");
+        DebugLog("DZStepper layoutSubviews");
         super.layoutSubviews();
         
         self.increaseButton.frame = CGRectMake(self.frame.width-self.frame.height, 0, self.frame.height, self.frame.height);
