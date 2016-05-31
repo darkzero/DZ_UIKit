@@ -55,7 +55,7 @@ public class DZStepper: UIControl {
         }
         if ( self.currentValue < self.maxValue ) {
             self.increaseButton.backgroundColor = self.increaseButton.backgroundColor?.colorWithAlphaComponent(0.5);
-            self.currentValue += stepLength;
+            self.currentValue = (self.currentValue+stepLength > self.maxValue) ? self.maxValue : (self.currentValue+stepLength);
             self.numberLabel.text = String(self.currentValue);
             self.sendActionsForControlEvents(UIControlEvents.ValueChanged);
         }
@@ -64,7 +64,7 @@ public class DZStepper: UIControl {
     func decrease() {
         if ( self.currentValue > self.minValue ) {
             self.decreaseButton.backgroundColor = self.decreaseButton.backgroundColor?.colorWithAlphaComponent(0.5);
-            self.currentValue -= stepLength;
+            self.currentValue = (self.currentValue-stepLength<self.minValue) ? self.minValue : (self.currentValue-stepLength);
             self.numberLabel.text = String(self.currentValue);
             self.sendActionsForControlEvents(UIControlEvents.ValueChanged);
         }

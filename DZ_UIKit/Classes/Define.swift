@@ -29,11 +29,11 @@ public func SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(v: String) -> Bool {
 public let SCREEN_BOUNDS:CGRect            = UIScreen.mainScreen().bounds;
 
 public func DebugLog(msg: AnyObject..., file: String = #file, function: String = #function, line: Int = #line, column: Int = #column) {
-    #if DEBUG
+#if DEBUG
     var str = "";
     for i in 0 ..< msg.count {
-        str += String(msg[i]);
+        str += " " + String(msg[i]);
     }
     print("\(file):\(function) L:\(line)|C:\(column) \(str)");
-    #endif
+#endif
 }
