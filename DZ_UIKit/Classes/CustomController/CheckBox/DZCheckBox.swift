@@ -11,8 +11,8 @@ import UIKit
 
 //let VALUE_KEY_CHECKED   = "_checked";
 
-let DEFAULT_CHECKED_COLOR   = UIColor.colorWithDec(Red: 184, Green: 208, Blue: 98, Alpha: 1.0); // (184, 208, 98);
-let DEFAULT_UNCHECKED_COLOR = UIColor.colorWithDec(Red: 230, Green: 230, Blue: 230, Alpha: 1.0);    //RGB(230, 230, 230);
+let DEFAULT_CHECKED_COLOR   = UIColor.colorWithDec(Red: 184, Green: 208, Blue: 98, Alpha: 1.0);     // RGB(184, 208, 98);
+let DEFAULT_UNCHECKED_COLOR = UIColor.colorWithDec(Red: 230, Green: 230, Blue: 230, Alpha: 1.0);    // RGB(230, 230, 230);
 
 public enum DZCheckBoxType : Int {
     case None       = 0
@@ -27,7 +27,7 @@ public class DZCheckBox : UIControl {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private var borderWidth:CGFloat = 0.0;
+    private var borderWidth:CGFloat = 4.0;
     
     private var backgroundLayer:CALayer!;
     private var uncheckedLayer:CALayer!;
@@ -36,8 +36,8 @@ public class DZCheckBox : UIControl {
     private var imageView:UIImageView!;
     
     // for DZCheckBoxRounded
-    private var outterCornerRadius:CGFloat = 0.0;
-    private var innerCornerRadius:CGFloat = 0.0;
+    private var outterCornerRadius:CGFloat = 8.0;
+    private var innerCornerRadius:CGFloat = 4.0;
     
     // for DZCheckBoxTypeCircular
     private var expansionRect:CGRect!;
@@ -86,10 +86,11 @@ public class DZCheckBox : UIControl {
         let checkbox:DZCheckBox! = DZCheckBox(frame:frame);
         if ( checkbox != nil ) {
             if ( borderColor != nil ) {
+                checkbox.hasBorder      = true;
                 checkbox.borderColor    = borderColor;
             }
             else {
-                checkbox.hasBorder = false;
+                checkbox.hasBorder      = false;
             }
         
             if ( uncheckedColor != nil ) {
@@ -111,27 +112,13 @@ public class DZCheckBox : UIControl {
     
     override init(frame: CGRect) {
         super.init(frame:frame);
-        //if ( self != nil ) {
-        // Initialization code
         
+        // Initialization code
         self.backgroundColor = UIColor.clearColor();
         
-        self.hasBorder = true;
+        self.hasBorder = false;
         
-        //self.uncheckedColor = DEFAULT_UNCHECKED_COLOR;
-        //self.checkedColor   = DEFAULT_CHECKED_COLOR;
-        
-        // for all type, calc the border width
-        borderWidth = min(frame.size.width, frame.size.height)/8;
-        
-        // for DZCheckBoxRounded
-        outterCornerRadius = 2*borderWidth;
-        innerCornerRadius = borderWidth;
-        
-        // for DZCheckBoxTypeCircular
-        let rect:CGRect     = self.bounds;
-        expansionRect   = CGRectMake(borderWidth, borderWidth, rect.size.width - borderWidth * 2, rect.size.height - borderWidth * 2);
-        contractRect    = CGRectMake((rect.size.width - borderWidth)/2, (rect.size.height - borderWidth)/2, borderWidth, borderWidth);
+        contractRect    = CGRectMake(self.bounds.size.width/2, self.bounds.size.height/2, 0, 0);
         
         backgroundLayer = CALayer();
         backgroundLayer.frame = self.bounds;
@@ -140,7 +127,7 @@ public class DZCheckBox : UIControl {
         self.layer.addSublayer(backgroundLayer);
         
         uncheckedLayer = CALayer();
-        uncheckedLayer.frame = expansionRect;
+        uncheckedLayer.frame = self.bounds;
         uncheckedLayer.backgroundColor = self.uncheckedColor.CGColor;
         uncheckedLayer.opacity = 1.0;
         self.layer.addSublayer(uncheckedLayer);
@@ -151,66 +138,28 @@ public class DZCheckBox : UIControl {
         checkedLayer.opacity = 0.0;
         self.layer.addSublayer(checkedLayer);
         
-        imageView = UIImageView(frame: expansionRect); //[[UIImageView alloc] initWithFrame:ExpansionRect];
+        imageView = UIImageView(frame: self.bounds); //[[UIImageView alloc] initWithFrame:ExpansionRect];
         imageView.hidden = true;
         self.addSubview(imageView);
         
         self.addTarget(self, action: #selector(DZCheckBox.onCheckBoxTouched(_:)), forControlEvents: UIControlEvents.TouchUpInside);
-        
-        //self.addObserver(self, forKeyPath: VALUE_KEY_CHECKED, options: NSKeyValueObservingOptions.Old|NSKeyValueObservingOptions.New, context: nil);
-        //}
-        //return self;
     }
     
-// MARK: isChecked function
-    
-//    public func isChecked() -> Bool
-//    {
-//        return self.valueForKey(VALUE_KEY_CHECKED)!.boolValue;
-//    }
-//    
-//    public func setChecked(checked:Bool)
-//    {
-//        self.setValue(checked, forKey: VALUE_KEY_CHECKED);
-//    }
     
 // MARK: - touch handle
     
     func onCheckBoxTouched(sender:AnyObject)
     {
         let oldValue:Bool = self.checked;
-//        self.setValue(!oldValue, forKey:VALUE_KEY_CHECKED);
         self.checked = !oldValue;
     }
-
-// MARK: - KVO
-//    override public func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
-//        var oldValue:Bool? = change["old"]?.boolValue;
-//        var newValue:Bool? = change["new"]?.boolValue;
-//        if ( keyPath == VALUE_KEY_CHECKED && oldValue != newValue ) {
-//            var checked:Bool? = newValue;//self.isChecked;
-//            if ( checked != nil ) {
-//                self.playAnimation(checked!);
-//            }
-//        }
-//    }
     
     private func playAnimation(checked:Bool)
     {
         if ( checked ) {
-            UIView.animateWithDuration(0.3, delay: 0.1, options: UIViewAnimationOptions.AllowUserInteraction, animations: { () -> Void in
+            UIView.animateWithDuration(0.1, delay: 0.1, options: UIViewAnimationOptions.AllowUserInteraction, animations: { () -> Void in
                 self.checkedLayer.opacity    = 1.0;
                 self.checkedLayer.frame      = self.expansionRect;
-                self.uncheckedLayer.opacity  = 0.0;
-                //uncheckedLayer.frame    = contractRect;
-                if ( self.type == .Circular ) {
-                    self.checkedLayer.cornerRadius   = self.expansionRect.size.width / 2;
-                    self.uncheckedLayer.cornerRadius = self.expansionRect.size.width / 2;
-                }
-                else if ( self.type == .Rounded ) {
-                    self.checkedLayer.cornerRadius       = self.innerCornerRadius;
-                    self.uncheckedLayer.cornerRadius     = self.innerCornerRadius;
-                }
             }, completion: { (result) -> Void in
                 self.sendActionsForControlEvents(UIControlEvents.ValueChanged);
             });
@@ -219,83 +168,42 @@ public class DZCheckBox : UIControl {
             UIView.animateWithDuration(0.3, delay: 0.1, options: UIViewAnimationOptions.AllowUserInteraction, animations: { () -> Void in
                 self.checkedLayer.opacity    = 0.0;
                 self.checkedLayer.frame      = self.contractRect;
-                self.uncheckedLayer.opacity  = 1.0;
-                //uncheckedLayer.frame    = contractRect;
-                if ( self.type == .Circular ) {
-                    self.checkedLayer.cornerRadius   = self.contractRect.size.width / 2;
-                    self.uncheckedLayer.cornerRadius = self.expansionRect.size.width / 2;
-                }
-                else if ( self.type == .Rounded ) {
-                    self.checkedLayer.cornerRadius       = self.innerCornerRadius;
-                    self.uncheckedLayer.cornerRadius     = self.innerCornerRadius;
-                }
-                }, completion: { (result) -> Void in
-                    self.sendActionsForControlEvents(UIControlEvents.ValueChanged);
+            }, completion: { (result) -> Void in
+                self.sendActionsForControlEvents(UIControlEvents.ValueChanged);
             });
         }
-        self.setNeedsLayout();
     }
     
     override public func layoutSubviews()
     {
-        if ( self.image != nil ) {
-            imageView.image = self.image;
-            if ( self.checked ) {
-                imageView.hidden = false;
-            }
-            else {
-                imageView.hidden = false;
-            }
-        }
-    }
-    
-    public override func drawRect(rect: CGRect) {
-        // border color
-        if self.borderColor != nil {
-            backgroundLayer.backgroundColor = self.borderColor.CGColor;
-        }
-        else {
-            backgroundLayer.backgroundColor = UIColor.whiteColor().CGColor;
-            borderWidth = 0.0;
-        }
-        // checked color
-        if self.checkedColor != nil {
-            checkedLayer.backgroundColor = self.checkedColor.CGColor;
-        }
-        // unchecked color
-        if self.uncheckedColor != nil {
-            uncheckedLayer.backgroundColor = self.uncheckedColor.CGColor;
-        }
-    
         let theRect     = self.bounds;
+        
         if  self.hasBorder {
             self.expansionRect      = CGRectMake(self.borderWidth, self.borderWidth, theRect.size.width - self.borderWidth * 2, theRect.size.height - self.borderWidth * 2);
-            self.contractRect       = CGRectMake((theRect.size.width - self.borderWidth)/2, (theRect.size.height - self.borderWidth)/2, self.borderWidth, self.borderWidth);
-            self.outterCornerRadius = 2 * self.borderWidth;
-            self.innerCornerRadius  = self.borderWidth;
+            self.contractRect       = CGRectMake((theRect.size.width - self.borderWidth)/2, (theRect.size.height - self.borderWidth)/2, 0, 0);
         }
         else {
             self.expansionRect      = theRect;
-            self.contractRect       = CGRectMake((theRect.size.width - self.borderWidth)/2, (theRect.size.height - self.borderWidth)/2, self.borderWidth, self.borderWidth);
-            self.outterCornerRadius = 2*borderWidth;
-            self.innerCornerRadius  = 2*borderWidth;
+            self.contractRect       = CGRectMake(theRect.size.width/2, theRect.size.height/2, 0, 0);
+            self.innerCornerRadius  = self.outterCornerRadius;
         }
-    
+        
         uncheckedLayer.frame    = self.expansionRect;
-    
+        
+        if ( self.image != nil ) {
+            imageView.image = self.image;
+        }
         imageView.frame = CGRectMake(self.borderWidth + 2, self.borderWidth + 2, self.expansionRect.size.width-4, self.expansionRect.size.height-4);
-    
+        
         if self.checked {
             self.checkedLayer.opacity   = 1.0;
             self.checkedLayer.frame     = self.expansionRect;
-            self.uncheckedLayer.opacity = 0.0;
         }
         else {
             self.checkedLayer.opacity    = 0.0;
             self.checkedLayer.frame      = self.contractRect;
-            self.uncheckedLayer.opacity  = 1.0;
         }
-    
+        
         // Drawing code
         switch self.type {
         case .Rounded :
@@ -320,5 +228,12 @@ public class DZCheckBox : UIControl {
             break;
         }
     }
-
+    
+    /*
+     // Only override drawRect: if you perform custom drawing.
+     // An empty implementation adversely affects performance during animation.
+     override func drawRect(rect: CGRect) {
+     // Drawing code
+     }
+     */
 }

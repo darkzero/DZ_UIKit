@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+@IBDesignable
 public class DZSwitch : UIControl {
     
     // MARK: - Class define
@@ -20,7 +21,11 @@ public class DZSwitch : UIControl {
         }
     }
     
-    // MARK: - internal properties
+    // MARK: - @IBInspectable properties
+    @IBInspectable var onImage: UIImage?;
+    @IBInspectable var offImage: UIImage?;
+    @IBInspectable var thumbImage: UIImage?;
+    @IBInspectable var defaultOn: Bool = false;
     
     // MARK: - private properties
     private var onImageView:UIImageView     = UIImageView();
@@ -35,7 +40,7 @@ public class DZSwitch : UIControl {
     // MARK: - init
     
     required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder);
     }
     
     public init(frame:CGRect, onImage: String, offImage: String, thumbImage: String) {

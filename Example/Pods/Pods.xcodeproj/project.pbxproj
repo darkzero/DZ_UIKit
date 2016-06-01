@@ -332,6 +332,7 @@
 				DF9466335770A7D3498A2439A3D75026 /* DZBlock.swift */,
 				71F14DD6B15B166005A56034C633D9C2 /* PIImageCache.swift */,
 				70AE2924C53CB9AD3C3265A0B07ED664 /* PIImageCacheExtensions.swift */,
+				C821C5721CF3E41D006B124D /* Stepper */,
 				A8B42EEABD3993DEB3F00CD2A86CDCC1 /* ActionSheet */,
 				05B1C442688B520D47E39D46F785E190 /* AlertView */,
 				E34315C4C46B9315CDE93A4ED0EF8CE6 /* AnnularProgress */,
@@ -417,8 +418,7 @@
 			children = (
 				C821C5731CF3E431006B124D /* DZStepper.swift */,
 			);
-			name = Stepper;
-			path = CustomController/Stepper;
+			path = Stepper;
 			sourceTree = "<group>";
 		};
 		C8A6E20F1CF863ED00E992FE /* Assets */ = {
@@ -434,7 +434,6 @@
 		C9E2D73AB82A3780EBCEE90FA6EACED2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				C821C5721CF3E41D006B124D /* Stepper */,
 				A00DA1F49B016C49DF4B624D16B6EDA2 /* Define.swift */,
 				C8CC96654A940F28EF1684CB364B4103 /* DZLib.swift */,
 				E33554F9AA62F4298B6BE6CE8E69B87F /* Categories */,

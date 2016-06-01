@@ -53,11 +53,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         cell?.textLabel?.text = self.controllerList![indexPath.row]["Name"] as? String;
         
         if indexPath.row == 6 {
-            let stepper = DZStepper(frame: CGRectMake(0,0,120,32));
-            cell?.accessoryView = stepper;
+            let stepper = DZStepper(frame: CGRectMake(0,0,140,32));
             stepper.maxValue = 100;
             stepper.mainColor = UIColor.purpleColor().colorWithAlphaComponent(0.7);
+            stepper.textColor = UIColor.purpleColor().colorWithAlphaComponent(0.7);
             stepper.addTarget(self, action: #selector(ViewController.onStepperChanged(_:)), forControlEvents: .ValueChanged);
+            cell?.accessoryView = stepper;
         }
         
         return cell!;

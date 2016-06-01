@@ -138,10 +138,12 @@ public class DZAnnularProgress: UIView {
     
     public override func layoutSubviews() {
         //
+        DebugLog("DZAnnularProgress layoutSubviews", self.frame.width, self.frame.height);
         super.layoutSubviews();
     }
     
     public override func drawRect(rect: CGRect) {
+        DebugLog("DZAnnularProgress drawRect", self.frame.width, self.frame.height);
         // draw annular background color
         let lineWidth: CGFloat = self.annularWidth;
         let processBackgroundPath: UIBezierPath = UIBezierPath();
