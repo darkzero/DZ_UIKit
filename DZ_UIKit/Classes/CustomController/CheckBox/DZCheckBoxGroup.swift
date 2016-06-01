@@ -9,6 +9,12 @@
 import Foundation
 import UIKit
 
+public enum DZCheckBoxGroupStyle: Int {
+    case Default    = 0;
+    case Bar        = 1;
+    case List       = 2;
+}
+
 protocol DZCheckBoxGroupDelegate {
     func numberOfCheckBoxes() -> Int;
     func checkBoxSizeOfGroup(group : DZCheckBoxGroup, atIndex theIndex : Int)-> CGSize;
@@ -17,7 +23,9 @@ protocol DZCheckBoxGroupDelegate {
 
 public class DZCheckBoxGroup : UIControl {
     
-    public var multipleCheckEnabled:Bool;
+    public var multipleCheckEnabled:Bool    = false;
+    public var style: DZCheckBoxGroupStyle  = .Default;
+    
     public var checkedIndexes:NSMutableArray {
         didSet {
             for i in 0 ... (self.checkBoxArray.count - 1) {
@@ -65,13 +73,19 @@ public class DZCheckBoxGroup : UIControl {
         
         self.frame = theRect;
         
-        for i in 0 ... (itemsCount-1) {
-            let aCheckBox = self.checkBoxArray[i] as! DZCheckBox;
-            aCheckBox.frame = CGRectMake(
-                (aCheckBox.frame.size.width+5)*CGFloat(i), 0,
-                self.frame.size.height, self.frame.size.height);
-            
-            self.addSubview(aCheckBox);
+        switch self.style {
+        case .List :
+            break;
+        case .Bar, .Default :
+            for i in 0 ... (itemsCount-1) {
+                let aCheckBox = self.checkBoxArray[i] as! DZCheckBox;
+                aCheckBox.frame = CGRectMake(
+                    (aCheckBox.frame.size.width+5)*CGFloat(i), 0,
+                    self.frame.size.height, self.frame.size.height);
+                
+                self.addSubview(aCheckBox);
+            }
+            break;
         }
     }
     
@@ -89,7 +103,7 @@ public class DZCheckBoxGroup : UIControl {
     public func addCheckBox(checkBox:DZCheckBox) {
         checkBox.addTarget(self, action: #selector(DZCheckBoxGroup.onCheckBoxCheckedChanged(_:)), forControlEvents: UIControlEvents.ValueChanged);
         self.checkBoxArray.addObject(checkBox);
-        self.setNeedsLayout();
+        //self.setNeedsLayout();
     }
     
     public func addCheckBoxes(items:NSArray) {
@@ -99,7 +113,7 @@ public class DZCheckBoxGroup : UIControl {
                 self.checkBoxArray.addObject(checkBox);
             }
         }
-        self.setNeedsLayout();
+        //self.setNeedsLayout();
     }
     
     public func onCheckBoxCheckedChanged(sender: AnyObject)

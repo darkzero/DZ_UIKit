@@ -63,41 +63,39 @@ class DetailViewController: UIViewController, DZNineImageBoxViewDelegate {
             //checkboxGroup.multipleCheckEnabled = true;
             checkboxGroup.addCheckBox(
                 DZCheckBox.checkBoxWithFrame(CGRectMake(0, 0, 48, 48),
-                    Type: DZCheckBoxType.Square,
-                    BorderColorOrNil: nil,
-                    UncheckedColorOrNil: nil,
-                    CheckedColorOrNil: nil));
+                    Type: DZCheckBoxType.Square));
             checkboxGroup.addCheckBox(
                 DZCheckBox.checkBoxWithFrame(CGRectMake(0, 0, 48, 48),
                     Type: DZCheckBoxType.Square,
-                    BorderColorOrNil: UIColor.orangeColor(),
-                    UncheckedColorOrNil: nil,
-                    CheckedColorOrNil: nil));
+                    BorderColorOrNil: UIColor.orangeColor()));
+            checkboxGroup.addCheckBox(
+                DZCheckBox.checkBoxWithFrame(CGRectMake(0, 0, 48, 48),
+                    Type: DZCheckBoxType.Rounded));
             checkboxGroup.addCheckBox(
                 DZCheckBox.checkBoxWithFrame(CGRectMake(0, 0, 48, 48),
                     Type: DZCheckBoxType.Rounded,
-                    BorderColorOrNil: nil,
-                    UncheckedColorOrNil: nil,
-                    CheckedColorOrNil: nil));
+                    BorderColorOrNil: UIColor.orangeColor()));
             checkboxGroup.addCheckBox(
                 DZCheckBox.checkBoxWithFrame(CGRectMake(0, 0, 48, 48),
-                    Type: DZCheckBoxType.Rounded,
-                    BorderColorOrNil: UIColor.orangeColor(),
-                    UncheckedColorOrNil: nil,
-                    CheckedColorOrNil: nil));
-            checkboxGroup.addCheckBox(
-                DZCheckBox.checkBoxWithFrame(CGRectMake(0, 0, 48, 48),
-                    Type: DZCheckBoxType.Circular,
-                    BorderColorOrNil: nil,
-                    UncheckedColorOrNil: nil,
-                    CheckedColorOrNil: nil));
+                    Type: DZCheckBoxType.Circular));
             checkboxGroup.addCheckBox(
                 DZCheckBox.checkBoxWithFrame(CGRectMake(0, 0, 48, 48),
                     Type: DZCheckBoxType.Circular,
                     BorderColorOrNil: UIColor.orangeColor(),
-                    UncheckedColorOrNil: nil,
                     CheckedColorOrNil: RGB_HEX("9988333", 1.0)));
             self.view.addSubview(checkboxGroup);
+            
+            let checkBoxList = DZCheckBoxGroup.checkBoxgroupWithFrame(CGRectMake(10, 180, 240, 240));
+            checkBoxList.addCheckBox(
+                DZCheckBox.checkBoxWithFrame(CGRectMake(0, 0, 48, 48),
+                    Type: DZCheckBoxType.Square, Title: "Aaaa"));
+            checkBoxList.addCheckBox(
+                DZCheckBox.checkBoxWithFrame(CGRectMake(0, 0, 48, 48),
+                    Type: DZCheckBoxType.Square, Title: "Bbbb"));
+            checkBoxList.addCheckBox(
+                DZCheckBox.checkBoxWithFrame(CGRectMake(0, 0, 48, 48),
+                    Type: DZCheckBoxType.Square, Title: "Cccc"));
+            self.view.addSubview(checkBoxList);
             break;
         default:
             break;
