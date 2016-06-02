@@ -67,26 +67,33 @@ public class DZCheckBoxGroup : UIControl {
         
         let itemsCount:Int  = self.checkBoxArray.count;
         let theCheckBox     = self.checkBoxArray[0] as! DZCheckBox;
-        let theRect:CGRect  = CGRectMake(
-            self.frame.origin.x, self.frame.origin.y,
-            (theCheckBox.frame.size.width + 5)*CGFloat(itemsCount), theCheckBox.frame.size.height);
+        var theRect:CGRect  = CGRectZero;
         
-        self.frame = theRect;
         
         switch self.style {
         case .List :
-            break;
-        case .Bar, .Default :
+            theRect = CGRectMake( self.frame.origin.x, self.frame.origin.y,
+                                 theCheckBox.frame.size.width, (theCheckBox.frame.size.height + 5)*CGFloat(itemsCount));
             for i in 0 ... (itemsCount-1) {
                 let aCheckBox = self.checkBoxArray[i] as! DZCheckBox;
-                aCheckBox.frame = CGRectMake(
-                    (aCheckBox.frame.size.width+5)*CGFloat(i), 0,
-                    self.frame.size.height, self.frame.size.height);
+                aCheckBox.frame.origin = CGPointMake(0, (aCheckBox.frame.size.height+5)*CGFloat(i));
+                
+                self.addSubview(aCheckBox);
+            }
+            break;
+        case .Bar, .Default :
+            theRect = CGRectMake( self.frame.origin.x, self.frame.origin.y,
+                                  (theCheckBox.frame.size.width + 5)*CGFloat(itemsCount), theCheckBox.frame.size.height);
+            for i in 0 ... (itemsCount-1) {
+                let aCheckBox = self.checkBoxArray[i] as! DZCheckBox;
+                aCheckBox.frame.origin = CGPointMake((aCheckBox.frame.size.width+5)*CGFloat(i), 0);
                 
                 self.addSubview(aCheckBox);
             }
             break;
         }
+        
+        self.frame = theRect;
     }
     
     public class func checkBoxgroupWithFrame(frame : CGRect) -> DZCheckBoxGroup {

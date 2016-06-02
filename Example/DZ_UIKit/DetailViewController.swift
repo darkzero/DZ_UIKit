@@ -86,15 +86,15 @@ class DetailViewController: UIViewController, DZNineImageBoxViewDelegate {
             self.view.addSubview(checkboxGroup);
             
             let checkBoxList = DZCheckBoxGroup.checkBoxgroupWithFrame(CGRectMake(10, 180, 240, 240));
+            checkBoxList.style = .List;
             checkBoxList.addCheckBox(
-                DZCheckBox.checkBoxWithFrame(CGRectMake(0, 0, 48, 48),
-                    Type: DZCheckBoxType.Square, Title: "Aaaa"));
+                DZCheckBox.checkBoxWithFrame(CGRectMake(0, 0, 32, 32),
+                    Type: DZCheckBoxType.Rounded, BorderColorOrNil: UIColor.orangeColor(), Title: "Save Account"));
             checkBoxList.addCheckBox(
-                DZCheckBox.checkBoxWithFrame(CGRectMake(0, 0, 48, 48),
-                    Type: DZCheckBoxType.Square, Title: "Bbbb"));
-            checkBoxList.addCheckBox(
-                DZCheckBox.checkBoxWithFrame(CGRectMake(0, 0, 48, 48),
-                    Type: DZCheckBoxType.Square, Title: "Cccc"));
+                DZCheckBox.checkBoxWithFrame(CGRectMake(0, 0, 32, 32),
+                    Type: DZCheckBoxType.Circular, BorderColorOrNil: UIColor.orangeColor(), Title: "Auto Login"));
+            checkBoxList.checkedIndexes = [0];
+            checkBoxList.multipleCheckEnabled = true;
             self.view.addSubview(checkBoxList);
             break;
         default:
