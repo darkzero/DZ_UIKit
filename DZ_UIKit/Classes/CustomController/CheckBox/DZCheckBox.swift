@@ -14,17 +14,17 @@ import UIKit
 let DEFAULT_CHECKED_COLOR   = UIColor.colorWithDec(Red: 184, Green: 208, Blue: 98, Alpha: 1.0);     // RGB(184, 208, 98);
 let DEFAULT_UNCHECKED_COLOR = UIColor.colorWithDec(Red: 230, Green: 230, Blue: 230, Alpha: 1.0);    // RGB(230, 230, 230);
 
-public enum DZCheckBoxType : Int {
-    case None       = 0
-    case Circular   = 1
-    case Square     = 2
-    case Rounded    = 3
+public enum DZCheckBoxType {
+    case None
+    case Circular
+    case Square
+    case Rounded
 }
 
 @IBDesignable
 public class DZCheckBox : UIControl {
     
-    @IBInspectable private var borderWidth:CGFloat = 4.0;
+    @IBInspectable public var borderWidth:CGFloat = 4.0;
     
     private var backgroundLayer:CALayer!;
     private var uncheckedLayer:CALayer!;
@@ -42,7 +42,9 @@ public class DZCheckBox : UIControl {
     private var outterCornerRadius:CGFloat = 8.0;
     private var innerCornerRadius:CGFloat = 4.0;
     
-    private var checkBoxSize:CGSize! = CGSizeZero;
+    @IBInspectable public var type:DZCheckBoxType = .None;
+    
+    @IBInspectable public var checkBoxSize:CGSize = CGSizeMake(48, 48);
     
     var withTitle: Bool = false;
     public var title: String = "" {
@@ -67,21 +69,22 @@ public class DZCheckBox : UIControl {
         }
     }
     
-    var type:DZCheckBoxType = .None;
-    
-    @IBInspectable public var borderColor: UIColor! {
+    @IBInspectable public var borderColor: UIColor? = nil {
         didSet {
-            backgroundLayer.backgroundColor = borderColor.CGColor;
+            if ( borderColor != nil ) {
+                backgroundLayer.backgroundColor = borderColor!.CGColor;
+                self.hasBorder = true;
+            }
         }
     };
     
-    @IBInspectable public var uncheckedColor: UIColor! = DEFAULT_UNCHECKED_COLOR {
+    @IBInspectable public var uncheckedColor: UIColor = DEFAULT_UNCHECKED_COLOR {
         didSet {
             uncheckedLayer.backgroundColor = uncheckedColor.CGColor;
         }
     };
     
-    @IBInspectable public var checkedColor: UIColor! = DEFAULT_CHECKED_COLOR {
+    @IBInspectable public var checkedColor: UIColor = DEFAULT_CHECKED_COLOR {
         didSet {
             checkedLayer.backgroundColor = checkedColor.CGColor;
         }
@@ -120,11 +123,11 @@ public class DZCheckBox : UIControl {
             }
         
             if ( uncheckedColor != nil ) {
-                checkbox.uncheckedColor     = uncheckedColor;
+                checkbox.uncheckedColor     = uncheckedColor!;
             }
         
             if ( checkedColor != nil ) {
-                checkbox.checkedColor       = checkedColor;
+                checkbox.checkedColor       = checkedColor!;
             }
             
             if title != nil {
@@ -230,10 +233,13 @@ public class DZCheckBox : UIControl {
         }
     }
     
-    override public func layoutSubviews()
-    {
+    override public func layoutSubviews() {
         super.layoutSubviews();
-        //let theRect     = self.bounds;
+        
+        //self.backgroundColor = UIColor.redColor();
+        if ( self.borderColor != nil ) {
+            self.hasBorder = true;
+        }
         
         if  self.hasBorder {
             self.expansionRect      = CGRectMake(self.borderWidth, self.borderWidth, checkBoxSize.width - self.borderWidth * 2, checkBoxSize.height - self.borderWidth * 2);
@@ -247,7 +253,8 @@ public class DZCheckBox : UIControl {
             self.innerCornerRadius  = self.outterCornerRadius;
         }
         
-        uncheckedLayer.frame    = self.expansionRect;
+        self.backgroundLayer.frame  = CGRectMake(0, 0, checkBoxSize.width, checkBoxSize.height);
+        self.uncheckedLayer.frame   = self.expansionRect;
         
         if self.checked {
             self.checkedLayer.opacity   = 1.0;
