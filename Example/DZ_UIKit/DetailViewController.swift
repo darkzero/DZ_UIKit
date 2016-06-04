@@ -89,10 +89,10 @@ class DetailViewController: UIViewController, DZNineImageBoxViewDelegate {
             checkBoxList.style = .List;
             checkBoxList.addCheckBox(
                 DZCheckBox.checkBoxWithFrame(CGRectMake(0, 0, 32, 32),
-                    Type: DZCheckBoxType.Rounded, BorderColorOrNil: UIColor.orangeColor(), Title: "Save Account"));
+                    Type: DZCheckBoxType.Rounded, CheckedColorOrNil: UIColor.orangeColor(), Title: "Save Account"));
             checkBoxList.addCheckBox(
                 DZCheckBox.checkBoxWithFrame(CGRectMake(0, 0, 32, 32),
-                    Type: DZCheckBoxType.Circular, BorderColorOrNil: UIColor.orangeColor(), Title: "Auto Login"));
+                    Type: DZCheckBoxType.Rounded, BorderColorOrNil: UIColor.orangeColor(), Title: "Auto Login"));
             checkBoxList.checkedIndexes = [0];
             checkBoxList.multipleCheckEnabled = true;
             self.view.addSubview(checkBoxList);
