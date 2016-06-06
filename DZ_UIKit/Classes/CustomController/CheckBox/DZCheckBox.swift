@@ -139,7 +139,7 @@ public class DZCheckBox : UIControl {
                 checkbox.image = image;
             }
             else {
-                var imageStr = NSBundle(forClass: DZCheckBox.self).pathForResource("checked", ofType: "png");
+                let imageStr = NSBundle(forClass: DZCheckBox.self).pathForResource("checked", ofType: "png");
                 checkbox.image = UIImage(data: NSData(contentsOfURL: NSURL(fileURLWithPath: imageStr!))!);
             }
             checkbox.type = type;
@@ -194,7 +194,7 @@ public class DZCheckBox : UIControl {
         imageView = UIImageView(frame: self.bounds);
         // set default image
         if self.image == nil {
-            var imageStr = NSBundle(forClass: DZCheckBox.self).pathForResource("checked", ofType: "png");
+            let imageStr = NSBundle(forClass: DZCheckBox.self).pathForResource("checked", ofType: "png");
             self.image = UIImage(data: NSData(contentsOfURL: NSURL(fileURLWithPath: imageStr!))!);
         }
         self.addSubview(imageView);
