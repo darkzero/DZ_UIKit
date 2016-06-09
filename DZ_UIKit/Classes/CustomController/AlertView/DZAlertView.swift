@@ -20,24 +20,24 @@ public class DZAlertView : UIView {
     
 // MARK: - public properties
     
-    public var title: String    = "";
-    public var message: String  = "";
+    public private(set) var title: String    = "";
+    public private(set) var message: String  = "";
     
     // cancel button color / text color
-    public var cancelButtonColor:UIColor        = RGB(92, 177, 173);
-    public var cancelButtonTextColor:UIColor    = RGB(255, 255, 255);
+    private let cancelButtonColor:UIColor       = RGB(92, 177, 173);
+    private let cancelButtonTextColor:UIColor   = RGB(255, 255, 255);
     
     // normal button color / text color
-    public var normalButtonColor:UIColor        = RGB(136, 136, 136);
-    public var normalButtonTextColor:UIColor    = RGB(255, 255, 255);
+    private let normalButtonColor:UIColor       = RGB(136, 136, 136);
+    private let normalButtonTextColor:UIColor   = RGB(255, 255, 255);
     
 // MARK: - internal properties
     
-    internal var buttonArray:NSMutableArray                 = NSMutableArray();
-    internal var blockDictionary:Dictionary<Int, DZBlock>   = Dictionary();
-    internal var titleLabel:UILabel     = UILabel();
-    internal var messageLabel:UILabel   = UILabel();
-    internal var theWindow:UIWindow     = UIWindow(frame: UIScreen.mainScreen().bounds);
+    private var buttonArray:NSMutableArray                  = NSMutableArray();
+    private var blockDictionary:Dictionary<Int, DZBlock>    = Dictionary();
+    private var titleLabel:UILabel      = UILabel();
+    private var messageLabel:UILabel    = UILabel();
+    private var theWindow:UIWindow      = UIWindow(frame: UIScreen.mainScreen().bounds);
     
 // MARK: - private properties
     
@@ -63,7 +63,7 @@ public class DZAlertView : UIView {
         self.message    = message;
     }
     
-    private init(title: String, Message message: String, CancelTitle cancelTitle: String, CancelBlock cancelBlock:DZBlock) {
+    private init(title: String, Message message: String = "", CancelTitle cancelTitle: String, CancelBlock cancelBlock:DZBlock) {
         let rect:CGRect = CGRectMake(0, 0, ALERT_VIEW_WIDTH, 100);
         
         super.init(frame: rect);
@@ -81,7 +81,7 @@ public class DZAlertView : UIView {
     
 // MARK: - class functions
     
-    public class func alertViewWithTitle(title: String, Message message: String) -> DZAlertView {
+    public class func alertViewWithTitle(title: String, Message message: String = "") -> DZAlertView {
         return DZAlertView(title: title, Message: message);
     }
     
@@ -104,16 +104,16 @@ public class DZAlertView : UIView {
         }
     }
     
-    internal func setHandler(block:DZBlock?, forButtonAtIndex index:Int) {
-        if ( block != nil ) {
-            self.blockDictionary[index] = block;
+    internal func setHandler(handler:DZBlock?, forButtonAtIndex index:Int) {
+        if ( handler != nil ) {
+            self.blockDictionary[index] = handler;
         }
         else {
             self.blockDictionary.removeValueForKey(index);
         }
     }
     
-    public func buttonClicked(sender: AnyObject) {
+    internal func buttonClicked(sender: AnyObject) {
         let btnIdx = sender.tag;
         
         let block:DZBlock? = self.blockDictionary[btnIdx];
@@ -128,32 +128,34 @@ public class DZAlertView : UIView {
     
 // MARK: - public functions
     
-    public func setCancelButtonWithTitle(cancelTitle: String, CancelBlock cancelBlock:DZBlock?) {
+    public func setCancelButtonWithTitle(title: String, bgColor: UIColor? = nil, textColor: UIColor? = nil, handler: DZBlock?) {
         var btn:UIButton! = self.buttonArray.objectAtIndex(CANCEL_BUTTON_TAG) as? UIButton;
         if ( btn == nil ) {
             btn = UIButton(type: UIButtonType.Custom);
         }
         
-        btn.setTitle(cancelTitle, forState: UIControlState.Normal);
-        btn.backgroundColor = self.cancelButtonColor;
+        btn.setTitle(title, forState: UIControlState.Normal);
+        btn.backgroundColor = (bgColor == nil) ? self.cancelButtonColor : bgColor;
+        btn.setTitleColor((textColor == nil) ? self.cancelButtonTextColor : textColor, forState: UIControlState.Normal);
         btn.frame           = BUTTON_FRAME;
         btn.tag             = CANCEL_BUTTON_TAG;
         btn.addTarget(self, action: #selector(DZAlertView.buttonClicked(_:)), forControlEvents: UIControlEvents.TouchUpInside);
-        self.setHandler(cancelBlock!, forButtonAtIndex: CANCEL_BUTTON_TAG);
+        self.setHandler(handler, forButtonAtIndex: CANCEL_BUTTON_TAG);
     }
     
-    public func addButtonWithTitle(buttoTitle: String, Handler buttonBlock:DZBlock?) {
+    public func addButtonWithTitle(title: String, bgColor: UIColor? = nil, textColor: UIColor? = nil, handler:DZBlock?) {
         let btn = UIButton(type: UIButtonType.Custom);
         
-        btn.setTitle(buttoTitle, forState: UIControlState.Normal);
+        btn.setTitle(title, forState: UIControlState.Normal);
         self.buttonArray.addObject(btn);
-        btn.backgroundColor = self.normalButtonColor;
+        btn.backgroundColor = (bgColor == nil) ? self.normalButtonColor : bgColor;
+        btn.setTitleColor((textColor == nil) ? self.normalButtonTextColor : textColor, forState: UIControlState.Normal);
         btn.frame           = BUTTON_FRAME;
         let index:Int       = self.buttonArray.indexOfObject(btn);
         btn.tag             = index;
         btn.addTarget(self, action: #selector(DZAlertView.buttonClicked(_:)), forControlEvents: UIControlEvents.TouchUpInside);
         
-        self.setHandler(buttonBlock, forButtonAtIndex: index);
+        self.setHandler(handler, forButtonAtIndex: index);
         return;
     }
     
@@ -283,36 +285,41 @@ public class DZAlertView : UIView {
         
         //var messageSize:CGSize = self.message.sizeWithAttributes([NSFontAttributeName: UIFont.systemFontOfSize(16.0)]);
         
-        let msgRect:CGRect = self.message.boundingRectWithSize(
-            CGSizeMake(ALERT_VIEW_WIDTH - 20, CGFloat.max),
-            options: NSStringDrawingOptions.UsesLineFragmentOrigin,
-            attributes: [NSFontAttributeName:UIFont.systemFontOfSize(16.0)],
-            context: nil);
-        
-        rect = CGRectMake(10, 10 + 40, ALERT_VIEW_WIDTH-20, msgRect.size.height);
-        alertViewHeight += (rect.size.height + 30.0);
-        self.messageLabel.frame = rect;
-        self.messageLabel.lineBreakMode     = NSLineBreakMode.ByWordWrapping;
-        self.messageLabel.numberOfLines     = 0;
-        
-        if ( msgRect.size.height > 20 ) {
-            self.messageLabel.textAlignment     = NSTextAlignment.Center;
+        if self.message != "" {
+            let msgRect:CGRect = self.message.boundingRectWithSize(
+                CGSizeMake(ALERT_VIEW_WIDTH - 20, CGFloat.max),
+                options: NSStringDrawingOptions.UsesLineFragmentOrigin,
+                attributes: [NSFontAttributeName:UIFont.systemFontOfSize(16.0)],
+                context: nil);
+            
+            rect = CGRectMake(10, 10 + 40, ALERT_VIEW_WIDTH-20, msgRect.size.height);
+            alertViewHeight += (msgRect.size.height + 30.0);
+            self.messageLabel.frame = rect;
+            self.messageLabel.lineBreakMode     = NSLineBreakMode.ByWordWrapping;
+            self.messageLabel.numberOfLines     = 0;
+            
+            if ( msgRect.size.height > 20 ) {
+                self.messageLabel.textAlignment     = NSTextAlignment.Center;
+            }
+            else {
+                self.messageLabel.textAlignment     = NSTextAlignment.Center;
+            }
+            self.messageLabel.backgroundColor   = UIColor.clearColor();
+            self.messageLabel.font              = UIFont.systemFontOfSize(16.0);
+            self.messageLabel.textColor         = UIColor.darkTextColor();
+            self.messageLabel.text              = self.message;
+            self.addSubview(self.messageLabel);
         }
         else {
-            self.messageLabel.textAlignment     = NSTextAlignment.Center;
+            alertViewHeight += 30.0;
         }
-        self.messageLabel.backgroundColor   = UIColor.clearColor();
-        self.messageLabel.font              = UIFont.systemFontOfSize(16.0);
-        self.messageLabel.textColor         = UIColor.darkTextColor();
-        self.messageLabel.text              = self.message;
-        self.addSubview(self.messageLabel);
         
         //
         if ( self.buttonArray.count <= 2 ) {
             alertViewHeight += 45.0;
         }
         else {
-            alertViewHeight += (55.0 + 10.0) * CGFloat(self.buttonArray.count) - 10;
+            alertViewHeight += (45.0 + 10.0) * CGFloat(self.buttonArray.count) - 10;
         }
         
         self.frame                  = CGRectMake(0, 0, 280, alertViewHeight);

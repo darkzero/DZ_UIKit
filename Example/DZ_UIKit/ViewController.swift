@@ -107,27 +107,30 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         case 1:
             // DZAlertView 2 button
             let alert = DZAlertView.alertViewWithTitle("DZ_UIKit", Message: "DZAlertView");
-            alert.setCancelButtonWithTitle("Cancel", CancelBlock: { 
+            alert.setCancelButtonWithTitle("Cancel", handler: {
                 //
+                print("Cancel button is clicked");
             });
-            alert.addButtonWithTitle("Button 01", Handler: { 
+            alert.addButtonWithTitle("Button 01", handler: {
                 //
+                print("Button 01 is clicked");
             });
             alert.show();
             break;
         case 2:
             // DZAlertView 3 button
-            let alert = DZAlertView.alertViewWithTitle("DZ_UIKit", Message: "DZAlertView");
-            alert.cancelButtonColor = UIColor.redColor();
-            alert.normalButtonColor = RGB_HEX("0099FF", 1.0);
-            alert.setCancelButtonWithTitle("Cancel", CancelBlock: {
+            let alert = DZAlertView.alertViewWithTitle("DZ_UIKit", Message: "DZAlertView DZAlertView DZAlertView DZAlertView DZAlertView DZAlertView");
+            alert.setCancelButtonWithTitle("Cancel", bgColor:UIColor.redColor(), handler: {
                 //
+                print("Cancel button is clicked");
             });
-            alert.addButtonWithTitle("Button 01", Handler: {
+            alert.addButtonWithTitle("Button 01", bgColor:RGB_HEX("0099FF", 1.0),  handler: {
                 //
+                print("Button 01 is clicked");
             });
-            alert.addButtonWithTitle("Button 02", Handler: {
+            alert.addButtonWithTitle("Button 02", handler: {
                 //
+                print("Button 02 is clicked");
             });
             alert.show();
             break;
