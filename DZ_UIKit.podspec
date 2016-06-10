@@ -31,8 +31,9 @@ Add DZStepper, which can be used in both code or storyboard.
 
   s.ios.deployment_target = '8.0'
 
-  s.source_files = 'DZ_UIKit/Classes/**/*'
-  
+    s.source_files = 'DZ_UIKit/Classes/**/*'
+    s.resources = ['DZ_UIKit/Assets/*.png']
+
   # s.resource_bundles = {
   #   'DZ_UIKit' => ['DZ_UIKit/Assets/*.png']
   # }
