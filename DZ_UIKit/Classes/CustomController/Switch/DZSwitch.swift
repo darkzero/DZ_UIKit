@@ -22,10 +22,10 @@ public class DZSwitch : UIControl {
     }
     
     // MARK: - @IBInspectable properties
-    @IBInspectable var onImage: UIImage?;
-    @IBInspectable var offImage: UIImage?;
-    @IBInspectable var thumbImage: UIImage?;
-    @IBInspectable var defaultOn: Bool = false;
+    @IBInspectable public var onImage: UIImage      = UIImage(named: "SwitchBackground_on")!;
+    @IBInspectable public var offImage: UIImage     = UIImage(named: "SwitchBackground_off")!;
+    @IBInspectable public var thumbImage: UIImage   = UIImage(named: "SwitchThumb")!;
+    @IBInspectable public var defaultOn: Bool       = false;
     
     // MARK: - private properties
     private var onImageView:UIImageView     = UIImageView();
@@ -43,7 +43,7 @@ public class DZSwitch : UIControl {
         super.init(coder: aDecoder);
     }
     
-    public init(frame:CGRect, onImage: String, offImage: String, thumbImage: String) {
+    public init(frame:CGRect, onImage: String? = nil, offImage: String? = nil, thumbImage: String? = nil) {
         super.init(frame: frame);
         
         // Initialization code
@@ -55,9 +55,9 @@ public class DZSwitch : UIControl {
         self.addGestureRecognizer(pan);
         let tap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(DZSwitch.onTapHandleImage(_:)));
         self.addGestureRecognizer(tap);
-        self.onImageView        = UIImageView(image: UIImage(named: onImage));
-        self.offImageView       = UIImageView(image: UIImage(named: offImage));
-        self.thumbImageView     = UIImageView(image: UIImage(named: thumbImage));
+        self.onImageView        = (onImage != nil) ? UIImageView(image: UIImage(named: onImage!)) : UIImageView(image: self.onImage);
+        self.offImageView       = (offImage != nil) ? UIImageView(image: UIImage(named: offImage!)) : UIImageView(image: self.offImage);
+        self.thumbImageView     = (thumbImage != nil) ? UIImageView(image: UIImage(named: thumbImage!)) : UIImageView(image: self.thumbImage);
         
         self.addSubview(self.onImageView);
         self.addSubview(self.offImageView);
@@ -91,20 +91,21 @@ public class DZSwitch : UIControl {
             let base:CGFloat        = self.thumbImageView.frame.origin.x;
             let move:CGFloat        = position.x - self.startPos.x;
             var offset:CGFloat      = base + move;
-            if ( base + move > 23.0 ) {
-                offset = 23.0;
+            var standardOffset: CGFloat = self.onImageView.frame.size.width - self.thumbImageView.frame.size.width;
+            if ( base + move > standardOffset ) {
+                offset = standardOffset;
             }
             if ( base + move < 0.0 ) {
                 offset = 0.0;
             }
             if ( self.isPanning ) {
-                self.onImageView.frame.origin      = CGPointMake(offset-23.0, 0.0); //CGRectMake(offset-23, 0, _onImageView.frame.size.width, _onImageView.frame.size.height);
+                self.onImageView.frame.origin      = CGPointMake(offset - standardOffset, 0.0); //CGRectMake(offset-23, 0, _onImageView.frame.size.width, _onImageView.frame.size.height);
                 self.offImageView.frame.origin     = CGPointMake(offset, 0.0);      //CGRectMake(offset, 0, _offImageView.frame.size.width, _offImageView.frame.size.height);
                 self.thumbImageView.frame.origin   = CGPointMake(offset, 0.0);      //CGRectMake(offset, 0, _thumbImageView.frame.size.width, _thumbImageView.frame.size.height);
             }
             break;
         case UIGestureRecognizerState.Cancelled,
-        UIGestureRecognizerState.Ended:
+             UIGestureRecognizerState.Ended:
             let position:CGPoint    = pan.locationInView(self);
             let base:CGFloat        = self.thumbImageView.frame.origin.x;
             let move:CGFloat        = position.x - self.startPos.x;

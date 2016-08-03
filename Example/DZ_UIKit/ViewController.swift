@@ -61,6 +61,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             cell?.accessoryView = stepper;
         }
         
+        if indexPath.row == 7 {
+            // DZSwitch
+            let aSwitch = DZSwitch(frame: CGRectMake(0,0, 55, 32));
+            cell?.accessoryView = aSwitch;
+        }
+        
         return cell!;
     }
     
@@ -148,6 +154,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             break;
         case 6:
             // DZStepper
+            break;
+        case 7:
+            // DZSwitch
             break;
         default:
             break;
