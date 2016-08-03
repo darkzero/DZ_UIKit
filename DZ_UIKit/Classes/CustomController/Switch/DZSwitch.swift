@@ -21,6 +21,11 @@ public class DZSwitch : UIControl {
         }
     }
     
+    private let defaultOnImageName      = "SwitchBackground_on";
+    private let defaultOffImageName     = "SwitchBackground_off";
+    private let defaultThumbImageName   = "SwitchThumb";
+    private let defaultImageType        = "png";
+    
     // MARK: - @IBInspectable properties
     @IBInspectable public var onImage: UIImage?;
     @IBInspectable public var offImage: UIImage?;
@@ -62,7 +67,7 @@ public class DZSwitch : UIControl {
         
         // On Image
         if onImage == nil {
-            let imageStr = NSBundle(forClass: DZCheckBox.self).pathForResource("SwitchBackground_on", ofType: "png");
+            let imageStr = NSBundle(forClass: DZCheckBox.self).pathForResource(defaultOnImageName, ofType: defaultImageType);
             self.onImageView.image = UIImage(data: NSData(contentsOfURL: NSURL(fileURLWithPath: imageStr!))!);
             
         }
@@ -72,7 +77,7 @@ public class DZSwitch : UIControl {
         
         // Off Image
         if offImage == nil {
-            let imageStr = NSBundle(forClass: DZCheckBox.self).pathForResource("SwitchBackground_off", ofType: "png");
+            let imageStr = NSBundle(forClass: DZCheckBox.self).pathForResource(defaultOffImageName, ofType: defaultImageType);
             self.offImageView.image = UIImage(data: NSData(contentsOfURL: NSURL(fileURLWithPath: imageStr!))!);
         }
         else {
@@ -81,7 +86,7 @@ public class DZSwitch : UIControl {
         
         // Thumb Image
         if thumbImage == nil {
-            let imageStr = NSBundle(forClass: DZCheckBox.self).pathForResource("SwitchThumb", ofType: "png");
+            let imageStr = NSBundle(forClass: DZCheckBox.self).pathForResource(defaultThumbImageName, ofType: defaultImageType);
             self.thumbImageView.image = UIImage(data: NSData(contentsOfURL: NSURL(fileURLWithPath: imageStr!))!);
         }
         else {
