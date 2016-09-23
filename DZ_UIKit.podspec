@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "DZ_UIKit"
-  s.version          = "0.3.0"
+  s.version          = "0.3.1"
   s.summary          = "Custom UIs that be used in Topeko"
 
 # This description is used to generate tags and improve search results.
@@ -29,7 +29,7 @@ Add DZStepper, which can be used in both code or storyboard.
   s.source           = { :git => "https://github.com/darkzero/DZ_UIKit.git", :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/darkzero_mk2'
 
-  s.ios.deployment_target = '8.0'
+  s.ios.deployment_target = '8.3'
 
     s.source_files = 'DZ_UIKit/Classes/**/*'
     s.resources = ['DZ_UIKit/Assets/*.png']
