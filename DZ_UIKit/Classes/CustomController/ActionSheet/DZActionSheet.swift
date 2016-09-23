@@ -291,7 +291,7 @@ open class DZActionSheet : UIView {
             })
         });
         
-        self.queue = DispatchQueue.global( priority: DispatchQueue.GlobalQueuePriority.default);
+        self.queue = DispatchQueue.global();
         self.group = DispatchGroup();
         self.semaphore = DispatchSemaphore(value: 0);
         
