@@ -3,11 +3,11 @@
 
 import UIKit
 
-public class PIImageCache {
+open class PIImageCache {
   
   //initialize
   
-  private func myInit() {
+  fileprivate func myInit() {
     folderCreate()
     prefetchQueueInit()
   }
@@ -17,13 +17,13 @@ public class PIImageCache {
   }
   
   public init(config: Config) {
-    dispatch_semaphore_wait(memorySemaphore, DISPATCH_TIME_FOREVER)
+    memorySemaphore.wait(timeout: DispatchTime.distantFuture)
     self.config = config
-    dispatch_semaphore_signal(memorySemaphore)
+    memorySemaphore.signal()
     myInit()
   }
   
-  public class var shared: PIImageCache {
+  open class var shared: PIImageCache {
     struct Static {
       static let instance: PIImageCache = PIImageCache()
     }
@@ -33,57 +33,57 @@ public class PIImageCache {
   
   //public config method
   
-  public class Config {
-    public var maxMemorySum           : Int    = 10 // 10 images
-    public var limitByteSize          : Int    = 3 * 1024 * 1024 //3MB
-    public var usingDiskCache         : Bool   = true
-    public var diskCacheExpireMinutes : Int    = 24 * 60 // 1 day
-    public var prefetchOprationCount  : Int    = 5
-    public var cacheRootDirectory     : String = NSTemporaryDirectory()
-    public var cacheFolderName        : String = "PIImageCache"
+  open class Config {
+    open var maxMemorySum           : Int    = 10 // 10 images
+    open var limitByteSize          : Int    = 3 * 1024 * 1024 //3MB
+    open var usingDiskCache         : Bool   = true
+    open var diskCacheExpireMinutes : Int    = 24 * 60 // 1 day
+    open var prefetchOprationCount  : Int    = 5
+    open var cacheRootDirectory     : String = NSTemporaryDirectory()
+    open var cacheFolderName        : String = "PIImageCache"
   }
   
-  public func setConfig(config :Config) {
-    dispatch_semaphore_wait(memorySemaphore,DISPATCH_TIME_FOREVER)
+  open func setConfig(_ config :Config) {
+    memorySemaphore.wait(timeout: DispatchTime.distantFuture)
     self.config = config
     myInit()
-    dispatch_semaphore_signal(memorySemaphore)
+    memorySemaphore.signal()
   }
   
   //public download method
   
-  public func get(url: NSURL) -> UIImage? {
+  open func get(_ url: URL) -> UIImage? {
     return perform(url).0
   }
   
-  public func get(url: NSURL, then: (image:UIImage?) -> Void) {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+  open func get(_ url: URL, then: @escaping (_ image:UIImage?) -> Void) {
+    DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async {
       [weak self] in
       let image = self?.get(url)
-      dispatch_async(dispatch_get_main_queue()) {
-        then(image: image)
+      DispatchQueue.main.async {
+        then(image)
       }
     }
   }
 
-  public func getWithId(url: NSURL, id: Int, then: (id: Int, image: UIImage?) -> Void) {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+  open func getWithId(_ url: URL, id: Int, then: @escaping (_ id: Int, _ image: UIImage?) -> Void) {
+    DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async {
       [weak self] in
       let image = self?.get(url)
-      dispatch_async(dispatch_get_main_queue()) {
-        then(id: id, image: image)
+      DispatchQueue.main.async {
+        then(id, image)
       }
     }
   }
   
-  public func prefetch(urls: [NSURL]) {
+  open func prefetch(_ urls: [URL]) {
     for url in urls {
       prefetch(url)
     }
   }
   
-  public func prefetch(url: NSURL) {
-    let op = NSOperation();
+  open func prefetch(_ url: URL) {
+    let op = Operation();
     op.completionBlock = {
       [weak self] in
       self?.downloadToDisk(url)
@@ -93,20 +93,20 @@ public class PIImageCache {
   
   //public delete method
   
-  public func allMemoryCacheDelete() {
-    dispatch_semaphore_wait(memorySemaphore, DISPATCH_TIME_FOREVER)
-    memoryCache.removeAll(keepCapacity: false)
-    dispatch_semaphore_signal(memorySemaphore)
+  open func allMemoryCacheDelete() {
+    memorySemaphore.wait(timeout: DispatchTime.distantFuture)
+    memoryCache.removeAll(keepingCapacity: false)
+    memorySemaphore.signal()
   }
   
-    public func allDiskCacheDelete() {
+    open func allDiskCacheDelete() {
         let path = PIImageCache.folderPath(config)
-        dispatch_semaphore_wait(diskSemaphore, DISPATCH_TIME_FOREVER);
+        diskSemaphore.wait(timeout: DispatchTime.distantFuture);
         do {
-            let allFileName: [String]? = try fileManager.contentsOfDirectoryAtPath(path);
+            let allFileName: [String]? = try fileManager.contentsOfDirectory(atPath: path);
             if allFileName != nil {
                 for fileName in allFileName! {
-                    try fileManager.removeItemAtPath(path + fileName);
+                    try fileManager.removeItem(atPath: path + fileName);
                 }
             }
         }
@@ -114,20 +114,20 @@ public class PIImageCache {
             
         }
         folderCreate()
-        dispatch_semaphore_signal(diskSemaphore)
+        diskSemaphore.signal()
     }
   
-    public func oldDiskCacheDelete() {
+    open func oldDiskCacheDelete() {
         let path = PIImageCache.folderPath(config)
-        dispatch_semaphore_wait(diskSemaphore, DISPATCH_TIME_FOREVER);
+        diskSemaphore.wait(timeout: DispatchTime.distantFuture);
         do {
-            let allFileName: [String]? = try fileManager.contentsOfDirectoryAtPath(path);
+            let allFileName: [String]? = try fileManager.contentsOfDirectory(atPath: path);
             if allFileName != nil {
                 for fileName in allFileName! {
-                    if let attr:[String : AnyObject] = try fileManager.attributesOfItemAtPath(path + fileName) {
-                        let diff = NSDate().timeIntervalSinceDate( (attr[NSFileModificationDate] as? NSDate) ?? NSDate() )
+                    if let attr:[FileAttributeKey : Any] = try fileManager.attributesOfItem(atPath: path + fileName) {
+                        let diff = Date().timeIntervalSince( (attr[FileAttributeKey.modificationDate] as? Date) ?? Date() )
                         if Double(diff) > Double(config.diskCacheExpireMinutes * 60) {
-                            try fileManager.removeItemAtPath(path + fileName);
+                            try fileManager.removeItem(atPath: path + fileName);
                         }
                     }
                 }
@@ -137,27 +137,27 @@ public class PIImageCache {
             
         }
         folderCreate()
-        dispatch_semaphore_signal(diskSemaphore)
+        diskSemaphore.signal()
     }
   
   //member
   
-  private var config: Config = Config()
-  private var memoryCache : [memoryCacheImage] = []
-  private var memorySemaphore = dispatch_semaphore_create(1)
-  private var diskSemaphore = dispatch_semaphore_create(1)
-  private let fileManager = NSFileManager.defaultManager()
-  private let prefetchQueue = NSOperationQueue()
+  fileprivate var config: Config = Config()
+  fileprivate var memoryCache : [memoryCacheImage] = []
+  fileprivate var memorySemaphore = DispatchSemaphore(value: 1)
+  fileprivate var diskSemaphore = DispatchSemaphore(value: 1)
+  fileprivate let fileManager = FileManager.default
+  fileprivate let prefetchQueue = OperationQueue()
   
-  private struct memoryCacheImage {
+  fileprivate struct memoryCacheImage {
     let image     :UIImage
     var timeStamp :Double
-    let url       :NSURL
+    let url       :URL
   }
   
   // memory cache
   
-  private func memoryCacheRead(url: NSURL) -> UIImage? {
+  fileprivate func memoryCacheRead(_ url: URL) -> UIImage? {
     for i in 0 ..< memoryCache.count {
       if url == memoryCache[i].url {
         memoryCache[i].timeStamp = now
@@ -167,7 +167,7 @@ public class PIImageCache {
     return nil
   }
   
-  private func memoryCacheWrite(url:NSURL,image:UIImage) {
+  fileprivate func memoryCacheWrite(_ url:URL,image:UIImage) {
     switch memoryCache.count {
     case 0 ... config.maxMemorySum:
       memoryCache.append(memoryCacheImage(image: image, timeStamp: now, url: url))
@@ -178,7 +178,7 @@ public class PIImageCache {
           old = (i,memoryCache[i].timeStamp)
         }
       }
-      memoryCache.removeAtIndex(old.0)
+      memoryCache.remove(at: old.0)
       memoryCache.append(memoryCacheImage(image: image, timeStamp:now, url: url))
     default://case: over the limit. because, limit can chenge in runtime.
       for _ in 0 ... 1 {//release cache slowly.
@@ -188,7 +188,7 @@ public class PIImageCache {
             old = (i,memoryCache[i].timeStamp)
           }
         }
-        memoryCache.removeAtIndex(old.0)
+        memoryCache.remove(at: old.0)
       }
       memoryCache.append(memoryCacheImage(image: image, timeStamp:now, url: url))
     }
@@ -197,62 +197,62 @@ public class PIImageCache {
   //disk cache
   
   
-  private func diskCacheRead(url: NSURL) -> UIImage? {
+  fileprivate func diskCacheRead(_ url: URL) -> UIImage? {
     if let path = PIImageCache.filePath(url, config: config) {
       return UIImage(contentsOfFile: path)
     }
     return nil
   }
   
-  private func diskCacheWrite(url:NSURL,image:UIImage) {
+  fileprivate func diskCacheWrite(_ url:URL,image:UIImage) {
     if let path = PIImageCache.filePath(url, config: config) {
-      NSData(data: UIImagePNGRepresentation(image)!).writeToFile(path, atomically: true)
+      try? (NSData(data: UIImagePNGRepresentation(image)!) as Data).write(to: URL(fileURLWithPath: path), options: [.atomic])
     }
   }
   
   //private download
   
   internal enum Result {
-    case Mishit, MemoryHit, DiskHit
+    case mishit, memoryHit, diskHit
   }
   
-  internal func download(url: NSURL) -> (UIImage, byteSize: Int)? {
-    var maybeImageData: NSData?;
+  internal func download(_ url: URL) -> (UIImage, byteSize: Int)? {
+    var maybeImageData: Data?;
     do {
-        maybeImageData = try NSData(contentsOfURL: url, options: .UncachedRead);
+        maybeImageData = try Data(contentsOf: url, options: .uncachedRead);
     }
     catch {
-        DebugLog("get image data error!!");
+        DebugLog("get image data error!!" as AnyObject);
     }
     if let imageData = maybeImageData {
       if let image = UIImage(data: imageData) {
-        let bytes = imageData.length
+        let bytes = imageData.count
         return (image, bytes)
       }
     }
     return nil
   }
   
-  internal func perform(url: NSURL) -> (UIImage?, Result) {
+  internal func perform(_ url: URL) -> (UIImage?, Result) {
     
     //memory read
-    dispatch_semaphore_wait(memorySemaphore, DISPATCH_TIME_FOREVER)
+    memorySemaphore.wait(timeout: DispatchTime.distantFuture)
     let maybeMemoryCache = memoryCacheRead(url)
-    dispatch_semaphore_signal(memorySemaphore)
+    memorySemaphore.signal()
     if let cache = maybeMemoryCache {
-      return (cache, .MemoryHit)
+      return (cache, .memoryHit)
     }
     
     //disk read
     if config.usingDiskCache {
-      dispatch_semaphore_wait(diskSemaphore, DISPATCH_TIME_FOREVER)
+      diskSemaphore.wait(timeout: DispatchTime.distantFuture)
       let maybeDiskCache = diskCacheRead(url)
-      dispatch_semaphore_signal(diskSemaphore)
+      diskSemaphore.signal()
       if let cache = maybeDiskCache {
-        dispatch_semaphore_wait(memorySemaphore, DISPATCH_TIME_FOREVER)
+        memorySemaphore.wait(timeout: DispatchTime.distantFuture)
         memoryCacheWrite(url, image: cache)
-        dispatch_semaphore_signal(memorySemaphore)
-        return (cache, .DiskHit)
+        memorySemaphore.signal()
+        return (cache, .diskHit)
       }
     }
     
@@ -261,59 +261,59 @@ public class PIImageCache {
     if let (image, byteSize) = maybeImage {
       if byteSize < config.limitByteSize {
         //write memory
-        dispatch_semaphore_wait(memorySemaphore, DISPATCH_TIME_FOREVER)
+        memorySemaphore.wait(timeout: DispatchTime.distantFuture)
         memoryCacheWrite(url, image: image)
-        dispatch_semaphore_signal(memorySemaphore)
+        memorySemaphore.signal()
         //write disk
         if config.usingDiskCache {
-          dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
+          DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.background).async {
             [weak self] in
             if let scope = self {
-              dispatch_semaphore_wait(scope.diskSemaphore, DISPATCH_TIME_FOREVER)
+              scope.diskSemaphore.wait(timeout: DispatchTime.distantFuture)
               scope.diskCacheWrite(url, image: image)
-              dispatch_semaphore_signal(scope.diskSemaphore)
+              scope.diskSemaphore.signal()
             }
           }
         }
       }
     }
-    return (maybeImage?.0, .Mishit)
+    return (maybeImage?.0, .mishit)
   }
   
-  private func downloadToDisk(url: NSURL) {
+  fileprivate func downloadToDisk(_ url: URL) {
     let path = PIImageCache.filePath(url, config: config)
     if path == nil { return }
-    if fileManager.fileExistsAtPath(path!) { return }
+    if fileManager.fileExists(atPath: path!) { return }
     let maybeImage = download(url)
     if let (image, byteSize) = maybeImage {
       if byteSize < config.limitByteSize {
-        dispatch_semaphore_wait(diskSemaphore, DISPATCH_TIME_FOREVER)
+        diskSemaphore.wait(timeout: DispatchTime.distantFuture)
         diskCacheWrite(url, image: image)
-        dispatch_semaphore_signal(diskSemaphore)
+        diskSemaphore.signal()
       }
     }
   }
   
     //MARK: - util
   
-    private var now: Double {
+    fileprivate var now: Double {
         get {
-            return NSDate().timeIntervalSince1970
+            return Date().timeIntervalSince1970
         }
     }
   
-  private func folderCreate() {
+  fileprivate func folderCreate() {
     let path = "\(config.cacheRootDirectory)\(config.cacheFolderName)/"
     do {
-        try fileManager.createDirectoryAtPath(path, withIntermediateDirectories: true, attributes: nil);
+        try fileManager.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil);
     }
     catch {
-        DebugLog("[PIImageCache] folderCreate error!!");
+        DebugLog("[PIImageCache] folderCreate error!!" as AnyObject);
     }
   }
   
 
-    private class func filePath(url: NSURL, config:Config) -> String? {
+    fileprivate class func filePath(_ url: URL, config:Config) -> String? {
         let urlstr = url.absoluteString;
         var code = ""
         for char in urlstr.utf8 {
@@ -322,13 +322,13 @@ public class PIImageCache {
         return "\(config.cacheRootDirectory)\(config.cacheFolderName)/\(code)";
     }
   
-  private class func folderPath(config: Config) -> String {
+  fileprivate class func folderPath(_ config: Config) -> String {
     return "\(config.cacheRootDirectory)\(config.cacheFolderName)/"
   }
   
-  private func prefetchQueueInit(){
+  fileprivate func prefetchQueueInit(){
     prefetchQueue.maxConcurrentOperationCount = config.prefetchOprationCount
-    prefetchQueue.qualityOfService = NSQualityOfService.Background
+    prefetchQueue.qualityOfService = QualityOfService.background
   }
   
 }

@@ -12,23 +12,23 @@ extension UIImage {
     
 // MARK: - Make image from color
 
-    class func imageWithColor( color:UIColor ) -> UIImage
+    class func imageWithColor( _ color:UIColor ) -> UIImage
     {
-        let size = CGSizeMake(1, 1);
+        let size = CGSize(width: 1, height: 1);
         let image = UIImage.imageWithColor(color, size: size);
         return image;
     }
     
-    class func imageWithColor( color:UIColor, size: CGSize ) -> UIImage
+    class func imageWithColor( _ color:UIColor, size: CGSize ) -> UIImage
     {
-        let rect:CGRect = CGRectMake(0.0, 0.0, size.width, size.height);
+        let rect:CGRect = CGRect(x: 0.0, y: 0.0, width: size.width, height: size.height);
         UIGraphicsBeginImageContext(rect.size);
-        let context:CGContextRef = UIGraphicsGetCurrentContext()!;
+        let context:CGContext = UIGraphicsGetCurrentContext()!;
         
-        CGContextSetFillColorWithColor(context, color.CGColor);
-        CGContextFillRect(context, rect);
+        context.setFillColor(color.cgColor);
+        context.fill(rect);
         
-        let image:UIImage = UIGraphicsGetImageFromCurrentImageContext();
+        let image:UIImage = UIGraphicsGetImageFromCurrentImageContext()!;
         UIGraphicsEndImageContext();
         
         return image;

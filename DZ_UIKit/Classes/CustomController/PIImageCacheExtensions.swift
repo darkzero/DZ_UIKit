@@ -3,32 +3,32 @@
 
 import UIKit
 
-public extension NSURL {
+public extension URL {
   public func getImageWithCache() -> UIImage? {
     return PIImageCache.shared.get(self)
   }
   
-  public func getImageWithCache(cache: PIImageCache) -> UIImage? {
+  public func getImageWithCache(_ cache: PIImageCache) -> UIImage? {
     return cache.get(self)
   }
 }
 
 public extension UIImageView {
-  public func imageOfURL(url: NSURL) {
+  public func imageOfURL(_ url: URL) {
     PIImageCache.shared.get(url) {
       [weak self] img in
       self?.image = img
     }
   }
   
-  public func imageOfURL(url: NSURL, cache: PIImageCache) {
+  public func imageOfURL(_ url: URL, cache: PIImageCache) {
     cache.get(url) {
       [weak self] img in
       self?.image = img
     }
   }
   
-  public func imageOfURL(url: NSURL, then:(Bool)->Void) {
+  public func imageOfURL(_ url: URL, then:@escaping (Bool)->Void) {
     PIImageCache.shared.get(url) {
       [weak self] img in
       let isOK = img != nil
@@ -37,7 +37,7 @@ public extension UIImageView {
     }
   }
   
-  public func imageOfURL(url: NSURL, cache: PIImageCache, then:(Bool)->Void) {
+  public func imageOfURL(_ url: URL, cache: PIImageCache, then:@escaping (Bool)->Void) {
     cache.get(url) {
       [weak self] img in
       let isOK = img != nil

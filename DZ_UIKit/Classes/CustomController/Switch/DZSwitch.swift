@@ -10,37 +10,37 @@ import Foundation
 import UIKit
 
 @IBDesignable
-public class DZSwitch : UIControl {
+open class DZSwitch : UIControl {
     
     // MARK: - Class define
     
     // MARK: - public properties
-    public var on:Bool = false {
+    open var on:Bool = false {
         didSet {
             self.changeSwitchWithAnimationTo(self.on);
         }
     }
     
-    private let defaultOnImageName      = "SwitchBackground_on";
-    private let defaultOffImageName     = "SwitchBackground_off";
-    private let defaultThumbImageName   = "SwitchThumb";
-    private let defaultImageType        = "png";
+    fileprivate let defaultOnImageName      = "SwitchBackground_on";
+    fileprivate let defaultOffImageName     = "SwitchBackground_off";
+    fileprivate let defaultThumbImageName   = "SwitchThumb";
+    fileprivate let defaultImageType        = "png";
     
     // MARK: - @IBInspectable properties
-    @IBInspectable public var onImage: UIImage?;
-    @IBInspectable public var offImage: UIImage?;
-    @IBInspectable public var thumbImage: UIImage?;
-    @IBInspectable public var defaultOn: Bool = false;
+    @IBInspectable open var onImage: UIImage?;
+    @IBInspectable open var offImage: UIImage?;
+    @IBInspectable open var thumbImage: UIImage?;
+    @IBInspectable open var defaultOn: Bool = false;
     
     // MARK: - private properties
-    private var onImageView:UIImageView     = UIImageView();
-    private var offImageView:UIImageView    = UIImageView();
-    private var thumbImageView:UIImageView  = UIImageView();
+    fileprivate var onImageView:UIImageView     = UIImageView();
+    fileprivate var offImageView:UIImageView    = UIImageView();
+    fileprivate var thumbImageView:UIImageView  = UIImageView();
     
     //UIViewController* _target;
     //SEL _action;
-    private var startPos:CGPoint            = CGPoint();
-    private var isPanning:Bool              = false;
+    fileprivate var startPos:CGPoint            = CGPoint();
+    fileprivate var isPanning:Bool              = false;
     
     // MARK: - init
     
@@ -53,7 +53,7 @@ public class DZSwitch : UIControl {
         
         // Initialization code
         self.layer.cornerRadius     = frame.size.height/2.0;
-        self.backgroundColor        = UIColor.clearColor();
+        self.backgroundColor        = UIColor.clear;
         self.layer.masksToBounds    = true;
         
         let pan:UIPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(DZSwitch.onPanHandleImage(_:)));
@@ -63,12 +63,12 @@ public class DZSwitch : UIControl {
         
         self.onImageView    = UIImageView(frame: self.bounds);
         self.offImageView   = UIImageView(frame: self.bounds);
-        self.thumbImageView = UIImageView(frame: CGRectMake(0, 0, self.bounds.size.height, self.bounds.size.height));
+        self.thumbImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: self.bounds.size.height, height: self.bounds.size.height));
         
         // On Image
         if onImage == nil {
-            let imageStr = NSBundle(forClass: DZCheckBox.self).pathForResource(defaultOnImageName, ofType: defaultImageType);
-            self.onImageView.image = UIImage(data: NSData(contentsOfURL: NSURL(fileURLWithPath: imageStr!))!);
+            let imageStr = Bundle(for: DZCheckBox.self).path(forResource: defaultOnImageName, ofType: defaultImageType);
+            self.onImageView.image = UIImage(data: try! Data(contentsOf: URL(fileURLWithPath: imageStr!)));
             
         }
         else {
@@ -77,8 +77,8 @@ public class DZSwitch : UIControl {
         
         // Off Image
         if offImage == nil {
-            let imageStr = NSBundle(forClass: DZCheckBox.self).pathForResource(defaultOffImageName, ofType: defaultImageType);
-            self.offImageView.image = UIImage(data: NSData(contentsOfURL: NSURL(fileURLWithPath: imageStr!))!);
+            let imageStr = Bundle(for: DZCheckBox.self).path(forResource: defaultOffImageName, ofType: defaultImageType);
+            self.offImageView.image = UIImage(data: try! Data(contentsOf: URL(fileURLWithPath: imageStr!)));
         }
         else {
             self.offImageView.image = UIImage(named: offImage!);
@@ -86,8 +86,8 @@ public class DZSwitch : UIControl {
         
         // Thumb Image
         if thumbImage == nil {
-            let imageStr = NSBundle(forClass: DZCheckBox.self).pathForResource(defaultThumbImageName, ofType: defaultImageType);
-            self.thumbImageView.image = UIImage(data: NSData(contentsOfURL: NSURL(fileURLWithPath: imageStr!))!);
+            let imageStr = Bundle(for: DZCheckBox.self).path(forResource: defaultThumbImageName, ofType: defaultImageType);
+            self.thumbImageView.image = UIImage(data: try! Data(contentsOf: URL(fileURLWithPath: imageStr!)));
         }
         else {
             self.thumbImageView.image = UIImage(named: thumbImage!);
@@ -106,26 +106,26 @@ public class DZSwitch : UIControl {
     
     // MARK: - internal functions
     
-    func onTapHandleImage(tap: UITapGestureRecognizer) {
+    func onTapHandleImage(_ tap: UITapGestureRecognizer) {
         self.on = !self.on;
     }
     
     
-    func onPanHandleImage(pan: UIPanGestureRecognizer) {
+    func onPanHandleImage(_ pan: UIPanGestureRecognizer) {
         switch pan.state {
-        case UIGestureRecognizerState.Began:
+        case UIGestureRecognizerState.began:
             self.isPanning  = false;
-            self.startPos   = pan.locationInView(self);
-            if ( CGRectContainsPoint(self.thumbImageView.frame, self.startPos) ) {
+            self.startPos   = pan.location(in: self);
+            if ( self.thumbImageView.frame.contains(self.startPos) ) {
                 self.isPanning  = true;
             }
             break;
-        case UIGestureRecognizerState.Changed:
-            let position:CGPoint    = pan.locationInView(self);
+        case UIGestureRecognizerState.changed:
+            let position:CGPoint    = pan.location(in: self);
             let base:CGFloat        = self.thumbImageView.frame.origin.x;
             let move:CGFloat        = position.x - self.startPos.x;
             var offset:CGFloat      = base + move;
-            var standardOffset: CGFloat = self.onImageView.frame.size.width - self.thumbImageView.frame.size.width;
+            let standardOffset: CGFloat = self.onImageView.frame.size.width - self.thumbImageView.frame.size.width;
             if ( base + move > standardOffset ) {
                 offset = standardOffset;
             }
@@ -133,14 +133,14 @@ public class DZSwitch : UIControl {
                 offset = 0.0;
             }
             if ( self.isPanning ) {
-                self.onImageView.frame.origin      = CGPointMake(offset - standardOffset, 0.0); //CGRectMake(offset-23, 0, _onImageView.frame.size.width, _onImageView.frame.size.height);
-                self.offImageView.frame.origin     = CGPointMake(offset, 0.0);      //CGRectMake(offset, 0, _offImageView.frame.size.width, _offImageView.frame.size.height);
-                self.thumbImageView.frame.origin   = CGPointMake(offset, 0.0);      //CGRectMake(offset, 0, _thumbImageView.frame.size.width, _thumbImageView.frame.size.height);
+                self.onImageView.frame.origin      = CGPoint(x: offset - standardOffset, y: 0.0); //CGRectMake(offset-23, 0, _onImageView.frame.size.width, _onImageView.frame.size.height);
+                self.offImageView.frame.origin     = CGPoint(x: offset, y: 0.0);      //CGRectMake(offset, 0, _offImageView.frame.size.width, _offImageView.frame.size.height);
+                self.thumbImageView.frame.origin   = CGPoint(x: offset, y: 0.0);      //CGRectMake(offset, 0, _thumbImageView.frame.size.width, _thumbImageView.frame.size.height);
             }
             break;
-        case UIGestureRecognizerState.Cancelled,
-             UIGestureRecognizerState.Ended:
-            let position:CGPoint    = pan.locationInView(self);
+        case UIGestureRecognizerState.cancelled,
+             UIGestureRecognizerState.ended:
+            let position:CGPoint    = pan.location(in: self);
             let base:CGFloat        = self.thumbImageView.frame.origin.x;
             let move:CGFloat        = position.x - self.startPos.x;
             let offset:CGFloat      = base + move;
@@ -158,43 +158,43 @@ public class DZSwitch : UIControl {
     
     // MARK: - private functions
     
-    private func changeSwitchWithAnimationTo(on:Bool)
+    fileprivate func changeSwitchWithAnimationTo(_ on:Bool)
     {
-        var standardOffset: CGFloat = self.onImageView.frame.size.width - self.thumbImageView.frame.size.width;
+        let standardOffset: CGFloat = self.onImageView.frame.size.width - self.thumbImageView.frame.size.width;
         if ( on ) {
-            UIView.animateWithDuration(0.2, delay: 0.0, options: UIViewAnimationOptions.AllowUserInteraction, animations: { () -> Void in
-                self.onImageView.frame      = CGRectMake(0, 0, self.onImageView.frame.size.width, self.onImageView.frame.size.height);
-                self.offImageView.frame     = CGRectMake(standardOffset, 0, self.offImageView.frame.size.width, self.offImageView.frame.size.height);
-                self.thumbImageView.frame   = CGRectMake(standardOffset, 0, self.thumbImageView.frame.size.width, self.thumbImageView.frame.size.height);
+            UIView.animate(withDuration: 0.2, delay: 0.0, options: UIViewAnimationOptions.allowUserInteraction, animations: { () -> Void in
+                self.onImageView.frame      = CGRect(x: 0, y: 0, width: self.onImageView.frame.size.width, height: self.onImageView.frame.size.height);
+                self.offImageView.frame     = CGRect(x: standardOffset, y: 0, width: self.offImageView.frame.size.width, height: self.offImageView.frame.size.height);
+                self.thumbImageView.frame   = CGRect(x: standardOffset, y: 0, width: self.thumbImageView.frame.size.width, height: self.thumbImageView.frame.size.height);
                 }, completion: { (isFinished) -> Void in
-                    self.sendActionsForControlEvents(UIControlEvents.ValueChanged);
+                    self.sendActions(for: UIControlEvents.valueChanged);
             });
         }
         else {
-            UIView.animateWithDuration(0.2, delay: 0.0, options: UIViewAnimationOptions.AllowUserInteraction, animations: { () -> Void in
-                self.onImageView.frame.origin   = CGPointMake(0, 0);//      = CGRectMake(-23, 0, self.onImageView.frame.size.width, self.onImageView.frame.size.height);
-                self.offImageView.frame         = CGRectMake(0, 0, self.offImageView.frame.size.width, self.offImageView.frame.size.height);
-                self.thumbImageView.frame       = CGRectMake(0, 0, self.thumbImageView.frame.size.width, self.thumbImageView.frame.size.height);
+            UIView.animate(withDuration: 0.2, delay: 0.0, options: UIViewAnimationOptions.allowUserInteraction, animations: { () -> Void in
+                self.onImageView.frame.origin   = CGPoint(x: 0, y: 0);//      = CGRectMake(-23, 0, self.onImageView.frame.size.width, self.onImageView.frame.size.height);
+                self.offImageView.frame         = CGRect(x: 0, y: 0, width: self.offImageView.frame.size.width, height: self.offImageView.frame.size.height);
+                self.thumbImageView.frame       = CGRect(x: 0, y: 0, width: self.thumbImageView.frame.size.width, height: self.thumbImageView.frame.size.height);
                 }, completion: { (isFinished) -> Void in
                     //
-                    self.sendActionsForControlEvents(UIControlEvents.ValueChanged);
+                    self.sendActions(for: UIControlEvents.valueChanged);
             });
         }
     }
     
     // MARK: - layoutSubviews
     
-    public override func layoutSubviews() {
-        var standardOffset: CGFloat = self.onImageView.frame.size.width - self.thumbImageView.frame.size.width;
+    open override func layoutSubviews() {
+        let standardOffset: CGFloat = self.onImageView.frame.size.width - self.thumbImageView.frame.size.width;
         if ( self.on ) {
-            self.onImageView.frame.origin      = CGPointMake(0.0, 0.0);     //CGRectMake(0, 0, _onImageView.frame.size.width, _onImageView.frame.size.height);
-            self.offImageView.frame.origin     = CGPointMake(standardOffset, 0.0);    //CGRectMake(23, 0, _offImageView.frame.size.width, _offImageView.frame.size.height);
-            self.thumbImageView.frame.origin   = CGPointMake(standardOffset, 0.0);    //CGRectMake(55-32, 0, _thumbImageView.frame.size.width, _thumbImageView.frame.size.height);
+            self.onImageView.frame.origin      = CGPoint(x: 0.0, y: 0.0);     //CGRectMake(0, 0, _onImageView.frame.size.width, _onImageView.frame.size.height);
+            self.offImageView.frame.origin     = CGPoint(x: standardOffset, y: 0.0);    //CGRectMake(23, 0, _offImageView.frame.size.width, _offImageView.frame.size.height);
+            self.thumbImageView.frame.origin   = CGPoint(x: standardOffset, y: 0.0);    //CGRectMake(55-32, 0, _thumbImageView.frame.size.width, _thumbImageView.frame.size.height);
         }
         else {
-            self.onImageView.frame.origin      = CGPointMake(-1.0*standardOffset, 0.0);   //CGRectMake(-23, 0, _onImageView.frame.size.width, _onImageView.frame.size.height);
-            self.offImageView.frame.origin     = CGPointMake(0.0, 0.0);     //CGRectMake(0, 0, _offImageView.frame.size.width, _offImageView.frame.size.height);
-            self.thumbImageView.frame.origin   = CGPointMake(0.0, 0.0);     //CGRectMake(0, 0, _thumbImageView.frame.size.width, _thumbImageView.frame.size.height);
+            self.onImageView.frame.origin      = CGPoint(x: -1.0*standardOffset, y: 0.0);   //CGRectMake(-23, 0, _onImageView.frame.size.width, _onImageView.frame.size.height);
+            self.offImageView.frame.origin     = CGPoint(x: 0.0, y: 0.0);     //CGRectMake(0, 0, _offImageView.frame.size.width, _offImageView.frame.size.height);
+            self.thumbImageView.frame.origin   = CGPoint(x: 0.0, y: 0.0);     //CGRectMake(0, 0, _thumbImageView.frame.size.width, _thumbImageView.frame.size.height);
         }
     }
 }

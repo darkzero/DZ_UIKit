@@ -6,6 +6,4 @@ end
 
 target 'DZ_UIKit_Tests', :exclusive => true do
   pod 'DZ_UIKit', :path => '../'
-
-  pod 'FBSnapshotTestCase'
 end

@@ -8,43 +8,43 @@
 
 import Foundation
 
-public class DateUtil {
+open class DateUtil {
     
-    public class func StringFromDate(Date date:NSDate, formatString:String) -> String
+    open class func StringFromDate(Date date:Date, formatString:String) -> String
     {
-        let formatter:NSDateFormatter   = NSDateFormatter();
+        let formatter:DateFormatter   = DateFormatter();
         formatter.dateFormat            = formatString;
-        formatter.timeZone              = NSTimeZone(name: "...");
-        let dateString                  = formatter.stringFromDate(date);
+        formatter.timeZone              = TimeZone(identifier: "...");
+        let dateString                  = formatter.string(from: date);
         
         return dateString;
     }
     
-    public class func dateFromString(DateString dateString:String, FormatString formatString:String) -> NSDate
+    open class func dateFromString(DateString dateString:String, FormatString formatString:String) -> Date
     {
-        let formatter:NSDateFormatter   = NSDateFormatter();
+        let formatter:DateFormatter   = DateFormatter();
         formatter.dateFormat            = formatString;
-        let theDate:NSDate?             = formatter.dateFromString(dateString);
+        let theDate:Date?             = formatter.date(from: dateString);
         return theDate!;
     }
     
-    public class func adjustZeroClock(date: NSDate, withCalendar calendar: NSCalendar) -> NSDate
+    open class func adjustZeroClock(_ date: Date, withCalendar calendar: Calendar) -> Date
     {
-        let components = calendar.components([NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.Day], fromDate: date);
-        return calendar.dateFromComponents(components)!;
+        let components = (calendar as NSCalendar).components([NSCalendar.Unit.year, NSCalendar.Unit.month, NSCalendar.Unit.day], from: date);
+        return calendar.date(from: components)!;
     }
     
-    public class func daysBetween(startDate startDate: NSDate, endDate: NSDate?) -> Int
+    open class func daysBetween(startDate: Date, endDate: Date?) -> Int
     {
         if endDate == nil {
             return 0;
         }
-        let calendar    = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!;
+        let calendar    = Calendar(identifier: Calendar.Identifier.gregorian);
         let _startDate  = DateUtil.adjustZeroClock(startDate, withCalendar: calendar);
         let _endDate    = DateUtil.adjustZeroClock(endDate!, withCalendar: calendar);
     
-        let components = calendar.components(NSCalendarUnit.Day, fromDate: _startDate, toDate: _endDate, options: NSCalendarOptions());
+        let components = (calendar as NSCalendar).components(NSCalendar.Unit.day, from: _startDate, to: _endDate, options: NSCalendar.Options());
         let days = components.day;
-        return days;
+        return days!;
     }
 }

@@ -9,4 +9,4 @@
 import Foundation
 
 public typealias DZBlock       = () -> Void;
-public typealias DZBlockWith   = (sender:AnyObject) -> Void;
+public typealias DZBlockWith   = (_ sender:AnyObject) -> Void;

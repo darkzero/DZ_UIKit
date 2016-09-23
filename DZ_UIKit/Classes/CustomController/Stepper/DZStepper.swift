@@ -9,26 +9,26 @@
 import UIKit
 
 @IBDesignable
-public class DZStepper: UIControl {
+open class DZStepper: UIControl {
     
-    @IBInspectable public var maxValue: Int = 10;
-    @IBInspectable public var minValue: Int = 0;
+    @IBInspectable open var maxValue: Int = 10;
+    @IBInspectable open var minValue: Int = 0;
     
-    @IBInspectable public var mainColor: UIColor    = UIColor.orangeColor();
-    @IBInspectable public var textColor: UIColor    = UIColor.whiteColor();
+    @IBInspectable open var mainColor: UIColor    = UIColor.orange;
+    @IBInspectable open var textColor: UIColor    = UIColor.white;
     
-    @IBInspectable public var plusImage: UIImage?;
-    @IBInspectable public var minusImage: UIImage?;
+    @IBInspectable open var plusImage: UIImage?;
+    @IBInspectable open var minusImage: UIImage?;
     
-    private var changeTimer: NSTimer = NSTimer();
+    fileprivate var changeTimer: Timer = Timer();
     
-    @IBInspectable public var currentValue: Int = 0;
+    @IBInspectable open var currentValue: Int = 0;
     
-    private var numberLabel: UILabel = UILabel();
-    private var increaseButton: UIImageView = UIImageView();
-    private var decreaseButton: UIImageView = UIImageView();
-    private var pushedDur: CGFloat = 0.0;
-    private var stepLength = 1;
+    fileprivate var numberLabel: UILabel = UILabel();
+    fileprivate var increaseButton: UIImageView = UIImageView();
+    fileprivate var decreaseButton: UIImageView = UIImageView();
+    fileprivate var pushedDur: CGFloat = 0.0;
+    fileprivate var stepLength = 1;
     
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder);
@@ -40,7 +40,7 @@ public class DZStepper: UIControl {
         self.createControllers();
     }
     
-    private func createControllers() {
+    fileprivate func createControllers() {
         self.addSubview(self.increaseButton);
         self.addSubview(self.decreaseButton);
         self.addSubview(self.numberLabel);
@@ -53,35 +53,35 @@ public class DZStepper: UIControl {
             self.stepLength = max(self.maxValue/20, 5);
         }
         if ( self.currentValue < self.maxValue ) {
-            self.increaseButton.backgroundColor = self.increaseButton.backgroundColor?.colorWithAlphaComponent(0.5);
+            self.increaseButton.backgroundColor = self.increaseButton.backgroundColor?.withAlphaComponent(0.5);
             self.currentValue = (self.currentValue+stepLength > self.maxValue) ? self.maxValue : (self.currentValue+stepLength);
             self.numberLabel.text = String(self.currentValue);
-            self.sendActionsForControlEvents(UIControlEvents.ValueChanged);
+            self.sendActions(for: UIControlEvents.valueChanged);
         }
     }
     
     func decrease() {
         if ( self.currentValue > self.minValue ) {
-            self.decreaseButton.backgroundColor = self.decreaseButton.backgroundColor?.colorWithAlphaComponent(0.5);
+            self.decreaseButton.backgroundColor = self.decreaseButton.backgroundColor?.withAlphaComponent(0.5);
             self.currentValue = (self.currentValue-stepLength<self.minValue) ? self.minValue : (self.currentValue-stepLength);
             self.numberLabel.text = String(self.currentValue);
-            self.sendActionsForControlEvents(UIControlEvents.ValueChanged);
+            self.sendActions(for: UIControlEvents.valueChanged);
         }
     }
     
-    public override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        let location = touches.first?.locationInView(self);
+    open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let location = touches.first?.location(in: self);
         if ( location != nil ) {
             self.changeValueWithTouchLocation(location!);
         }
     }
     
-    public override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        let location = touches.first?.locationInView(self);
+    open override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let location = touches.first?.location(in: self);
         if ( location != nil ) {
             if ( !self.increaseButton.frame.contains(location!) && !self.decreaseButton.frame.contains(location!) ) {
-                self.increaseButton.backgroundColor = self.increaseButton.backgroundColor?.colorWithAlphaComponent(1.0);
-                self.decreaseButton.backgroundColor = self.decreaseButton.backgroundColor?.colorWithAlphaComponent(1.0);
+                self.increaseButton.backgroundColor = self.increaseButton.backgroundColor?.withAlphaComponent(1.0);
+                self.decreaseButton.backgroundColor = self.decreaseButton.backgroundColor?.withAlphaComponent(1.0);
                 self.changeTimer.invalidate();
                 self.stepLength = 1;
                 self.pushedDur = 0.0;
@@ -89,31 +89,31 @@ public class DZStepper: UIControl {
         }
     }
     
-    public override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
-        self.increaseButton.backgroundColor = self.increaseButton.backgroundColor?.colorWithAlphaComponent(1.0);
-        self.decreaseButton.backgroundColor = self.decreaseButton.backgroundColor?.colorWithAlphaComponent(1.0);
+    open override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.increaseButton.backgroundColor = self.increaseButton.backgroundColor?.withAlphaComponent(1.0);
+        self.decreaseButton.backgroundColor = self.decreaseButton.backgroundColor?.withAlphaComponent(1.0);
         changeTimer.invalidate();
         self.stepLength = 1;
         self.pushedDur = 0.0;
     }
     
-    public override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        self.increaseButton.backgroundColor = self.increaseButton.backgroundColor?.colorWithAlphaComponent(1.0);
-        self.decreaseButton.backgroundColor = self.decreaseButton.backgroundColor?.colorWithAlphaComponent(1.0);
+    open override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.increaseButton.backgroundColor = self.increaseButton.backgroundColor?.withAlphaComponent(1.0);
+        self.decreaseButton.backgroundColor = self.decreaseButton.backgroundColor?.withAlphaComponent(1.0);
         changeTimer.invalidate();
         self.stepLength = 1;
         self.pushedDur = 0.0;
     }
     
-    func changeValueWithTouchLocation(location: CGPoint) {
+    func changeValueWithTouchLocation(_ location: CGPoint) {
         if ( self.increaseButton.frame.contains(location) ) {
             self.increase();
-            changeTimer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: #selector(DZStepper.increase), userInfo: nil, repeats: true);
+            changeTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(DZStepper.increase), userInfo: nil, repeats: true);
 
         }
         else if ( self.decreaseButton.frame.contains(location) ) {
             self.decrease();
-            changeTimer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: #selector(DZStepper.decrease), userInfo: nil, repeats: true);
+            changeTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(DZStepper.decrease), userInfo: nil, repeats: true);
         }
         else {
             self.changeTimer.invalidate();
@@ -122,20 +122,20 @@ public class DZStepper: UIControl {
         }
     }
     
-    override public func layoutSubviews() {
+    override open func layoutSubviews() {
         super.layoutSubviews();
         
-        self.increaseButton.frame = CGRectMake(self.frame.width-self.frame.height, 0, self.frame.height, self.frame.height);
-        self.decreaseButton.frame = CGRectMake(0, 0, self.frame.height, self.frame.height);
+        self.increaseButton.frame = CGRect(x: self.frame.width-self.frame.height, y: 0, width: self.frame.height, height: self.frame.height);
+        self.decreaseButton.frame = CGRect(x: 0, y: 0, width: self.frame.height, height: self.frame.height);
         
         if ( self.plusImage == nil || self.minusImage == nil ) {
             self.layer.cornerRadius = self.frame.height/2;
             self.clipsToBounds = true;
             
-            var imageStr = NSBundle(forClass: DZStepper.self).pathForResource("plus", ofType: "png");
-            increaseButton.image = UIImage(data: NSData(contentsOfURL: NSURL(fileURLWithPath: imageStr!))!);
-            imageStr = NSBundle(forClass: DZStepper.self).pathForResource("minus", ofType: "png");
-            decreaseButton.image = UIImage(data: NSData(contentsOfURL: NSURL(fileURLWithPath: imageStr!))!);
+            var imageStr = Bundle(for: DZStepper.self).path(forResource: "plus", ofType: "png");
+            increaseButton.image = UIImage(data: try! Data(contentsOf: URL(fileURLWithPath: imageStr!)));
+            imageStr = Bundle(for: DZStepper.self).path(forResource: "minus", ofType: "png");
+            decreaseButton.image = UIImage(data: try! Data(contentsOf: URL(fileURLWithPath: imageStr!)));
             
             self.increaseButton.backgroundColor = self.mainColor;
             increaseButton.layer.cornerRadius = increaseButton.frame.width/2;
@@ -148,10 +148,10 @@ public class DZStepper: UIControl {
             decreaseButton.image = self.minusImage;
         }
         
-        self.numberLabel.frame = CGRectMake(self.frame.height, 0, self.frame.width-self.frame.height*2, self.frame.height);
-        self.numberLabel.font = UIFont.boldSystemFontOfSize(self.frame.height*0.7);
+        self.numberLabel.frame = CGRect(x: self.frame.height, y: 0, width: self.frame.width-self.frame.height*2, height: self.frame.height);
+        self.numberLabel.font = UIFont.boldSystemFont(ofSize: self.frame.height*0.7);
         self.numberLabel.text = String(self.currentValue);
-        self.numberLabel.textAlignment = .Center;
+        self.numberLabel.textAlignment = .center;
         self.numberLabel.textColor = self.textColor;
     }
     

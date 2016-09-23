@@ -20,29 +20,29 @@ class DetailViewController: UIViewController, DZNineImageBoxViewDelegate {
         
         switch viewTitle {
         case "DZAnnularProgress":
-            let progress1 = DZAnnularProgress(Frame: CGRectMake(10, 10, 100, 100), AnnularWidth: 8, Type: AnnularProgressType.Progress);
+            let progress1 = DZAnnularProgress(Frame: CGRect(x: 10, y: 10, width: 100, height: 100), AnnularWidth: 8, Type: AnnularProgressType.progress);
             progress1.tag = 101;
-            progress1.annularBackColor = UIColor.lightGrayColor();
-            progress1.annularFrontColor = UIColor.orangeColor();
+            progress1.annularBackColor = UIColor.lightGray;
+            progress1.annularFrontColor = UIColor.orange;
             progress1.maxValue = 200;
             progress1.currectValue = 49;
-            let progress1Ctrl1 = UISlider.init(frame: CGRectMake(130, 50, 150, 10));
+            let progress1Ctrl1 = UISlider.init(frame: CGRect(x: 130, y: 50, width: 150, height: 10));
             progress1Ctrl1.maximumValue = 200;
             progress1Ctrl1.minimumValue = 1;
             progress1Ctrl1.tag = 102;
-            progress1Ctrl1.addTarget(self, action: #selector(DetailViewController.onProgressCtrlValueChanged(_:)), forControlEvents: UIControlEvents.ValueChanged);
+            progress1Ctrl1.addTarget(self, action: #selector(DetailViewController.onProgressCtrlValueChanged(_:)), for: UIControlEvents.valueChanged);
             
-            let progress2 = DZAnnularProgress(Frame: CGRectMake(10, 160, 100, 100), AnnularWidth: 8, Type: AnnularProgressType.Percent);
+            let progress2 = DZAnnularProgress(Frame: CGRect(x: 10, y: 160, width: 100, height: 100), AnnularWidth: 8, Type: AnnularProgressType.percent);
             progress2.tag = 103;
-            progress2.annularBackColor = UIColor.lightGrayColor();
-            progress2.annularFrontColor = UIColor.orangeColor();
+            progress2.annularBackColor = UIColor.lightGray;
+            progress2.annularFrontColor = UIColor.orange;
             progress2.maxValue = 200;
             progress2.currectValue = 29;
-            let progress1Ctrl2 = UISlider.init(frame: CGRectMake(130, 200, 150, 10));
+            let progress1Ctrl2 = UISlider.init(frame: CGRect(x: 130, y: 200, width: 150, height: 10));
             progress1Ctrl2.maximumValue = 200;
             progress1Ctrl2.minimumValue = 1;
             progress1Ctrl2.tag = 104;
-            progress1Ctrl2.addTarget(self, action: #selector(DetailViewController.onProgressCtrlValueChanged(_:)), forControlEvents: UIControlEvents.ValueChanged);
+            progress1Ctrl2.addTarget(self, action: #selector(DetailViewController.onProgressCtrlValueChanged(_:)), for: UIControlEvents.valueChanged);
             
             self.mainView.addSubview(progress1);
             self.mainView.addSubview(progress1Ctrl1);
@@ -53,46 +53,46 @@ class DetailViewController: UIViewController, DZNineImageBoxViewDelegate {
             let imageArray = ["http://place-hold.it/200x200", "http://www.featurepics.com/FI/Thumb300/20091231/Red-Fire-Hydrant-1421559.jpg",
                               "http://place-hold.it/200x200", "http://place-hold.it/200x200",
                               "http://place-hold.it/200x200", "http://place-hold.it/200x200",];
-            let nineImgView = DZNineImageBoxView.nineImageBoxViewWithImages(imageArray, frame: CGRectMake(10,10,200,200));
+            let nineImgView = DZNineImageBoxView.nineImageBoxViewWithImages(imageArray, frame: CGRect(x: 10,y: 10,width: 200,height: 200));
             nineImgView.delegate = self;
             self.mainView.addSubview(nineImgView);
             break;
         case "DZCheckBoxGroup":
-            let checkboxGroup = DZCheckBoxGroup.checkBoxgroupWithFrame(CGRectMake(10, 100, 240, 48));
-            checkboxGroup.backgroundColor = UIColor.redColor();
+            let checkboxGroup = DZCheckBoxGroup.checkBoxgroupWithFrame(CGRect(x: 10, y: 100, width: 240, height: 48));
+            checkboxGroup.backgroundColor = UIColor.red;
             //checkboxGroup.multipleCheckEnabled = true;
             checkboxGroup.addCheckBox(
-                DZCheckBox.checkBoxWithFrame(CGRectMake(0, 0, 48, 48),
-                    Type: DZCheckBoxType.Square));
+                DZCheckBox.checkBoxWithFrame(CGRect(x: 0, y: 0, width: 48, height: 48),
+                    Type: DZCheckBoxType.square));
             checkboxGroup.addCheckBox(
-                DZCheckBox.checkBoxWithFrame(CGRectMake(0, 0, 48, 48),
-                    Type: DZCheckBoxType.Square,
-                    BorderColorOrNil: UIColor.orangeColor()));
+                DZCheckBox.checkBoxWithFrame(CGRect(x: 0, y: 0, width: 48, height: 48),
+                    Type: DZCheckBoxType.square,
+                    BorderColorOrNil: UIColor.orange));
             checkboxGroup.addCheckBox(
-                DZCheckBox.checkBoxWithFrame(CGRectMake(0, 0, 48, 48),
-                    Type: DZCheckBoxType.Rounded));
+                DZCheckBox.checkBoxWithFrame(CGRect(x: 0, y: 0, width: 48, height: 48),
+                    Type: DZCheckBoxType.rounded));
             checkboxGroup.addCheckBox(
-                DZCheckBox.checkBoxWithFrame(CGRectMake(0, 0, 48, 48),
-                    Type: DZCheckBoxType.Rounded,
-                    BorderColorOrNil: UIColor.orangeColor()));
+                DZCheckBox.checkBoxWithFrame(CGRect(x: 0, y: 0, width: 48, height: 48),
+                    Type: DZCheckBoxType.rounded,
+                    BorderColorOrNil: UIColor.orange));
             checkboxGroup.addCheckBox(
-                DZCheckBox.checkBoxWithFrame(CGRectMake(0, 0, 48, 48),
-                    Type: DZCheckBoxType.Circular));
+                DZCheckBox.checkBoxWithFrame(CGRect(x: 0, y: 0, width: 48, height: 48),
+                    Type: DZCheckBoxType.circular));
             checkboxGroup.addCheckBox(
-                DZCheckBox.checkBoxWithFrame(CGRectMake(0, 0, 48, 48),
-                    Type: DZCheckBoxType.Circular,
-                    BorderColorOrNil: UIColor.orangeColor(),
+                DZCheckBox.checkBoxWithFrame(CGRect(x: 0, y: 0, width: 48, height: 48),
+                    Type: DZCheckBoxType.circular,
+                    BorderColorOrNil: UIColor.orange,
                     CheckedColorOrNil: RGB_HEX("9988333", 1.0)));
             self.view.addSubview(checkboxGroup);
             
-            let checkBoxList = DZCheckBoxGroup.checkBoxgroupWithFrame(CGRectMake(10, 180, 240, 240));
-            checkBoxList.style = .List;
+            let checkBoxList = DZCheckBoxGroup.checkBoxgroupWithFrame(CGRect(x: 10, y: 180, width: 240, height: 240));
+            checkBoxList.style = .list;
             checkBoxList.addCheckBox(
-                DZCheckBox.checkBoxWithFrame(CGRectMake(0, 0, 32, 32),
-                    Type: DZCheckBoxType.Rounded, CheckedColorOrNil: UIColor.orangeColor(), Title: "Save Account"));
+                DZCheckBox.checkBoxWithFrame(CGRect(x: 0, y: 0, width: 32, height: 32),
+                    Type: DZCheckBoxType.rounded, Title: "Save Account", CheckedColorOrNil: UIColor.orange));
             checkBoxList.addCheckBox(
-                DZCheckBox.checkBoxWithFrame(CGRectMake(0, 0, 32, 32),
-                    Type: DZCheckBoxType.Rounded, BorderColorOrNil: UIColor.orangeColor(), Title: "Auto Login"));
+                DZCheckBox.checkBoxWithFrame(CGRect(x: 0, y: 0, width: 32, height: 32),
+                    Type: DZCheckBoxType.rounded, Title: "Auto Login", BorderColorOrNil: UIColor.orange));
             checkBoxList.checkedIndexes = [0];
             checkBoxList.multipleCheckEnabled = true;
             self.view.addSubview(checkBoxList);
@@ -120,7 +120,7 @@ class DetailViewController: UIViewController, DZNineImageBoxViewDelegate {
     }
     */
     
-    func onProgressCtrlValueChanged(sender: AnyObject) {
+    func onProgressCtrlValueChanged(_ sender: AnyObject) {
         if ( sender.tag == 102 ) {
             let progress = self.view.viewWithTag(101) as! DZAnnularProgress;
             //if ( (sender as! UISlider).value != nil ) {
@@ -134,7 +134,7 @@ class DetailViewController: UIViewController, DZNineImageBoxViewDelegate {
     }
     
     //MARK: - DZNineImageBoxViewDelegate
-    func nineImageView(aButtonMenu: DZNineImageBoxView, tapImageAtIndex index: Int) {
+    func nineImageView(_ aButtonMenu: DZNineImageBoxView, tapImageAtIndex index: Int) {
         print("on tap image : ", index);
     }
 

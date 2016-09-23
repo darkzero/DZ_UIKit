@@ -10,10 +10,10 @@ import UIKit
 
 public protocol DZNineImageBoxViewDelegate {
     // tap event
-    func nineImageView(aButtonMenu: DZNineImageBoxView, tapImageAtIndex index: Int);
+    func nineImageView(_ aButtonMenu: DZNineImageBoxView, tapImageAtIndex index: Int);
 }
 
-public class DZNineImageBoxView: UIView {
+open class DZNineImageBoxView: UIView {
     
     // MARK: - - class define
     let TAG_BASE: Int           = 1000;
@@ -21,11 +21,11 @@ public class DZNineImageBoxView: UIView {
     let IMAGE_SPACING: CGFloat  = 4.0;
     
     // MARK: - properites
-    public var imageUrlList = Array<String>();
+    open var imageUrlList = Array<String>();
     
     var imageViewList = Array<UIImageView>();
     
-    public var delegate:DZNineImageBoxViewDelegate?;
+    open var delegate:DZNineImageBoxViewDelegate?;
     
     // MARK: - init
     
@@ -37,7 +37,7 @@ public class DZNineImageBoxView: UIView {
         super.init(frame: frame);
     }
     
-    public class func nineImageBoxViewWithImages(images: Array<String>, frame: CGRect) -> DZNineImageBoxView {
+    open class func nineImageBoxViewWithImages(_ images: Array<String>, frame: CGRect) -> DZNineImageBoxView {
         let obj = DZNineImageBoxView(frame: frame);
         obj.imageUrlList = images;
         obj.calcFrame();
@@ -54,12 +54,12 @@ public class DZNineImageBoxView: UIView {
         let width   = countInOneLine * (sideLength+IMAGE_SPACING) - IMAGE_SPACING;
         let height  = lineCount * (sideLength+IMAGE_SPACING) - IMAGE_SPACING;
         
-        self.frame.size = CGSizeMake(width, height);
+        self.frame.size = CGSize(width: width, height: height);
     }
 
     // MARK: - layoutSubviews
     
-    override public func layoutSubviews() {
+    override open func layoutSubviews() {
         super.layoutSubviews();
         // calc image count, if > 9, then 9
         let imageCount = (self.imageUrlList.count > MAX_IMAGE_COUNT) ? MAX_IMAGE_COUNT : self.imageUrlList.count;
@@ -73,13 +73,13 @@ public class DZNineImageBoxView: UIView {
         if ( imageCount > 0 ) {
             for i in 0 ... (imageCount-1) {
                 let viewTag = TAG_BASE + i;
-                let rect = CGRectMake((sideLength+IMAGE_SPACING)*(CGFloat(i)%countInOneLine), (sideLength+IMAGE_SPACING)*floor(CGFloat(i)/countInOneLine), sideLength, sideLength);
+                let rect = CGRect(x: (sideLength+IMAGE_SPACING)*(CGFloat(i).truncatingRemainder(dividingBy: countInOneLine)), y: (sideLength+IMAGE_SPACING)*floor(CGFloat(i)/countInOneLine), width: sideLength, height: sideLength);
                 let imageView = UIImageView(frame: rect);
-                let url = NSURL(string: self.imageUrlList[i])!;//"http://place-hold.it/200x200"
+                let url = URL(string: self.imageUrlList[i])!;//"http://place-hold.it/200x200"
                 let image = url.getImageWithCache();
                 imageView.image = image;
                 imageView.tag = viewTag;
-                imageView.userInteractionEnabled = true;
+                imageView.isUserInteractionEnabled = true;
                 let tap = UITapGestureRecognizer(target: self, action: #selector(DZNineImageBoxView.onTapImageAtIndex(_:)));
                 imageView.addGestureRecognizer(tap);
                 self.addSubview(imageView);
@@ -88,7 +88,7 @@ public class DZNineImageBoxView: UIView {
     }
     
     // for autoLayout
-    override public func intrinsicContentSize() -> CGSize {
+    override open var intrinsicContentSize : CGSize {
         let imageCount = (self.imageUrlList.count > MAX_IMAGE_COUNT) ? MAX_IMAGE_COUNT : self.imageUrlList.count;
         let countInOneLine  = ceil(sqrt(CGFloat(imageCount)));              // 1 = 1, 2,3,4 = 2, 5,6,7,8,9 = 3
         if ( countInOneLine != 0 ) {
@@ -99,15 +99,15 @@ public class DZNineImageBoxView: UIView {
             let width   = countInOneLine * (sideLength+IMAGE_SPACING) - IMAGE_SPACING;
             let height  = lineCount * (sideLength+IMAGE_SPACING) - IMAGE_SPACING;
             
-            self.frame.size = CGSizeMake(width, height);
+            self.frame.size = CGSize(width: width, height: height);
             layoutIfNeeded()
             
-            return CGSizeMake(width, height);
+            return CGSize(width: width, height: height);
         }
-        return CGSizeMake(10, 10);
+        return CGSize(width: 10, height: 10);
     }
     
-    func onTapImageAtIndex(sender: UITapGestureRecognizer) {
+    func onTapImageAtIndex(_ sender: UITapGestureRecognizer) {
         if (delegate != nil) {
             let tag = sender.view?.tag;
             delegate?.nineImageView(self, tapImageAtIndex: tag!-TAG_BASE);

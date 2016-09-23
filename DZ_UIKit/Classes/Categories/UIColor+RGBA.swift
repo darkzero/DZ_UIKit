@@ -13,13 +13,13 @@ let DEFAULT_ALPHA:CGFloat   = 1.0;
 let RED_MASK_HEX            = 0x10000;
 let GREEN_MASK_HEX          = 0x100;
 
-public func RGB(r:Int, _ g:Int, _ b:Int)
+public func RGB(_ r:Int, _ g:Int, _ b:Int)
     -> UIColor { return UIColor.colorWithDec(Red:r, Green:g, Blue:b, Alpha:1.0); };
 
-public func RGBA(r:Int, _ g:Int, _ b:Int, _ a:CGFloat)
+public func RGBA(_ r:Int, _ g:Int, _ b:Int, _ a:CGFloat)
     -> UIColor { return UIColor.colorWithDec(Red:r, Green:g, Blue:b, Alpha:a); };
 
-public func RGB_HEX(hex:String, _ a:CGFloat)
+public func RGB_HEX(_ hex:String, _ a:CGFloat)
     -> UIColor { return UIColor.colorWithHex(Hex: hex, Alpha: a); };
 
 extension UIColor {
@@ -34,9 +34,9 @@ extension UIColor {
      */
     public class func colorWithHex( Hex hex:String, Alpha alpha:CGFloat ) -> UIColor
     {
-        let colorScanner:NSScanner = NSScanner(string: hex);
+        let colorScanner:Scanner = Scanner(string: hex);
         var color:uint = 0;
-        colorScanner.scanHexInt(&color);
+        colorScanner.scanHexInt32(&color);
         let r:CGFloat = CGFloat( ( color & 0xFF0000 ) >> 16 ) / 255.0;
         let g:CGFloat = CGFloat( ( color & 0x00FF00 ) >> 8 ) / 255.0;
         let b:CGFloat = CGFloat( color & 0x0000FF ) / 255.0;
