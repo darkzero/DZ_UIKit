@@ -403,7 +403,7 @@ open class DZButtonMenu : UIView {
             
             let btnSizeSum = (idx_f+2.0)*BUTTON_DIAMETER;
             let btnPaddingSum = (idx_f+1.0)*BUTTON_PADDING;
-            var y = self.frame.size.height - btnSizeSum - btnPaddingSum + (BUTTON_DIAMETER-LABEL_HEIGHT)/2;
+            let y = self.frame.size.height - btnSizeSum - btnPaddingSum + (BUTTON_DIAMETER-LABEL_HEIGHT)/2;
             ret = CGRect(x: x,
                          y: y,
                          width: label.bounds.size.width,
