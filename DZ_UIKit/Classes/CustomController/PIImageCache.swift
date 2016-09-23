@@ -17,7 +17,7 @@ open class PIImageCache {
   }
   
   public init(config: Config) {
-    let _ = memorySemaphore.wait(timeout: DispatchTime.distantFuture)
+    _ = memorySemaphore.wait(timeout: DispatchTime.distantFuture)
     self.config = config
     memorySemaphore.signal()
     myInit()
@@ -44,7 +44,7 @@ open class PIImageCache {
   }
   
   open func setConfig(_ config :Config) {
-    let _ = memorySemaphore.wait(timeout: DispatchTime.distantFuture)
+    _ = memorySemaphore.wait(timeout: DispatchTime.distantFuture)
     self.config = config
     myInit()
     memorySemaphore.signal()
@@ -94,14 +94,14 @@ open class PIImageCache {
   //public delete method
   
   open func allMemoryCacheDelete() {
-    let _ = memorySemaphore.wait(timeout: DispatchTime.distantFuture)
+    _ = memorySemaphore.wait(timeout: DispatchTime.distantFuture)
     memoryCache.removeAll(keepingCapacity: false)
     memorySemaphore.signal()
   }
   
     open func allDiskCacheDelete() {
         let path = PIImageCache.folderPath(config)
-        let _ = diskSemaphore.wait(timeout: DispatchTime.distantFuture);
+        _ = diskSemaphore.wait(timeout: DispatchTime.distantFuture);
         do {
             let allFileName: [String]? = try fileManager.contentsOfDirectory(atPath: path);
             if allFileName != nil {
@@ -119,7 +119,7 @@ open class PIImageCache {
   
     open func oldDiskCacheDelete() {
         let path = PIImageCache.folderPath(config)
-        let _ = diskSemaphore.wait(timeout: DispatchTime.distantFuture);
+        _ = diskSemaphore.wait(timeout: DispatchTime.distantFuture);
         do {
             let allFileName: [String]? = try fileManager.contentsOfDirectory(atPath: path);
             if allFileName != nil {
@@ -238,7 +238,7 @@ open class PIImageCache {
   internal func perform(_ url: URL) -> (UIImage?, Result) {
     
     //memory read
-    let _ = memorySemaphore.wait(timeout: DispatchTime.distantFuture)
+    _ = memorySemaphore.wait(timeout: DispatchTime.distantFuture)
     let maybeMemoryCache = memoryCacheRead(url)
     memorySemaphore.signal()
     if let cache = maybeMemoryCache {
@@ -247,11 +247,11 @@ open class PIImageCache {
     
     //disk read
     if config.usingDiskCache {
-      let _ = diskSemaphore.wait(timeout: DispatchTime.distantFuture)
+      _ = diskSemaphore.wait(timeout: DispatchTime.distantFuture)
       let maybeDiskCache = diskCacheRead(url)
       diskSemaphore.signal()
       if let cache = maybeDiskCache {
-        let _ = memorySemaphore.wait(timeout: DispatchTime.distantFuture)
+        _ = memorySemaphore.wait(timeout: DispatchTime.distantFuture)
         memoryCacheWrite(url, image: cache)
         memorySemaphore.signal()
         return (cache, .diskHit)
@@ -263,7 +263,7 @@ open class PIImageCache {
     if let (image, byteSize) = maybeImage {
       if byteSize < config.limitByteSize {
         //write memory
-        let _ = memorySemaphore.wait(timeout: DispatchTime.distantFuture)
+        _ = memorySemaphore.wait(timeout: DispatchTime.distantFuture)
         memoryCacheWrite(url, image: image)
         memorySemaphore.signal()
         //write disk
@@ -271,7 +271,7 @@ open class PIImageCache {
             DispatchQueue.global(qos: DispatchQoS.background.qosClass).async {
             [weak self] in
             if let scope = self {
-              let _ = scope.diskSemaphore.wait(timeout: DispatchTime.distantFuture)
+              _ = scope.diskSemaphore.wait(timeout: DispatchTime.distantFuture)
               scope.diskCacheWrite(url, image: image)
               scope.diskSemaphore.signal()
             }
@@ -289,7 +289,7 @@ open class PIImageCache {
     let maybeImage = download(url)
     if let (image, byteSize) = maybeImage {
       if byteSize < config.limitByteSize {
-        let _ = diskSemaphore.wait(timeout: DispatchTime.distantFuture)
+        _ = diskSemaphore.wait(timeout: DispatchTime.distantFuture)
         diskCacheWrite(url, image: image)
         diskSemaphore.signal()
       }
