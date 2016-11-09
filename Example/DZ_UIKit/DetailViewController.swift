@@ -61,38 +61,39 @@ class DetailViewController: UIViewController, DZNineImageBoxViewDelegate {
             let checkboxGroup = DZCheckBoxGroup.checkBoxgroupWithFrame(CGRect(x: 10, y: 100, width: 240, height: 48));
             checkboxGroup.backgroundColor = UIColor.red;
             //checkboxGroup.multipleCheckEnabled = true;
+            checkboxGroup.multipleCheckEnabled = false;
             checkboxGroup.addCheckBox(
-                DZCheckBox.checkBoxWithFrame(CGRect(x: 0, y: 0, width: 48, height: 48),
-                    Type: DZCheckBoxType.square));
+                DZCheckBox.checkBox(withFrame: CGRect(x: 0, y: 0, width: 48, height: 48),
+                    type: DZCheckBoxType.square));
             checkboxGroup.addCheckBox(
-                DZCheckBox.checkBoxWithFrame(CGRect(x: 0, y: 0, width: 48, height: 48),
-                    Type: DZCheckBoxType.square,
-                    BorderColorOrNil: UIColor.orange));
+                DZCheckBox.checkBox(withFrame: CGRect(x: 0, y: 0, width: 48, height: 48),
+                    type: DZCheckBoxType.square,
+                    borderColor: UIColor.orange));
             checkboxGroup.addCheckBox(
-                DZCheckBox.checkBoxWithFrame(CGRect(x: 0, y: 0, width: 48, height: 48),
-                    Type: DZCheckBoxType.rounded));
+                DZCheckBox.checkBox(withFrame: CGRect(x: 0, y: 0, width: 48, height: 48),
+                    type: DZCheckBoxType.rounded));
             checkboxGroup.addCheckBox(
-                DZCheckBox.checkBoxWithFrame(CGRect(x: 0, y: 0, width: 48, height: 48),
-                    Type: DZCheckBoxType.rounded,
-                    BorderColorOrNil: UIColor.orange));
+                DZCheckBox.checkBox(withFrame: CGRect(x: 0, y: 0, width: 48, height: 48),
+                    type: DZCheckBoxType.rounded,
+                    borderColor: UIColor.orange));
             checkboxGroup.addCheckBox(
-                DZCheckBox.checkBoxWithFrame(CGRect(x: 0, y: 0, width: 48, height: 48),
-                    Type: DZCheckBoxType.circular));
+                DZCheckBox.checkBox(withFrame: CGRect(x: 0, y: 0, width: 48, height: 48),
+                    type: DZCheckBoxType.circular));
             checkboxGroup.addCheckBox(
-                DZCheckBox.checkBoxWithFrame(CGRect(x: 0, y: 0, width: 48, height: 48),
-                    Type: DZCheckBoxType.circular,
-                    BorderColorOrNil: UIColor.orange,
-                    CheckedColorOrNil: RGB_HEX("9988333", 1.0)));
+                DZCheckBox.checkBox(withFrame: CGRect(x: 0, y: 0, width: 48, height: 48),
+                    type: DZCheckBoxType.circular,
+                    borderColor: UIColor.orange,
+                    checkedColor: RGB_HEX("9988333", 1.0)));
             self.view.addSubview(checkboxGroup);
             
             let checkBoxList = DZCheckBoxGroup.checkBoxgroupWithFrame(CGRect(x: 10, y: 180, width: 240, height: 240));
             checkBoxList.style = .list;
             checkBoxList.addCheckBox(
-                DZCheckBox.checkBoxWithFrame(CGRect(x: 0, y: 0, width: 32, height: 32),
-                    Type: DZCheckBoxType.rounded, Title: "Save Account", CheckedColorOrNil: UIColor.orange));
+                DZCheckBox.checkBox(withFrame: CGRect(x: 0, y: 0, width: 32, height: 32),
+                    type: DZCheckBoxType.rounded, title: "Save Account", checkedColor: UIColor.orange));
             checkBoxList.addCheckBox(
-                DZCheckBox.checkBoxWithFrame(CGRect(x: 0, y: 0, width: 32, height: 32),
-                    Type: DZCheckBoxType.rounded, Title: "Auto Login", BorderColorOrNil: UIColor.orange));
+                DZCheckBox.checkBox(withFrame: CGRect(x: 0, y: 0, width: 32, height: 32),
+                    type: DZCheckBoxType.rounded, title: "Auto Login", borderColor: UIColor.orange));
             checkBoxList.checkedIndexes = [0];
             checkBoxList.multipleCheckEnabled = true;
             self.view.addSubview(checkBoxList);

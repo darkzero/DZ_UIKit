@@ -1,6 +1,6 @@
 //
 //  UIImage+Color.swift
-//  DZLib
+//  DZ_UIKit
 //
 //  Created by Dora.Yuan on 2014/10/08.
 //  Copyright (c) 2014 Dora.Yuan All rights reserved.

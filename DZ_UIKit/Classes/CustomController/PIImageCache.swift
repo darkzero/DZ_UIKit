@@ -224,7 +224,7 @@ open class PIImageCache {
         maybeImageData = try Data(contentsOf: url, options: .uncachedRead);
     }
     catch {
-        DebugLog("get image data error!!" as AnyObject);
+        DebugLog("get image data error!!");
     }
     if let imageData = maybeImageData {
       if let image = UIImage(data: imageData) {
@@ -310,7 +310,7 @@ open class PIImageCache {
         try fileManager.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil);
     }
     catch {
-        DebugLog("[PIImageCache] folderCreate error!!" as AnyObject);
+        DebugLog("[PIImageCache] folderCreate error!!");
     }
   }
   

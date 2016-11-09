@@ -1,6 +1,6 @@
 //
 //  DZActionSheet.swift
-//  DZLib
+//  DZ_UIKit
 //
 //  Created by Dora.Yuan on 2014/10/21.
 //  Copyright (c) 2014 Dora.Yuan All rights reserved.
@@ -44,7 +44,7 @@ open class DZActionSheet : UIView {
     open var cancelButtonTitleColor: UIColor = RGB(109, 109, 109);
     
 // MARK: - internal properties
-    internal var buttonArray:NSMutableArray = NSMutableArray();
+    internal var buttonArray                = [UIButton]();
     internal var blockDictionary            = Dictionary<Int, DZBlock>();
     internal var cancelButton               = UIButton(type: UIButtonType.custom);
     internal var cancelBlock:DZBlock?;
@@ -183,14 +183,14 @@ open class DZActionSheet : UIView {
         btn.frame = BUTTON_FRAME;
         //btn.backgroundColor = UIColor.redColor();
     
-        self.buttonArray.add(btn);
+        self.buttonArray.append(btn);
         
         btn.contentHorizontalAlignment  = UIControlContentHorizontalAlignment.center;
         btn.contentVerticalAlignment    = UIControlContentVerticalAlignment.top;
         btn.imageEdgeInsets             = UIEdgeInsetsMake(0.0, 8.0, 22.0, 8.0);
         btn.titleEdgeInsets             = UIEdgeInsetsMake(50, -1*btnImage.size.width, 0, 0);
         
-        let index:Int = self.buttonArray.index(of: btn);
+        let index:Int = self.buttonArray.index(of: btn)!;
         btn.tag = index;
         btn.addTarget(self, action: #selector(DZActionSheet.buttonClicked(_:)), for: UIControlEvents.touchUpInside);
         self.setHandler(buttonBlock!, forButtonAtIndex: index);
@@ -207,7 +207,7 @@ open class DZActionSheet : UIView {
     }
     
     open func setButtonState(_ buttonState:UIControlState, AtIndex buttonIndex:Int) {
-        let btn = self.buttonArray.object(at: buttonIndex) as! UIButton;
+        let btn = self.buttonArray[buttonIndex];
         
         switch ( buttonState ) {
         case UIControlState() :

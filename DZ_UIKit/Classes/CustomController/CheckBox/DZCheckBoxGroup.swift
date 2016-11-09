@@ -1,6 +1,6 @@
 //
 //  DZCheckBoxGroup.swift
-//  DZLib
+//  DZ_UIKit
 //
 //  Created by Dora.Yuan on 2014/10/08.
 //  Copyright (c) 2014 Dora.Yuan All rights reserved.
@@ -26,23 +26,14 @@ open class DZCheckBoxGroup : UIControl {
     open var multipleCheckEnabled:Bool    = false;
     open var style: DZCheckBoxGroupStyle  = .default;
     
-    open var checkedIndexes:NSMutableArray {
-        didSet {
-            for i in 0 ... (self.checkBoxArray.count - 1) {
-                let checkBox:DZCheckBox = self.checkBoxArray[i] as! DZCheckBox;
-                if ( self.checkedIndexes.contains(i) ) {
-                    checkBox.checked = true;
-                }
-            }
-        }
-    };
+    open var checkedIndexes:[Int];
     
-    fileprivate var checkBoxArray:NSMutableArray;
+    fileprivate var checkBoxArray:[DZCheckBox];
 
     required public init?(coder aDecoder: NSCoder) {
         self.multipleCheckEnabled   = false;
-        self.checkBoxArray          = NSMutableArray();
-        self.checkedIndexes         = NSMutableArray();
+        self.checkBoxArray          = [DZCheckBox]();
+        self.checkedIndexes         = [Int]();
         
         super.init(coder: aDecoder);
         self.backgroundColor        = UIColor.clear;
@@ -50,8 +41,8 @@ open class DZCheckBoxGroup : UIControl {
     
     override init(frame: CGRect) {
         self.multipleCheckEnabled   = false;
-        self.checkBoxArray          = NSMutableArray();
-        self.checkedIndexes         = NSMutableArray();
+        self.checkBoxArray          = [DZCheckBox]();
+        self.checkedIndexes         = [Int]();
         
         super.init(frame:frame);
         self.backgroundColor        = UIColor.clear;
@@ -94,6 +85,13 @@ open class DZCheckBoxGroup : UIControl {
         }
         
         self.frame = theRect;
+        
+        for i in 0 ... (self.checkBoxArray.count - 1) {
+            let checkBox:DZCheckBox = self.checkBoxArray[i] as! DZCheckBox;
+            if ( self.checkedIndexes.contains(i) ) {
+                checkBox.checked = true;
+            }
+        }
     }
     
     open class func checkBoxgroupWithFrame(_ frame : CGRect) -> DZCheckBoxGroup {
@@ -103,22 +101,20 @@ open class DZCheckBoxGroup : UIControl {
     
     open class func checkBoxgroupWithFrame(_ frame : CGRect, Items items : [DZCheckBox]) -> DZCheckBoxGroup {
         let group = DZCheckBoxGroup(frame:frame);
-        group.checkBoxArray.addObjects(from: items);
+        group.checkBoxArray.append(contentsOf: items);
         return group;
     }
     
     open func addCheckBox(_ checkBox:DZCheckBox) {
         checkBox.addTarget(self, action: #selector(DZCheckBoxGroup.onCheckBoxCheckedChanged(_:)), for: UIControlEvents.valueChanged);
-        self.checkBoxArray.add(checkBox);
+        self.checkBoxArray.append(checkBox);
         //self.setNeedsLayout();
     }
     
-    open func addCheckBoxes(_ items:NSArray) {
-        for obj: Any in items {
-            if let checkBox = obj as? DZCheckBox {
-                checkBox.addTarget(self, action: #selector(DZCheckBoxGroup.onCheckBoxCheckedChanged(_:)), for: UIControlEvents.valueChanged);
-                self.checkBoxArray.add(checkBox);
-            }
+    open func addCheckBoxes(_ items:[DZCheckBox]) {
+        for checkBox in items {
+            checkBox.addTarget(self, action: #selector(DZCheckBoxGroup.onCheckBoxCheckedChanged(_:)), for: UIControlEvents.valueChanged);
+            self.checkBoxArray.append(checkBox);
         }
         //self.setNeedsLayout();
     }
@@ -137,11 +133,11 @@ open class DZCheckBoxGroup : UIControl {
             }
         }
         
-        self.checkedIndexes.removeAllObjects();
+        self.checkedIndexes.removeAll();
         for i in 0 ... (self.checkBoxArray.count - 1) {
             let checkBox = self.checkBoxArray[i] as! DZCheckBox;
             if ( checkBox.checked ) {
-                self.checkedIndexes.add(i);
+                self.checkedIndexes.append(i);
             }
         }
         

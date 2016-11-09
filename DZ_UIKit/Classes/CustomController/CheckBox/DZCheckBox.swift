@@ -1,6 +1,6 @@
 //
 //  DZCheckBox.swift
-//  DZLib
+//  DZ_UIKit
 //
 //  Created by Dora.Yuan on 2014/10/08.
 //  Copyright (c) 2014 Dora.Yuan All rights reserved.
@@ -102,13 +102,13 @@ open class DZCheckBox : UIControl {
         }
     };
     
-    open class func checkBoxWithFrame(_ frame:CGRect,
-        Type type:DZCheckBoxType,
-        Title title: String? = nil,
-        Image image: UIImage? = nil,
-        BorderColorOrNil borderColor:UIColor? = nil,
-        UncheckedColorOrNil uncheckedColor:UIColor? = nil,
-        CheckedColorOrNil checkedColor:UIColor? = nil) -> DZCheckBox
+    open class func checkBox(withFrame frame:CGRect,
+        type:DZCheckBoxType,
+        title: String? = nil,
+        image: UIImage? = nil,
+        borderColor:UIColor? = nil,
+        uncheckedColor:UIColor? = nil,
+        checkedColor:UIColor? = nil) -> DZCheckBox
     {
         let checkbox:DZCheckBox! = DZCheckBox(frame:frame);
         if ( checkbox != nil ) {

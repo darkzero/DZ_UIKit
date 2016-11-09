@@ -1,6 +1,6 @@
 //
 //  DZButtonMenu.swift
-//  DZLib
+//  DZ_UIKit
 //
 //  Created by Dora.Yuan on 14/10/25.
 //  Copyright (c) 2014年 Dora.Yuan All rights reserved.
@@ -125,7 +125,7 @@ open class DZButtonMenu : UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public init(location: DZButtonMenuLocation, direction: DZButtonMenuDirection, closeImage: String, openImage: String?, titleArray: NSArray, imageArray: NSArray?) {
+    public init(location: DZButtonMenuLocation, direction: DZButtonMenuDirection, closeImage: String, openImage: String?, titleArray: [String], imageArray: [String]?) {
         super.init(frame: CGRect.zero);
         
         self.mask = UIView.init(frame: UIScreen.main.bounds);
@@ -150,7 +150,7 @@ open class DZButtonMenu : UIView {
         if ( imageArray != nil ) {
             // create buttons
             for i in 1 ... imageArray!.count {
-                let imgName             = imageArray!.object(at: i-1) as! String;
+                let imgName             = imageArray![i-1];
                 let btn                 = UIButton(type: UIButtonType.custom);
                 btn.frame               = CGRect(x: 0, y: 0, width: BUTTON_DIAMETER, height: BUTTON_DIAMETER);
                 btn.backgroundColor     = COLOR_SEARCH_ITEM_OFF;
@@ -167,7 +167,7 @@ open class DZButtonMenu : UIView {
         else {
             // create buttons
             for i in 1 ... titleArray.count {
-                let title               = titleArray.object(at: i-1) as! String;
+                let title               = titleArray[i-1];
                 let btn                 = UIButton(type: UIButtonType.custom);
                 btn.frame               = CGRect(x: 0, y: 0, width: BUTTON_DIAMETER, height: BUTTON_DIAMETER);
                 btn.backgroundColor     = COLOR_SEARCH_ITEM_OFF;
@@ -186,7 +186,7 @@ open class DZButtonMenu : UIView {
         // create labels
         maxLabelWidth = 0.0;
         for j in 1 ... titleArray.count {
-            let titleStr = titleArray.object(at: j-1) as! String;
+            let titleStr = titleArray[j-1];
             let lbl = UILabel.init();
             lbl.font = UIFont.systemFont(ofSize: 12.0);
             lbl.numberOfLines = 1;
@@ -213,7 +213,7 @@ open class DZButtonMenu : UIView {
         self.createMainButtonCloseImage(closeImage, OpenImage: openImage);
     }
     
-    public init(location: DZButtonMenuLocation, direction: DZButtonMenuDirection, closeImage: String, openImage: String?, imageArray: NSArray) {
+    public init(location: DZButtonMenuLocation, direction: DZButtonMenuDirection, closeImage: String, openImage: String?, imageArray: [String]) {
         super.init(frame: CGRect.zero);
         
         self.location   = location;
@@ -230,7 +230,7 @@ open class DZButtonMenu : UIView {
         
         // create buttons
         for i in 1 ... imageArray.count {
-            let imgName             = imageArray.object(at: i-1) as! String;
+            let imgName             = imageArray[i-1];
             let btn                 = UIButton(type: UIButtonType.custom);
             btn.frame               = CGRect(x: 0, y: 0, width: BUTTON_DIAMETER, height: BUTTON_DIAMETER);
             btn.backgroundColor     = COLOR_SEARCH_ITEM_OFF;

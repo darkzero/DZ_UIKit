@@ -1,6 +1,6 @@
 //
 //  DZAlertView.swift
-//  DZLib
+//  DZ_UIKit
 //
 //  Created by Dora.Yuan on 14/10/25.
 //  Copyright (c) 2014年 Dora.Yuan All rights reserved.
@@ -33,8 +33,8 @@ open class DZAlertView : UIView {
     
 // MARK: - internal properties
     
-    fileprivate var buttonArray:NSMutableArray                  = NSMutableArray();
-    fileprivate var blockDictionary:Dictionary<Int, DZBlock>    = Dictionary();
+    fileprivate var buttonArray             = [UIButton]();
+    fileprivate var blockDictionary         = [Int: DZBlock]();
     fileprivate var titleLabel:UILabel      = UILabel();
     fileprivate var messageLabel:UILabel    = UILabel();
     fileprivate var theWindow:UIWindow      = UIWindow(frame: UIScreen.main.bounds);
@@ -94,7 +94,7 @@ open class DZAlertView : UIView {
         btn.frame           = BUTTON_FRAME;
         btn.tag             = CANCEL_BUTTON_TAG;
         btn.addTarget(self, action: #selector(DZAlertView.buttonClicked(_:)), for: UIControlEvents.touchUpInside);
-        self.buttonArray.add(btn);
+        self.buttonArray.append(btn);
     
         if ( cancelBlock != nil ) {
             self.blockDictionary[CANCEL_BUTTON_TAG] = cancelBlock;
@@ -129,7 +129,7 @@ open class DZAlertView : UIView {
 // MARK: - public functions
     
     open func setCancelButtonWithTitle(_ title: String, bgColor: UIColor? = nil, textColor: UIColor? = nil, handler: DZBlock?) {
-        var btn:UIButton! = self.buttonArray.object(at: CANCEL_BUTTON_TAG) as? UIButton;
+        var btn:UIButton! = self.buttonArray[CANCEL_BUTTON_TAG];
         if ( btn == nil ) {
             btn = UIButton(type: UIButtonType.custom);
         }
@@ -147,11 +147,11 @@ open class DZAlertView : UIView {
         let btn = UIButton(type: UIButtonType.custom);
         
         btn.setTitle(title, for: UIControlState());
-        self.buttonArray.add(btn);
+        self.buttonArray.append(btn);
         btn.backgroundColor = (bgColor == nil) ? self.normalButtonColor : bgColor;
         btn.setTitleColor((textColor == nil) ? self.normalButtonTextColor : textColor, for: UIControlState());
         btn.frame           = BUTTON_FRAME;
-        let index:Int       = self.buttonArray.index(of: btn);
+        let index:Int       = self.buttonArray.index(of: btn)!;
         btn.tag             = index;
         btn.addTarget(self, action: #selector(DZAlertView.buttonClicked(_:)), for: UIControlEvents.touchUpInside);
         
@@ -331,7 +331,7 @@ open class DZAlertView : UIView {
         
         // buttons
         if ( self.buttonArray.count == 1 ) {
-            let btn = self.buttonArray.object(at: 0) as! UIButton;
+            let btn = self.buttonArray[0];
             self.addSubview(btn);
             let btnIdx:Int = btn.tag;
             btn.layer.cornerRadius = 4.0;

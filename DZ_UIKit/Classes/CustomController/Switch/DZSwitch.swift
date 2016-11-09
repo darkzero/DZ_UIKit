@@ -1,6 +1,6 @@
 //
 //  DZSwitch.swift
-//  DZLib
+//  DZ_UIKit
 //
 //  Created by Dora.Yuan on 14/10/25.
 //  Copyright (c) 2014年 Dora.Yuan All rights reserved.

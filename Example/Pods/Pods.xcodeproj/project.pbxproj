@@ -11,7 +11,6 @@
 		031D0E639AD9D0FFFBAF7F0E601735AA /* Pods-DZ_UIKit_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = C03A785BF978A0970D8855BDDA547712 /* Pods-DZ_UIKit_Example-dummy.m */; };
 		07FEE0CE6B5479EB3AD846361652B3D3 /* PIImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F14DD6B15B166005A56034C633D9C2 /* PIImageCache.swift */; };
 		105D8311208DBDDE738C8C54314F7761 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D31B096AB4A0164C61B63F0E59AD76C9 /* Foundation.framework */; };
-		21519F3919F3042D5F5E0DD27AD9AFC3 /* DZLib.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CC96654A940F28EF1684CB364B4103 /* DZLib.swift */; };
 		38D7FB4EE7CDB1E93C7E4A4E9BF4ADA8 /* Pods-DZ_UIKit_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 42BA3034C8C55F81678DCD23A21D6485 /* Pods-DZ_UIKit_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3BC66A95FF653C536B20FD5673F137E0 /* Pods-DZ_UIKit_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E147EDD39111D93C536B60410BBA658 /* Pods-DZ_UIKit_Tests-dummy.m */; };
 		4116CDBA5FBB12F054D60D93DEB0006D /* DZButtonMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94EE004862FA65CF4FBDFDE066BA3A61 /* DZButtonMenu.swift */; };
@@ -107,7 +106,6 @@
 		C8BF863C1D51F092005C6CB0 /* SwitchBackground_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SwitchBackground_off.png; sourceTree = "<group>"; };
 		C8BF863D1D51F092005C6CB0 /* SwitchBackground_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SwitchBackground_on.png; sourceTree = "<group>"; };
 		C8BF863E1D51F092005C6CB0 /* SwitchThumb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SwitchThumb.png; sourceTree = "<group>"; };
-		C8CC96654A940F28EF1684CB364B4103 /* DZLib.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DZLib.swift; sourceTree = "<group>"; };
 		CF5E642EBD84B1A8BC79BA0190D95B1C /* UIColor+RGBA.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "UIColor+RGBA.swift"; sourceTree = "<group>"; };
 		D16061C8E28C8CE1512283FDA8398AFB /* Pods-DZ_UIKit_Tests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-DZ_UIKit_Tests-resources.sh"; sourceTree = "<group>"; };
 		D31B096AB4A0164C61B63F0E59AD76C9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
@@ -358,7 +356,6 @@
 			isa = PBXGroup;
 			children = (
 				A00DA1F49B016C49DF4B624D16B6EDA2 /* Define.swift */,
-				C8CC96654A940F28EF1684CB364B4103 /* DZLib.swift */,
 				E33554F9AA62F4298B6BE6CE8E69B87F /* Categories */,
 				82F827271FCCBDD9B92E323202A84ADC /* CustomController */,
 			);
@@ -565,7 +562,6 @@
 				4116CDBA5FBB12F054D60D93DEB0006D /* DZButtonMenu.swift in Sources */,
 				AA0F79C2D3B83DB3E6A6CEAE6FB47167 /* DZCheckBox.swift in Sources */,
 				8C44FEE1C04602688E91563D13188475 /* DZCheckBoxGroup.swift in Sources */,
-				21519F3919F3042D5F5E0DD27AD9AFC3 /* DZLib.swift in Sources */,
 				EAB9ECE0C09463E227895D5026BAD632 /* DZSwitch.swift in Sources */,
 				5B513ABDEFFB61529D08DECCE5C0BA4E /* DZNineImageBoxView.swift in Sources */,
 				07FEE0CE6B5479EB3AD846361652B3D3 /* PIImageCache.swift in Sources */,
