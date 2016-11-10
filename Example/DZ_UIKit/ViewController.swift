@@ -77,42 +77,42 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         switch (indexPath as NSIndexPath).row {
         case 0:
             // DZActionSheet
-            let actionSheet = DZActionSheet.actionSheetWithTitle("DZ_UIKit DZActionSheet");
-            actionSheet.addButtonWithTitle("Action", CharacterColor: UIColor.red, Handler: {
+            let actionSheet = DZActionSheet.actionSheet(withTitle: "DZ_UIKit DZActionSheet");
+            actionSheet.addButton(withTitle: "Action", characterColor: UIColor.red, handler: {
                 //;
             });
-            actionSheet.addButtonWithTitle("Block", CharacterColor: UIColor.green, Handler: {
+            actionSheet.addButton(withTitle: "Block", characterColor: UIColor.green, handler: {
                 //;
             });
-            actionSheet.addButtonWithTitle("Continue", CharacterColor: UIColor.cyan, Handler: {
+            actionSheet.addButton(withTitle: "Continue", characterColor: UIColor.cyan, handler: {
                 //;
             });
-            actionSheet.addButtonWithTitle("Delete", CharacterColor: UIColor.orange, Handler: {
+            actionSheet.addButton(withTitle: "Delete", characterColor: UIColor.orange, handler: {
                 //;
             });
-            actionSheet.addButtonWithTitle("Edit", CharacterColor: UIColor.brown, Handler: {
+            actionSheet.addButton(withTitle: "Edit", characterColor: UIColor.brown, handler: {
                 //;
             });
-            actionSheet.addButtonWithTitle("FaceToFace", CharacterColor: UIColor.red, Handler: {
+            actionSheet.addButton(withTitle: "FaceToFace", characterColor: UIColor.red, handler: {
                 //;
             });
-            actionSheet.addButtonWithTitle("Game", CharacterColor: UIColor.green, Handler: {
+            actionSheet.addButton(withTitle: "Game", characterColor: UIColor.green, handler: {
                 //;
             });
-            actionSheet.addButtonWithTitle("Hit&Run", CharacterColor: UIColor.cyan, Handler: {
+            actionSheet.addButton(withTitle: "Hit&Run", characterColor: UIColor.cyan, handler: {
                 //;
             });
-            actionSheet.addButtonWithTitle("Increasement", CharacterColor: UIColor.orange, Handler: {
+            actionSheet.addButton(withTitle: "Increasement", characterColor: UIColor.orange, handler: {
                 //;
             });
-            actionSheet.addButtonWithTitle("JoinUs", CharacterColor: UIColor.white, Handler: {
+            actionSheet.addButton(withTitle: "JoinUs", characterColor: UIColor.white, handler: {
                 //;
             });
             actionSheet.show();
             break;
         case 1:
             // DZAlertView 2 button
-            let alert = DZAlertView.alertViewWithTitle("DZ_UIKit", Message: "DZAlertView");
+            let alert = DZAlertView.alertView(withTitle: "DZ_UIKit", message: "DZAlertView");
             alert.setCancelButtonWithTitle("Cancel", handler: {
                 //
                 print("Cancel button is clicked");
@@ -125,7 +125,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             break;
         case 2:
             // DZAlertView 3 button
-            let alert = DZAlertView.alertViewWithTitle("DZ_UIKit", Message: "DZAlertView DZAlertView DZAlertView DZAlertView DZAlertView DZAlertView");
+            let alert = DZAlertView.alertView(withTitle: "DZ_UIKit", message: "DZAlertView DZAlertView DZAlertView DZAlertView DZAlertView DZAlertView");
             alert.setCancelButtonWithTitle("Cancel", bgColor:UIColor.red, handler: {
                 //
                 print("Cancel button is clicked");
@@ -157,6 +157,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             break;
         case 7:
             // DZSwitch
+            break;
+        case 8:
+            // DZButtonMenu
+            self.performSegue(withIdentifier: "ShowDetail", sender: "DZButtonMenu");
             break;
         default:
             break;

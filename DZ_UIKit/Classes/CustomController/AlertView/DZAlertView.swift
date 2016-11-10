@@ -81,7 +81,7 @@ open class DZAlertView : UIView {
     
 // MARK: - class functions
     
-    open class func alertViewWithTitle(_ title: String, Message message: String = "") -> DZAlertView {
+    public class func alertView(withTitle title: String, message: String = "") -> DZAlertView {
         return DZAlertView(title: title, Message: message);
     }
     
@@ -128,7 +128,7 @@ open class DZAlertView : UIView {
     
 // MARK: - public functions
     
-    open func setCancelButtonWithTitle(_ title: String, bgColor: UIColor? = nil, textColor: UIColor? = nil, handler: DZBlock?) {
+    public func setCancelButtonWithTitle(_ title: String, bgColor: UIColor? = nil, textColor: UIColor? = nil, handler: DZBlock?) {
         var btn:UIButton! = self.buttonArray[CANCEL_BUTTON_TAG];
         if ( btn == nil ) {
             btn = UIButton(type: UIButtonType.custom);
@@ -143,7 +143,7 @@ open class DZAlertView : UIView {
         self.setHandler(handler, forButtonAtIndex: CANCEL_BUTTON_TAG);
     }
     
-    open func addButtonWithTitle(_ title: String, bgColor: UIColor? = nil, textColor: UIColor? = nil, handler:DZBlock?) {
+    public func addButtonWithTitle(_ title: String, bgColor: UIColor? = nil, textColor: UIColor? = nil, handler:DZBlock?) {
         let btn = UIButton(type: UIButtonType.custom);
         
         btn.setTitle(title, for: UIControlState());
@@ -167,15 +167,7 @@ open class DZAlertView : UIView {
     fileprivate var group:DispatchGroup?;
     fileprivate var semaphore:DispatchSemaphore?;
     
-    open func show() {
-        self.showWithAnimation(true);
-    }
-    
-    open func dismiss() {
-        self.dismissWithAnimation(true);
-    }
-    
-    open func showWithAnimation(_ flag:Bool) {
+    public func show(withAnimation animation:Bool = true) {
         
         // set all items
         self.setNeedsLayout();
@@ -188,7 +180,7 @@ open class DZAlertView : UIView {
         
         self.theWindow.addSubview(self);
         
-        if flag {
+        if (animation) {
             self.theWindow.alpha = 0.0;
             self.theWindow.transform = CGAffineTransform(scaleX: ANIMATION_SCALE, y: ANIMATION_SCALE);
             
@@ -210,11 +202,11 @@ open class DZAlertView : UIView {
         });
     }
     
-    open func dismissWithAnimation(_ flag:Bool) {
-        self.dismissWindowWithAnimation(true, Finish:true);
+    public func dismiss(withAnimation animation:Bool = true) {
+        self.dismissWindow(withAnimation: animation, finish:true);
     }
     
-    fileprivate func dismissWindowWithAnimation(_ animated:Bool, Finish finish:Bool) {
+    fileprivate func dismissWindow(withAnimation animated:Bool = true, finish:Bool) {
         
         self.theWindow.alpha = 1.0;
         self.theWindow.transform = CGAffineTransform.identity;

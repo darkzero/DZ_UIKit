@@ -11,6 +11,8 @@ import UIKit
 @IBDesignable
 open class DZStepper: UIControl {
     
+// MARK: - properties
+    
     @IBInspectable open var maxValue: Int = 10;
     @IBInspectable open var minValue: Int = 0;
     
@@ -20,15 +22,17 @@ open class DZStepper: UIControl {
     @IBInspectable open var plusImage: UIImage?;
     @IBInspectable open var minusImage: UIImage?;
     
-    fileprivate var changeTimer: Timer = Timer();
-    
     @IBInspectable open var currentValue: Int = 0;
+    
+    fileprivate var changeTimer: Timer = Timer();
     
     fileprivate var numberLabel: UILabel = UILabel();
     fileprivate var increaseButton: UIImageView = UIImageView();
     fileprivate var decreaseButton: UIImageView = UIImageView();
     fileprivate var pushedDur: CGFloat = 0.0;
     fileprivate var stepLength = 1;
+
+// MARK: - init
     
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder);
@@ -46,33 +50,12 @@ open class DZStepper: UIControl {
         self.addSubview(self.numberLabel);
     }
     
-    func increase() {
-        self.pushedDur += 0.5;
-        //DebugLog("self.pushedDur =  ", self.pushedDur);
-        if  self.pushedDur > 5.0 {
-            self.stepLength = max(self.maxValue/20, 5);
-        }
-        if ( self.currentValue < self.maxValue ) {
-            self.increaseButton.backgroundColor = self.increaseButton.backgroundColor?.withAlphaComponent(0.5);
-            self.currentValue = (self.currentValue+stepLength > self.maxValue) ? self.maxValue : (self.currentValue+stepLength);
-            self.numberLabel.text = String(self.currentValue);
-            self.sendActions(for: UIControlEvents.valueChanged);
-        }
-    }
-    
-    func decrease() {
-        if ( self.currentValue > self.minValue ) {
-            self.decreaseButton.backgroundColor = self.decreaseButton.backgroundColor?.withAlphaComponent(0.5);
-            self.currentValue = (self.currentValue-stepLength<self.minValue) ? self.minValue : (self.currentValue-stepLength);
-            self.numberLabel.text = String(self.currentValue);
-            self.sendActions(for: UIControlEvents.valueChanged);
-        }
-    }
+// MARK: - Touches handle
     
     open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let location = touches.first?.location(in: self);
         if ( location != nil ) {
-            self.changeValueWithTouchLocation(location!);
+            self.changeValue(withTouchLocation: location!);
         }
     }
     
@@ -105,7 +88,9 @@ open class DZStepper: UIControl {
         self.pushedDur = 0.0;
     }
     
-    func changeValueWithTouchLocation(_ location: CGPoint) {
+// MARK: - change value functions
+    
+    fileprivate func changeValue(withTouchLocation location: CGPoint) {
         if ( self.increaseButton.frame.contains(location) ) {
             self.increase();
             changeTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(DZStepper.increase), userInfo: nil, repeats: true);
@@ -122,6 +107,31 @@ open class DZStepper: UIControl {
         }
     }
     
+    internal func increase() {
+        self.pushedDur += 0.5;
+        //DebugLog("self.pushedDur =  ", self.pushedDur);
+        if  self.pushedDur > 5.0 {
+            self.stepLength = max(self.maxValue/20, 5);
+        }
+        if ( self.currentValue < self.maxValue ) {
+            self.increaseButton.backgroundColor = self.increaseButton.backgroundColor?.withAlphaComponent(0.5);
+            self.currentValue = (self.currentValue+stepLength > self.maxValue) ? self.maxValue : (self.currentValue+stepLength);
+            self.numberLabel.text = String(self.currentValue);
+            self.sendActions(for: UIControlEvents.valueChanged);
+        }
+    }
+    
+    internal func decrease() {
+        if ( self.currentValue > self.minValue ) {
+            self.decreaseButton.backgroundColor = self.decreaseButton.backgroundColor?.withAlphaComponent(0.5);
+            self.currentValue = (self.currentValue-stepLength<self.minValue) ? self.minValue : (self.currentValue-stepLength);
+            self.numberLabel.text = String(self.currentValue);
+            self.sendActions(for: UIControlEvents.valueChanged);
+        }
+    }
+
+// MARK: - layoutSubviews
+
     override open func layoutSubviews() {
         super.layoutSubviews();
         

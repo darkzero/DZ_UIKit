@@ -23,6 +23,8 @@ protocol DZCheckBoxGroupDelegate {
 
 open class DZCheckBoxGroup : UIControl {
     
+// MARK: - properties
+    
     open var multipleCheckEnabled:Bool    = false;
     open var style: DZCheckBoxGroupStyle  = .default;
     
@@ -30,6 +32,8 @@ open class DZCheckBoxGroup : UIControl {
     
     fileprivate var checkBoxArray:[DZCheckBox];
 
+// MARK: - init
+    
     required public init?(coder aDecoder: NSCoder) {
         self.multipleCheckEnabled   = false;
         self.checkBoxArray          = [DZCheckBox]();
@@ -53,65 +57,24 @@ open class DZCheckBoxGroup : UIControl {
         super.didMoveToSuperview();
     }
     
-    override open func layoutSubviews() {
-        var _ = self.subviews.map { $0.removeFromSuperview() };
-        
-        let itemsCount:Int  = self.checkBoxArray.count;
-        let theCheckBox     = self.checkBoxArray[0] as! DZCheckBox;
-        var theRect:CGRect  = CGRect.zero;
-        
-        
-        switch self.style {
-        case .list :
-            theRect = CGRect( x: self.frame.origin.x, y: self.frame.origin.y,
-                                 width: theCheckBox.frame.size.width, height: (theCheckBox.frame.size.height + 5)*CGFloat(itemsCount));
-            for i in 0 ... (itemsCount-1) {
-                let aCheckBox = self.checkBoxArray[i] as! DZCheckBox;
-                aCheckBox.frame.origin = CGPoint(x: 0, y: (aCheckBox.frame.size.height+5)*CGFloat(i));
-                
-                self.addSubview(aCheckBox);
-            }
-            break;
-        case .bar, .default :
-            theRect = CGRect( x: self.frame.origin.x, y: self.frame.origin.y,
-                                  width: (theCheckBox.frame.size.width + 5)*CGFloat(itemsCount), height: theCheckBox.frame.size.height);
-            for i in 0 ... (itemsCount-1) {
-                let aCheckBox = self.checkBoxArray[i] as! DZCheckBox;
-                aCheckBox.frame.origin = CGPoint(x: (aCheckBox.frame.size.width+5)*CGFloat(i), y: 0);
-                
-                self.addSubview(aCheckBox);
-            }
-            break;
-        }
-        
-        self.frame = theRect;
-        
-        for i in 0 ... (self.checkBoxArray.count - 1) {
-            let checkBox:DZCheckBox = self.checkBoxArray[i] as! DZCheckBox;
-            if ( self.checkedIndexes.contains(i) ) {
-                checkBox.checked = true;
-            }
-        }
-    }
-    
-    open class func checkBoxgroupWithFrame(_ frame : CGRect) -> DZCheckBoxGroup {
+    public class func checkBoxgroup(withFrame frame : CGRect) -> DZCheckBoxGroup {
         let group:DZCheckBoxGroup! = DZCheckBoxGroup(frame:frame);
         return group;
     }
     
-    open class func checkBoxgroupWithFrame(_ frame : CGRect, Items items : [DZCheckBox]) -> DZCheckBoxGroup {
+    public class func checkBoxgroup(withFrame frame : CGRect, Items items : [DZCheckBox]) -> DZCheckBoxGroup {
         let group = DZCheckBoxGroup(frame:frame);
         group.checkBoxArray.append(contentsOf: items);
         return group;
     }
     
-    open func addCheckBox(_ checkBox:DZCheckBox) {
+    public func addCheckBox(_ checkBox:DZCheckBox) {
         checkBox.addTarget(self, action: #selector(DZCheckBoxGroup.onCheckBoxCheckedChanged(_:)), for: UIControlEvents.valueChanged);
         self.checkBoxArray.append(checkBox);
         //self.setNeedsLayout();
     }
     
-    open func addCheckBoxes(_ items:[DZCheckBox]) {
+    public func addCheckBoxes(_ items:[DZCheckBox]) {
         for checkBox in items {
             checkBox.addTarget(self, action: #selector(DZCheckBoxGroup.onCheckBoxCheckedChanged(_:)), for: UIControlEvents.valueChanged);
             self.checkBoxArray.append(checkBox);
@@ -119,7 +82,7 @@ open class DZCheckBoxGroup : UIControl {
         //self.setNeedsLayout();
     }
     
-    open func onCheckBoxCheckedChanged(_ sender: AnyObject)
+    internal func onCheckBoxCheckedChanged(_ sender: AnyObject)
     {
         let box     = sender as! DZCheckBox;
         let checked = box.checked;
@@ -142,6 +105,49 @@ open class DZCheckBoxGroup : UIControl {
         }
         
         self.sendActions(for: UIControlEvents.valueChanged);
+    }
+    
+// MARK: - layoutSubviews
+    
+    override open func layoutSubviews() {
+        var _ = self.subviews.map { $0.removeFromSuperview() };
+        
+        let itemsCount:Int  = self.checkBoxArray.count;
+        let theCheckBox     = self.checkBoxArray[0] as! DZCheckBox;
+        var theRect:CGRect  = CGRect.zero;
+        
+        
+        switch self.style {
+        case .list :
+            theRect = CGRect( x: self.frame.origin.x, y: self.frame.origin.y,
+                              width: theCheckBox.frame.size.width, height: (theCheckBox.frame.size.height + 5)*CGFloat(itemsCount));
+            for i in 0 ... (itemsCount-1) {
+                let aCheckBox = self.checkBoxArray[i] as! DZCheckBox;
+                aCheckBox.frame.origin = CGPoint(x: 0, y: (aCheckBox.frame.size.height+5)*CGFloat(i));
+                
+                self.addSubview(aCheckBox);
+            }
+            break;
+        case .bar, .default :
+            theRect = CGRect( x: self.frame.origin.x, y: self.frame.origin.y,
+                              width: (theCheckBox.frame.size.width + 5)*CGFloat(itemsCount), height: theCheckBox.frame.size.height);
+            for i in 0 ... (itemsCount-1) {
+                let aCheckBox = self.checkBoxArray[i] as! DZCheckBox;
+                aCheckBox.frame.origin = CGPoint(x: (aCheckBox.frame.size.width+5)*CGFloat(i), y: 0);
+                
+                self.addSubview(aCheckBox);
+            }
+            break;
+        }
+        
+        self.frame = theRect;
+        
+        for i in 0 ... (self.checkBoxArray.count - 1) {
+            let checkBox:DZCheckBox = self.checkBoxArray[i] as! DZCheckBox;
+            if ( self.checkedIndexes.contains(i) ) {
+                checkBox.checked = true;
+            }
+        }
     }
     
 //    + (DZCheckBoxGroup*) checkBoxgroupWithFrame:(CGRect)frame;

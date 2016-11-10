@@ -39,7 +39,7 @@ protocol DZButtonMenuDelegate {
 
 open class DZButtonMenu : UIView {
     
-    // MARK: - Class define
+// MARK: - Class define
     
     let PADDING:CGFloat             = 10.0;
     let BUTTON_DIAMETER:CGFloat     = 48.0;
@@ -97,10 +97,12 @@ open class DZButtonMenu : UIView {
         }
     }
     
-    // MARK: - public properties
+// MARK: - public properties
+    
     var delegate:DZButtonMenuDelegate?;
     
-    // MARK: - internal properties
+// MARK: - internal properties
+    
     var location:DZButtonMenuLocation   = .free;
     var direction:DZButtonMenuDirection = .none;
     var menuState:DZButtonMenuState     = .closed;
@@ -112,25 +114,25 @@ open class DZButtonMenu : UIView {
     
     var maxLabelWidth:CGFloat = 0.0;
     
-    var openImage   = "";
-    var closeImage  = "";
+    var openImage: String?;
+    var closeImage: String?;
     
-     //open var mask: UIView?;
+     open var maskBg: UIView?;
     
-    // MARK: - private properties
+// MARK: - private properties
     
-    // MARK: - init
+// MARK: - init
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public init(location: DZButtonMenuLocation, direction: DZButtonMenuDirection, closeImage: String, openImage: String?, titleArray: [String], imageArray: [String]?) {
+    public init(location: DZButtonMenuLocation, direction: DZButtonMenuDirection, closeImage: String?, openImage: String?, titleArray: [String], imageArray: [String]?) {
         super.init(frame: CGRect.zero);
         
-        self.mask = UIView.init(frame: UIScreen.main.bounds);
-        self.mask?.backgroundColor = RGB_HEX("ffffff", 0.7);
-        self.mask?.isHidden = true;
+        self.maskBg = UIView.init(frame: UIScreen.main.bounds);
+        self.maskBg?.backgroundColor = RGB_HEX("ffff00", 0.7);
+        self.maskBg?.isHidden = true;
         
         self.clipsToBounds = false;
         
@@ -213,7 +215,7 @@ open class DZButtonMenu : UIView {
         self.createMainButtonCloseImage(closeImage, OpenImage: openImage);
     }
     
-    public init(location: DZButtonMenuLocation, direction: DZButtonMenuDirection, closeImage: String, openImage: String?, imageArray: [String]) {
+    public init(location: DZButtonMenuLocation, direction: DZButtonMenuDirection, closeImage: String?, openImage: String?, imageArray: [String]) {
         super.init(frame: CGRect.zero);
         
         self.location   = location;
@@ -255,7 +257,7 @@ open class DZButtonMenu : UIView {
     // MARK: - public functions
     
     // MARK: - private functions
-    fileprivate func setFrameWithLocation(_ location: DZButtonMenuLocation)
+    fileprivate func setFrame(withLocation location: DZButtonMenuLocation)
     {
         switch location {
             case .rightBottom:
@@ -428,21 +430,21 @@ open class DZButtonMenu : UIView {
         
     }
     
-    @objc fileprivate func switchMenuStatus() {
+    internal func switchMenuStatus() {
         if ( self.menuState == .closed ) {
-            self.showMenuWithAnimation(true);
+            self.showMenu(withAnimation: true);
         }
         else if ( self.menuState == .opened ) {
-            self.hideMenuWithAnimation(true);
+            self.hideMenu(withAnimation: true);
         }
     }
     
     // MARK: - Menu Animations
-    fileprivate func showMenuWithAnimation(_ animation:Bool) {
+    fileprivate func showMenu(withAnimation animation:Bool = true) {
         self.menuState = .opening;
         
-        self.superview?.addSubview(self.mask!);
-        self.mask?.isHidden = false;
+        self.superview?.addSubview(self.maskBg!);
+        self.maskBg?.isHidden = false;
         self.superview?.bringSubview(toFront: self);
 //        self.mask
         
@@ -477,11 +479,13 @@ open class DZButtonMenu : UIView {
     
     fileprivate func afterShow() {
         let mainBtn = self.viewWithTag(self.TAG_MAIN_BUTTON) as! UIButton;
-        mainBtn.setImage(UIImage(named: self.openImage), for: UIControlState());
+        if ( self.openImage != nil ) {
+            mainBtn.setImage(UIImage(named: self.openImage!), for: UIControlState());
+        }
         self.menuState = .opened;
     }
     
-    fileprivate func hideMenuWithAnimation(_ animation:Bool) {
+    fileprivate func hideMenu(withAnimation animation:Bool = true) {
         self.menuState = .closing;
         
         UIView.animate(withDuration: ANIMATION_DURATION, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
@@ -503,18 +507,20 @@ open class DZButtonMenu : UIView {
     }
     
     fileprivate func afterHide() {
-        self.mask?.removeFromSuperview();
-        self.mask?.isHidden = true;
+        self.maskBg?.removeFromSuperview();
+        self.maskBg?.isHidden = true;
         
         let mainBtn = self.viewWithTag(self.TAG_MAIN_BUTTON) as! UIButton;
-        mainBtn.setImage(UIImage(named: self.closeImage), for: UIControlState());
+        if ( self.closeImage != nil ) {
+            mainBtn.setImage(UIImage(named: self.closeImage!), for: UIControlState());
+        }
         self.menuState = .closed;
     }
     
     // MARK: - layoutSubviews
     open override func didMoveToSuperview() {
         if ( self.superview != nil ) {
-            self.setFrameWithLocation(self.location);
+            self.setFrame(withLocation: self.location);
             self.calcOpenFrame();
         }
     }

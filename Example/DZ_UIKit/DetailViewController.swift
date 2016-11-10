@@ -20,7 +20,7 @@ class DetailViewController: UIViewController, DZNineImageBoxViewDelegate {
         
         switch viewTitle {
         case "DZAnnularProgress":
-            let progress1 = DZAnnularProgress(Frame: CGRect(x: 10, y: 10, width: 100, height: 100), AnnularWidth: 8, Type: AnnularProgressType.progress);
+            let progress1 = DZAnnularProgress(frame: CGRect(x: 10, y: 10, width: 100, height: 100), annularWidth: 8, type: .progress);
             progress1.tag = 101;
             progress1.annularBackColor = UIColor.lightGray;
             progress1.annularFrontColor = UIColor.orange;
@@ -32,7 +32,7 @@ class DetailViewController: UIViewController, DZNineImageBoxViewDelegate {
             progress1Ctrl1.tag = 102;
             progress1Ctrl1.addTarget(self, action: #selector(DetailViewController.onProgressCtrlValueChanged(_:)), for: UIControlEvents.valueChanged);
             
-            let progress2 = DZAnnularProgress(Frame: CGRect(x: 10, y: 160, width: 100, height: 100), AnnularWidth: 8, Type: AnnularProgressType.percent);
+            let progress2 = DZAnnularProgress(frame: CGRect(x: 10, y: 160, width: 100, height: 100), annularWidth: 8, type: .percent);
             progress2.tag = 103;
             progress2.annularBackColor = UIColor.lightGray;
             progress2.annularFrontColor = UIColor.orange;
@@ -53,12 +53,12 @@ class DetailViewController: UIViewController, DZNineImageBoxViewDelegate {
             let imageArray = ["http://place-hold.it/200x200", "http://www.featurepics.com/FI/Thumb300/20091231/Red-Fire-Hydrant-1421559.jpg",
                               "http://place-hold.it/200x200", "http://place-hold.it/200x200",
                               "http://place-hold.it/200x200", "http://place-hold.it/200x200",];
-            let nineImgView = DZNineImageBoxView.nineImageBoxViewWithImages(imageArray, frame: CGRect(x: 10,y: 10,width: 200,height: 200));
+            let nineImgView = DZNineImageBoxView.nineImageBoxView(withImages: imageArray, frame: CGRect(x: 10,y: 10,width: 200,height: 200));
             nineImgView.delegate = self;
             self.mainView.addSubview(nineImgView);
             break;
         case "DZCheckBoxGroup":
-            let checkboxGroup = DZCheckBoxGroup.checkBoxgroupWithFrame(CGRect(x: 10, y: 100, width: 240, height: 48));
+            let checkboxGroup = DZCheckBoxGroup.checkBoxgroup(withFrame: CGRect(x: 10, y: 100, width: 240, height: 48));
             checkboxGroup.backgroundColor = UIColor.red;
             //checkboxGroup.multipleCheckEnabled = true;
             checkboxGroup.multipleCheckEnabled = false;
@@ -86,7 +86,7 @@ class DetailViewController: UIViewController, DZNineImageBoxViewDelegate {
                     checkedColor: RGB_HEX("9988333", 1.0)));
             self.view.addSubview(checkboxGroup);
             
-            let checkBoxList = DZCheckBoxGroup.checkBoxgroupWithFrame(CGRect(x: 10, y: 180, width: 240, height: 240));
+            let checkBoxList = DZCheckBoxGroup.checkBoxgroup(withFrame: CGRect(x: 10, y: 180, width: 240, height: 240));
             checkBoxList.style = .list;
             checkBoxList.addCheckBox(
                 DZCheckBox.checkBox(withFrame: CGRect(x: 0, y: 0, width: 32, height: 32),
@@ -97,6 +97,10 @@ class DetailViewController: UIViewController, DZNineImageBoxViewDelegate {
             checkBoxList.checkedIndexes = [0];
             checkBoxList.multipleCheckEnabled = true;
             self.view.addSubview(checkBoxList);
+            break;
+        case "DZButtonMenu" :
+            let buttonMenu = DZButtonMenu(location: .rightBottom, direction: .up, closeImage: nil, openImage: nil, titleArray: ["A", "B"], imageArray: nil);
+            self.view.addSubview(buttonMenu);
             break;
         default:
             break;

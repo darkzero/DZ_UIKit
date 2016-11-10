@@ -24,6 +24,8 @@ public enum DZCheckBoxType {
 @IBDesignable
 open class DZCheckBox : UIControl {
     
+// MARK: - properties
+    
     @IBInspectable open var borderWidth:CGFloat = 4.0;
     
     fileprivate var backgroundLayer:CALayer!;
@@ -47,7 +49,7 @@ open class DZCheckBox : UIControl {
     @IBInspectable open var checkBoxSize:CGSize = CGSize(width: 48, height: 48);
     
     var withTitle: Bool = false;
-    open var title: String = "" {
+    public var title: String = "" {
         didSet {
             if self.withTitle {
                 self.titleLabel?.text = title;
@@ -63,13 +65,13 @@ open class DZCheckBox : UIControl {
         }
     }
     
-    @IBInspectable open var checked: Bool = false {
+    @IBInspectable public var checked: Bool = false {
         didSet {
             self.playAnimation(checked);
         }
     }
     
-    @IBInspectable open var borderColor: UIColor? = nil {
+    @IBInspectable public var borderColor: UIColor? = nil {
         didSet {
             if ( borderColor != nil ) {
                 backgroundLayer.backgroundColor = borderColor!.cgColor;
@@ -78,19 +80,19 @@ open class DZCheckBox : UIControl {
         }
     };
     
-    @IBInspectable open var uncheckedColor: UIColor = DEFAULT_UNCHECKED_COLOR {
+    @IBInspectable public var uncheckedColor: UIColor = DEFAULT_UNCHECKED_COLOR {
         didSet {
             uncheckedLayer.backgroundColor = uncheckedColor.cgColor;
         }
     };
     
-    @IBInspectable open var checkedColor: UIColor = DEFAULT_CHECKED_COLOR {
+    @IBInspectable public var checkedColor: UIColor = DEFAULT_CHECKED_COLOR {
         didSet {
             checkedLayer.backgroundColor = checkedColor.cgColor;
         }
     };
     
-    @IBInspectable open var image: UIImage? {
+    @IBInspectable public var image: UIImage? {
         didSet {
             self.imageView.image = image;
             //self.setNeedsLayout();
@@ -102,7 +104,7 @@ open class DZCheckBox : UIControl {
         }
     };
     
-    open class func checkBox(withFrame frame:CGRect,
+    public class func checkBox(withFrame frame:CGRect,
         type:DZCheckBoxType,
         title: String? = nil,
         image: UIImage? = nil,
@@ -202,10 +204,9 @@ open class DZCheckBox : UIControl {
         self.addTarget(self, action: #selector(DZCheckBox.onCheckBoxTouched(_:)), for: UIControlEvents.touchUpInside);
     }
     
+// MARK: - touch handler
     
-// MARK: - touch handle
-    
-    func onCheckBoxTouched(_ sender:AnyObject)
+    internal func onCheckBoxTouched(_ sender:AnyObject)
     {
         let oldValue:Bool = self.checked;
         self.checked = !oldValue;
@@ -232,6 +233,8 @@ open class DZCheckBox : UIControl {
             });
         }
     }
+    
+// MARK: - layoutSubviews
     
     override open func layoutSubviews() {
         super.layoutSubviews();
@@ -292,12 +295,4 @@ open class DZCheckBox : UIControl {
             break;
         }
     }
-    
-    /*
-     // Only override drawRect: if you perform custom drawing.
-     // An empty implementation adversely affects performance during animation.
-     override func drawRect(rect: CGRect) {
-     // Drawing code
-     }
-     */
 }

@@ -28,53 +28,52 @@ public enum AnnularDisplayType: Int {
 
 open class DZAnnularProgress: UIView {
     
-    // MARK: - properties
+// MARK: - properties
     
-    open var progressType: AnnularProgressType   = AnnularProgressType.none;
-    open var displayType: AnnularDisplayType     = AnnularDisplayType.none;
+    public var progressType: AnnularProgressType    = AnnularProgressType.none;
+    public var displayType: AnnularDisplayType      = AnnularDisplayType.none;
     
-    open var maxValue: CGFloat            = 100.0 { didSet { self.setNeedsDisplay(); } };
-    open var currectValue: CGFloat        = 0.0  { didSet { self.setNeedsDisplay(); } };
+    public var maxValue: CGFloat            = 100.0 { didSet { self.setNeedsDisplay(); } };
+    public var currectValue: CGFloat        = 0.0  { didSet { self.setNeedsDisplay(); } };
     
-    open var annularWidth: CGFloat        = 8.0;
+    public var annularWidth: CGFloat        = 8.0;
     
-    open var annularBackColor: UIColor    = UIColor.white;
-    open var annularFrontColor: UIColor   = UIColor.white;
-    open var centerCircleColor: UIColor   = UIColor.white;
+    public var annularBackColor: UIColor    = UIColor.white;
+    public var annularFrontColor: UIColor   = UIColor.white;
+    public var centerCircleColor: UIColor   = UIColor.white;
     
-    open var title: String                = "";
-    open var titleFont: UIFont            = UIFont.systemFont(ofSize: 16.0);
-    open var titleColor: UIColor          = UIColor.darkText;
+    public var title: String                = "";
+    public var titleFont: UIFont            = UIFont.systemFont(ofSize: 16.0);
+    public var titleColor: UIColor          = UIColor.darkText;
     
-    open var subtitle: String             = "";
-    open var subtitleFont: UIFont         = UIFont.systemFont(ofSize: 12.0);
-    open var subtitleColor: UIColor       = UIColor.darkText;
+    public var subtitle: String             = "";
+    public var subtitleFont: UIFont         = UIFont.systemFont(ofSize: 12.0);
+    public var subtitleColor: UIColor       = UIColor.darkText;
     
     
     open var INNER_CIRCLE_DIAMETER:CGFloat {
         get { return (self.frame.size.width - (self.annularWidth*2.0) - 6.0) }
     };
     
-    // MARK: - init functions
+// MARK: - init functions
     
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder);
-//        fatalError("init(coder:) has not been implemented")
     }
     
-    open class func initWithOuterRadius(_ outerRadius: CGFloat, InnerRadius innerRadius: CGFloat, Type type: AnnularProgressType) -> DZAnnularProgress {
+    public class func annularProgress(withOuterRadius outerRadius: CGFloat, innerRadius: CGFloat, type: AnnularProgressType) -> DZAnnularProgress {
         let outerDiameter = outerRadius * 2.0;
         let innerDiameter = innerRadius * 2.0;
-        return DZAnnularProgress.initWithOuterDiameter(outerDiameter, InnerDiameter: innerDiameter, Type: type);
+        return DZAnnularProgress.annularProgress(withOuterDiameter: outerDiameter, innerDiameter: innerDiameter, type: type);
     }
     
-    open class func initWithOuterDiameter(_ outerDiameter: CGFloat, InnerDiameter innerDiameter: CGFloat, Type type: AnnularProgressType) -> DZAnnularProgress {
+    public class func annularProgress(withOuterDiameter outerDiameter: CGFloat, innerDiameter: CGFloat, type: AnnularProgressType) -> DZAnnularProgress {
         let frame: CGRect           = CGRect(x: 0, y: 0, width: outerDiameter, height: outerDiameter);
         let annularWidth: CGFloat   = outerDiameter/2.0 - innerDiameter/2.0;
-        return DZAnnularProgress(Frame: frame, AnnularWidth: annularWidth, Type: type);
+        return DZAnnularProgress(frame: frame, annularWidth: annularWidth, type: type);
     }
     
-    public init(Frame frame: CGRect, AnnularWidth annularWidth: CGFloat, Type type: AnnularProgressType) {
+    public init(frame: CGRect, annularWidth: CGFloat, type: AnnularProgressType) {
         super.init(frame: frame);
         
         self.progressType       = type;
@@ -82,7 +81,8 @@ open class DZAnnularProgress: UIView {
         self.backgroundColor    = UIColor.clear;
     }
     
-    // MARK: - life cycle
+// MARK: - life cycle
+    
     open override func didMoveToSuperview() {
     }
     
