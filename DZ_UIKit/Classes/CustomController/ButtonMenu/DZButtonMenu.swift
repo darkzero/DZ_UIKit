@@ -37,6 +37,9 @@ protocol DZButtonMenuDelegate {
     func buttonMenu(_ aButtonMenu: DZButtonMenu, ClickedButtonAtIndex index: Int);
 }
 
+let MAIN_BTN_OPEN_STR: String   = "▲";
+let MAIN_BTN_CLOSE_STR: String  = "▼";
+
 open class DZButtonMenu : UIView {
     
 // MARK: - Class define
@@ -131,7 +134,7 @@ open class DZButtonMenu : UIView {
         super.init(frame: CGRect.zero);
         
         self.maskBg = UIView.init(frame: UIScreen.main.bounds);
-        self.maskBg?.backgroundColor = RGB_HEX("ffff00", 0.7);
+        self.maskBg?.backgroundColor = RGB_HEX("ffffff", 0.7);
         self.maskBg?.isHidden = true;
         
         self.clipsToBounds = false;
@@ -176,6 +179,7 @@ open class DZButtonMenu : UIView {
                 btn.layer.cornerRadius  = BUTTON_DIAMETER/2
                 btn.tag                 = TAG_MAIN_BUTTON + i;
                 btn.alpha               = 0.0;
+                btn.titleLabel?.font    = UIFont.boldSystemFont(ofSize: 16);
                 btn.setTitle(title.substring(to: title.characters.index(title.startIndex, offsetBy: 1)).uppercased(), for:UIControlState());
                 btn.titleLabel?.font = UIFont.systemFont(ofSize: 24.0);
                 self.addSubview(btn);
@@ -286,13 +290,11 @@ open class DZButtonMenu : UIView {
         btnMain.backgroundColor = COLOR_SEARCH_ITEM_OFF;
     
         // image
-        if( closeImg != nil )
-        {
+        if( closeImg != nil ) {
             btnMain.setImage(UIImage(named: closeImg!), for:UIControlState());
         }
-        else
-        {
-            btnMain.setTitle("▲", for:UIControlState());
+        else {
+            btnMain.setTitle(MAIN_BTN_OPEN_STR, for:UIControlState());
         }
         
         btnMain.tag = TAG_MAIN_BUTTON;
@@ -316,35 +318,31 @@ open class DZButtonMenu : UIView {
                   self.frame.origin.y,
                   BUTTON_DIAMETER*(buttonCount+1)+BUTTON_PADDING*buttonCount,
                   BUTTON_DIAMETER);
-            self.frameOpen
-                = CGRect(x: self.frame.origin.x-BUTTON_DIAMETER*buttonCount-BUTTON_PADDING*buttonCount,
-                             y: self.frame.origin.y,
-                             width: BUTTON_DIAMETER*(buttonCount+1)+BUTTON_PADDING*buttonCount,
-                             height: BUTTON_DIAMETER);
+            self.frameOpen = CGRect(x: self.frame.origin.x-BUTTON_DIAMETER*buttonCount-BUTTON_PADDING*buttonCount,
+                                    y: self.frame.origin.y,
+                                    width: BUTTON_DIAMETER*(buttonCount+1)+BUTTON_PADDING*buttonCount,
+                                    height: BUTTON_DIAMETER);
             break;
         case .right:
             //
-            self.frameOpen
-                = CGRect(x: self.frame.origin.x,
-                             y: self.frame.origin.y,
-                             width: BUTTON_DIAMETER*(buttonCount+1)+BUTTON_PADDING*buttonCount,
-                             height: BUTTON_DIAMETER);
+            self.frameOpen = CGRect(x: self.frame.origin.x,
+                                    y: self.frame.origin.y,
+                                    width: BUTTON_DIAMETER*(buttonCount+1)+BUTTON_PADDING*buttonCount,
+                                    height: BUTTON_DIAMETER);
             break;
         case .up:
             //
-            self.frameOpen
-                = CGRect(x: self.frame.origin.x,
-                             y: self.frame.origin.y-BUTTON_DIAMETER*buttonCount-BUTTON_PADDING*buttonCount,
-                             width: BUTTON_DIAMETER,
-                             height: BUTTON_DIAMETER*(buttonCount+1)+BUTTON_PADDING*buttonCount);
+            self.frameOpen = CGRect(x: self.frame.origin.x,
+                                    y: self.frame.origin.y-BUTTON_DIAMETER*buttonCount-BUTTON_PADDING*buttonCount,
+                                    width: BUTTON_DIAMETER,
+                                    height: BUTTON_DIAMETER*(buttonCount+1)+BUTTON_PADDING*buttonCount);
             break;
         case .down:
             //
-            self.frameOpen
-                = CGRect(x: self.frame.origin.x,
-                             y: self.frame.origin.y,
-                             width: BUTTON_DIAMETER,
-                             height: BUTTON_DIAMETER*(buttonCount+1)+BUTTON_PADDING*buttonCount);
+            self.frameOpen = CGRect(x: self.frame.origin.x,
+                                    y: self.frame.origin.y,
+                                    width: BUTTON_DIAMETER,
+                                    height: BUTTON_DIAMETER*(buttonCount+1)+BUTTON_PADDING*buttonCount);
             break;
         default:
             break;
@@ -482,6 +480,9 @@ open class DZButtonMenu : UIView {
         if ( self.openImage != nil ) {
             mainBtn.setImage(UIImage(named: self.openImage!), for: UIControlState());
         }
+        else {
+            mainBtn.setTitle(MAIN_BTN_CLOSE_STR, for:UIControlState());
+        }
         self.menuState = .opened;
     }
     
@@ -513,6 +514,9 @@ open class DZButtonMenu : UIView {
         let mainBtn = self.viewWithTag(self.TAG_MAIN_BUTTON) as! UIButton;
         if ( self.closeImage != nil ) {
             mainBtn.setImage(UIImage(named: self.closeImage!), for: UIControlState());
+        }
+        else {
+            mainBtn.setTitle(MAIN_BTN_OPEN_STR, for:UIControlState());
         }
         self.menuState = .closed;
     }

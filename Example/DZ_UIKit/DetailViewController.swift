@@ -99,8 +99,14 @@ class DetailViewController: UIViewController, DZNineImageBoxViewDelegate {
             self.view.addSubview(checkBoxList);
             break;
         case "DZButtonMenu" :
-            let buttonMenu = DZButtonMenu(location: .rightBottom, direction: .up, closeImage: nil, openImage: nil, titleArray: ["A", "B"], imageArray: nil);
-            self.view.addSubview(buttonMenu);
+            let buttonMenuRB = DZButtonMenu(location: .rightBottom, direction: .up, closeImage: nil, openImage: nil, titleArray: ["Attack", "Defence", "Magic", "Run Away"], imageArray: nil);
+            let buttonMenuLB = DZButtonMenu(location: .leftBottom, direction: .right, closeImage: nil, openImage: nil, titleArray: ["Attack", "Defence", "Magic", "Run Away"], imageArray: nil);
+            let buttonMenuRT = DZButtonMenu(location: .rightTop, direction: .left, closeImage: nil, openImage: nil, titleArray: ["Attack", "Defence", "Magic", "Run Away"], imageArray: nil);
+            let buttonMenuLT = DZButtonMenu(location: .leftTop, direction: .down, closeImage: nil, openImage: nil, titleArray: ["Attack", "Defence", "Magic", "Run Away"], imageArray: nil);
+            self.view.addSubview(buttonMenuRB);
+            self.view.addSubview(buttonMenuLB);
+            self.view.addSubview(buttonMenuRT);
+            self.view.addSubview(buttonMenuLT);
             break;
         default:
             break;
