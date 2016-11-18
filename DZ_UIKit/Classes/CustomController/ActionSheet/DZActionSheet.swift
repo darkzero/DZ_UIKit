@@ -270,7 +270,7 @@ open class DZActionSheet : UIView {
         // set all items
         self.setNeedsLayout();
         
-        //self.theWindow = UIWindow(frame: UIScreen.mainScreen().bounds);
+        self.theWindow = UIWindow(frame: UIScreen.main.bounds);
         self.theWindow.windowLevel = UIWindowLevelNormal;
         self.theWindow.isOpaque = false;
         self.theWindow.backgroundColor = RGBA(0, 0, 0, 0.3);
@@ -375,6 +375,9 @@ open class DZActionSheet : UIView {
 // MARK: - layoutSubviews
     
     override open func layoutSubviews() {
+        
+        UITraitCollection(horizontalSizeClass: .regular);
+        
         let rect:CGRect = CGRect(x: 0.0, y: 0.0, width: CANCEL_BUTTON_WIDTH, height: TITLE_LABEL_HEIGHT);
         
         // calc the height

@@ -26,6 +26,7 @@
 		BE3916F47645CADC9E3EA3EC8430F4E2 /* UIImage+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECDD092FE96EA9F03878F38C43154D88 /* UIImage+Color.swift */; };
 		C12BD0181621F463A166AE3FABB3ABCC /* DZ_UIKit-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD5483AF46DCE6B873E8552B776B932 /* DZ_UIKit-dummy.m */; };
 		C821C5741CF3E431006B124D /* DZStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C821C5731CF3E431006B124D /* DZStepper.swift */; };
+		C883CF4F1DDEEAA10039CC46 /* DZActionSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C883CF4E1DDEEAA00039CC46 /* DZActionSheetController.swift */; };
 		C8A6E2141CF863FD00E992FE /* minus.png in Resources */ = {isa = PBXBuildFile; fileRef = C8A6E2111CF863ED00E992FE /* minus.png */; };
 		C8A6E2151CF863FD00E992FE /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = C8A6E2121CF863ED00E992FE /* plus.png */; };
 		C8BF863F1D51F092005C6CB0 /* SwitchBackground_off.png in Resources */ = {isa = PBXBuildFile; fileRef = C8BF863C1D51F092005C6CB0 /* SwitchBackground_off.png */; };
@@ -100,6 +101,7 @@
 		C03A785BF978A0970D8855BDDA547712 /* Pods-DZ_UIKit_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-DZ_UIKit_Example-dummy.m"; sourceTree = "<group>"; };
 		C75CD6FCC7383C39B43225B0287D7F8B /* DZAlertView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DZAlertView.swift; sourceTree = "<group>"; };
 		C821C5731CF3E431006B124D /* DZStepper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DZStepper.swift; sourceTree = "<group>"; };
+		C883CF4E1DDEEAA00039CC46 /* DZActionSheetController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DZActionSheetController.swift; sourceTree = "<group>"; };
 		C8A6E2101CF863ED00E992FE /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		C8A6E2111CF863ED00E992FE /* minus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = minus.png; sourceTree = "<group>"; };
 		C8A6E2121CF863ED00E992FE /* plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plus.png; sourceTree = "<group>"; };
@@ -300,6 +302,7 @@
 			isa = PBXGroup;
 			children = (
 				9AA820CE95CA74A77566713D5CD1A8E4 /* DZActionSheet.swift */,
+				C883CF4E1DDEEAA00039CC46 /* DZActionSheetController.swift */,
 			);
 			path = ActionSheet;
 			sourceTree = "<group>";
@@ -562,6 +565,7 @@
 				4116CDBA5FBB12F054D60D93DEB0006D /* DZButtonMenu.swift in Sources */,
 				AA0F79C2D3B83DB3E6A6CEAE6FB47167 /* DZCheckBox.swift in Sources */,
 				8C44FEE1C04602688E91563D13188475 /* DZCheckBoxGroup.swift in Sources */,
+				C883CF4F1DDEEAA10039CC46 /* DZActionSheetController.swift in Sources */,
 				EAB9ECE0C09463E227895D5026BAD632 /* DZSwitch.swift in Sources */,
 				5B513ABDEFFB61529D08DECCE5C0BA4E /* DZNineImageBoxView.swift in Sources */,
 				07FEE0CE6B5479EB3AD846361652B3D3 /* PIImageCache.swift in Sources */,

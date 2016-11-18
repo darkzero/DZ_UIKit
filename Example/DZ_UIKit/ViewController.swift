@@ -76,6 +76,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         tableView.deselectRow(at: indexPath, animated: false);
         switch (indexPath as NSIndexPath).row {
         case 0:
+            let a = UIAlertController(title: "a", message: "a", preferredStyle: UIAlertControllerStyle.actionSheet);
+            a.addAction(UIAlertAction(title: "AAA", style: UIAlertActionStyle.cancel, handler: { (action) in
+                //
+            }));
+            self.present(a, animated: true, completion: { 
+                //
+            });
+            /*
             // DZActionSheet
             let actionSheet = DZActionSheet.actionSheet(withTitle: "DZ_UIKit DZActionSheet");
             actionSheet.addButton(withTitle: "Action", characterColor: UIColor.red, handler: {
@@ -108,7 +116,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             actionSheet.addButton(withTitle: "JoinUs", characterColor: UIColor.white, handler: {
                 //;
             });
-            actionSheet.show();
+            actionSheet.show();*/
             break;
         case 1:
             // DZAlertView 2 button
