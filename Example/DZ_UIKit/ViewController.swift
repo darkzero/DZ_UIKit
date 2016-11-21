@@ -76,13 +76,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         tableView.deselectRow(at: indexPath, animated: false);
         switch (indexPath as NSIndexPath).row {
         case 0:
-            let a = UIAlertController(title: "a", message: "a", preferredStyle: UIAlertControllerStyle.actionSheet);
-            a.addAction(UIAlertAction(title: "AAA", style: UIAlertActionStyle.cancel, handler: { (action) in
-                //
-            }));
-            self.present(a, animated: true, completion: { 
-                //
-            });
+            let a = DZActionSheetController.actionSheet(withTitle: "Test", message: "");
+            a.addButton(withTitle: "Action", characterColor: UIColor.red, handler: nil);
+            a.addButton(withTitle: "Block", characterColor: UIColor.green, handler: nil);
+            a.addButton(withTitle: "Continue", characterColor: UIColor.cyan, handler: nil);
+            a.addButton(withTitle: "Delete", characterColor: UIColor.orange, handler: nil);
+            a.show(inViewController: self, animated: true);
             /*
             // DZActionSheet
             let actionSheet = DZActionSheet.actionSheet(withTitle: "DZ_UIKit DZActionSheet");

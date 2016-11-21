@@ -26,7 +26,7 @@ public func SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(_ v: String) -> Bool {
     return (UIDevice.current.systemVersion.compare(v, options: String.CompareOptions.numeric, range: nil, locale: nil) != .orderedDescending);
 }
 
-public let SCREEN_BOUNDS:CGRect            = UIScreen.main.bounds;
+public let SCREEN_BOUNDS = { return UIScreen.main.bounds };
 
 public func DebugLog(_ msg: Any..., file: String = #file, function: String = #function, line: Int = #line, column: Int = #column) {
 #if DEBUG
