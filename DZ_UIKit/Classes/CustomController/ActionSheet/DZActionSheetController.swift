@@ -135,7 +135,7 @@ public class DZActionSheetController: UIViewController, DZActionSheetDelegate {
         DebugLog("onButtonClicked at index \(index)");
         let handler = self.handlerDictionary[index];
         if ( handler != nil ) {
-            DebugLog("no handler");
+            DebugLog("call handler");
             handler!();
         }
         self.dismiss();
@@ -155,7 +155,7 @@ public class DZActionSheetController: UIViewController, DZActionSheetDelegate {
     
     public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         // reset the position
-        UIView.animate(withDuration: self.ANIMATION_SPEED, delay: 0.0, options: .allowUserInteraction, animations: {
+        UIView.animate(withDuration: 0.3, delay: 0.0, options: .allowUserInteraction, animations: {
             self.actionSheet!.center = CGPoint(x: SCREEN_BOUNDS().size.width/2,
                                                y: SCREEN_BOUNDS().size.height - self.actionSheet!.frame.size.height/2);
         }, completion: { (finished) in

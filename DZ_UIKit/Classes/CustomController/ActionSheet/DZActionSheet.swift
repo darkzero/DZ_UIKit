@@ -47,16 +47,16 @@ internal class DZActionSheet : UIControl {
     
 // MARK: - internal properties
     
-    internal var title: String                      = "";
-    internal var cancelButtonBgColor: UIColor       = UIColor.white;
-    internal var cancelButtonTitleColor: UIColor    = RGB(109, 109, 109);
-    
-    internal var buttonArray                = [UIButton]();
-    internal var cancelButton               = UIButton(type: UIButtonType.custom);
-    internal var titleLabel:UILabel?;
-    internal var buttonBgView               = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.light));
-    
 // MARK: - private properties
+    
+    fileprivate var title: String                      = "";
+    fileprivate var cancelButtonBgColor: UIColor       = UIColor.white;
+    fileprivate var cancelButtonTitleColor: UIColor    = RGB(109, 109, 109);
+    
+    fileprivate var buttonArray                = [UIButton]();
+    fileprivate var cancelButton               = UIButton(type: UIButtonType.custom);
+    fileprivate var titleLabel:UILabel?;
+    fileprivate var buttonBgView               = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.light));
     
 // MARK: - delegate
     var delegate: DZActionSheetDelegate?;
@@ -239,9 +239,6 @@ internal class DZActionSheet : UIControl {
         self.addSubview(self.buttonBgView);
         
         self.buttonBgView.backgroundColor = RGB_HEX("ffffff", 0.3);
-        //let effectView = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.light))
-        //effectView.frame = CGRect(x: 0, y: 0, width: CANCEL_BUTTON_WIDTH, height: buttonAreaHeight + titleHeight);
-        //self.buttonBgView.addSubview(effectView);
         
         if ( self.titleLabel != nil ) {
             buttonBgView.addSubview(self.titleLabel!);

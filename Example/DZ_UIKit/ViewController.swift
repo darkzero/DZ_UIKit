@@ -92,33 +92,30 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             break;
         case 1:
             // DZAlertView 2 button
-            let alert = DZAlertView.alertView(withTitle: "DZ_UIKit", message: "DZAlertView");
-            alert.setCancelButtonWithTitle("Cancel", handler: {
+            let alert = DZAlertViewController(title: "DZ_UIKit");
+            alert.setCancelButton(title: "Cancel", handler: {
                 //
                 print("Cancel button is clicked");
             });
-            alert.addButtonWithTitle("Button 01", handler: {
+            alert.addButton(title: "Button 01", handler: {
                 //
                 print("Button 01 is clicked");
             });
-            alert.show();
+            alert.show(inViewController: self);
             break;
         case 2:
             // DZAlertView 3 button
-            let alert = DZAlertView.alertView(withTitle: "DZ_UIKit", message: "DZAlertView DZAlertView DZAlertView DZAlertView DZAlertView DZAlertView");
-            alert.setCancelButtonWithTitle("Cancel", bgColor:UIColor.red, handler: {
+            let alert = DZAlertViewController(title: "DZ_UIKit", message: "DZAlertView DZAlertView DZAlertView DZAlertView DZAlertView DZAlertView");
+            alert.setCancelButton(title: "Cancel", bgColor:UIColor.red, handler: {
                 //
                 print("Cancel button is clicked");
             });
-            alert.addButtonWithTitle("Button 01", bgColor:RGB_HEX("0099FF", 1.0),  handler: {
+            alert.addButton(title: "Button 01", bgColor:RGB_HEX("0099FF", 1.0),  handler: {
                 //
                 print("Button 01 is clicked");
             });
-            alert.addButtonWithTitle("Button 02", handler: {
-                //
-                print("Button 02 is clicked");
-            });
-            alert.show();
+            alert.addButton(title: "Button 02");
+            alert.show(inViewController: self);
             break;
         case 3:
             // DZAnnularProgress
