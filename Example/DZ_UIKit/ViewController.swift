@@ -13,11 +13,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     @IBOutlet var listTableView: UITableView!;
     
-//    lazy var controllerList: NSArray? = {
-//        let path = NSBundle.mainBundle().pathForResource("Controllers", ofType:"plist")
-//        let list = NSArray(contentsOfFile: path);
-//        return list;
-//    }();
     var controllerList: NSArray?;
 
     override func viewDidLoad() {
@@ -76,46 +71,24 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         tableView.deselectRow(at: indexPath, animated: false);
         switch (indexPath as NSIndexPath).row {
         case 0:
-            let a = DZActionSheetController.actionSheet(withTitle: "Test", message: "");
-            a.addButton(withTitle: "Action", characterColor: UIColor.red, handler: nil);
-            a.addButton(withTitle: "Block", characterColor: UIColor.green, handler: nil);
-            a.addButton(withTitle: "Continue", characterColor: UIColor.cyan, handler: nil);
-            a.addButton(withTitle: "Delete", characterColor: UIColor.orange, handler: nil);
-            a.show(inViewController: self, animated: true);
-            /*
-            // DZActionSheet
-            let actionSheet = DZActionSheet.actionSheet(withTitle: "DZ_UIKit DZActionSheet");
-            actionSheet.addButton(withTitle: "Action", characterColor: UIColor.red, handler: {
-                //;
-            });
-            actionSheet.addButton(withTitle: "Block", characterColor: UIColor.green, handler: {
-                //;
-            });
-            actionSheet.addButton(withTitle: "Continue", characterColor: UIColor.cyan, handler: {
-                //;
-            });
-            actionSheet.addButton(withTitle: "Delete", characterColor: UIColor.orange, handler: {
-                //;
-            });
-            actionSheet.addButton(withTitle: "Edit", characterColor: UIColor.brown, handler: {
-                //;
-            });
-            actionSheet.addButton(withTitle: "FaceToFace", characterColor: UIColor.red, handler: {
-                //;
-            });
-            actionSheet.addButton(withTitle: "Game", characterColor: UIColor.green, handler: {
-                //;
-            });
-            actionSheet.addButton(withTitle: "Hit&Run", characterColor: UIColor.cyan, handler: {
-                //;
-            });
-            actionSheet.addButton(withTitle: "Increasement", characterColor: UIColor.orange, handler: {
-                //;
-            });
-            actionSheet.addButton(withTitle: "JoinUs", characterColor: UIColor.white, handler: {
-                //;
-            });
-            actionSheet.show();*/
+            let actionSheetController = DZActionSheetController(title: "- ActionSheet Test -");
+            actionSheetController.addButton(withTitle: "Action", characterColor: UIColor.red, handler: nil);
+            actionSheetController.addButton(withTitle: "Block", characterColor: UIColor.green, handler: nil);
+            actionSheetController.addButton(withTitle: "Continue", characterColor: UIColor.cyan, handler: nil);
+            actionSheetController.addButton(withTitle: "Delete", characterColor: UIColor.orange, handler: nil);
+            actionSheetController.addButton(withTitle: "Edit", characterColor: UIColor.brown, handler: nil);
+            actionSheetController.addButton(withTitle: "FaceToFace", characterColor: UIColor.red, handler: nil);
+            actionSheetController.addButton(withTitle: "Game", characterColor: UIColor.green, handler: nil);
+            actionSheetController.addButton(withTitle: "Hit&Run", characterColor: UIColor.cyan, handler: nil);
+            actionSheetController.addButton(withTitle: "Increasement", characterColor: UIColor.orange, handler: nil);
+            actionSheetController.addButton(withTitle: "JoinUs", characterColor: UIColor.white, handler: nil);
+            
+            //actionSheetController.addButton(withTitle: "Increasement", characterColor: UIColor.orange, handler: nil);
+            //actionSheetController.addButton(withTitle: "JoinUs", characterColor: UIColor.white, handler: nil);
+            //actionSheetController.addButton(withTitle: "Increasement", characterColor: UIColor.orange, handler: nil);
+            //actionSheetController.addButton(withTitle: "JoinUs", characterColor: UIColor.white, handler: nil);
+            
+            actionSheetController.show(inViewController: self, animated: true);
             break;
         case 1:
             // DZAlertView 2 button

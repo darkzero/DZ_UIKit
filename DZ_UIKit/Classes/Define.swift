@@ -34,6 +34,6 @@ public func DebugLog(_ msg: Any..., file: String = #file, function: String = #fu
     for i in 0 ..< msg.count {
         str += " " + String(describing: msg[i]);
     }
-    print("\(file):\(function) L:\(line)|C:\(column) \(str)");
+    print("\((file as NSString).lastPathComponent) [L:\(line)|C:\(column)] - \(function) :\(str)");
 #endif
 }

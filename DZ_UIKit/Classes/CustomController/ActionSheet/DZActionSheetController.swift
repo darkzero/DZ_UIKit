@@ -9,43 +9,54 @@
 import Foundation
 
 public class DZActionSheetController: UIViewController, DZActionSheetDelegate {
+    
     var actionSheet: DZActionSheet?;
+    
+    internal var cancelHandler:(() -> Void)?;
+    internal var handlerDictionary = Dictionary<Int, (() -> Void)>();
 
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+
+// MARK: - static create func
+
+    public init(title: String, cancelTitle: String = "Cancel", cancelHandler: (() -> Void)? = nil) {
+        
         super.init(nibName: nil, bundle: nil);
         
-        // tap to dismiss
-        let tap = UITapGestureRecognizer(target: self, action: #selector(DZActionSheetController.hide));
-        self.view.addGestureRecognizer(tap);
-    }
-    
-    public class func actionSheet(withTitle title: String, message: String) -> DZActionSheetController {
-        let instace = DZActionSheetController();
-        instace.actionSheet = DZActionSheet.actionSheet(withTitle: title);
-        instace.actionSheet!.delegate = instace;
-        instace.view.backgroundColor = RGBA(100, 100, 100, 0.5);
-        instace.modalPresentationStyle = .overFullScreen;
-        instace.modalTransitionStyle = .crossDissolve;
-        instace.view.addSubview(instace.actionSheet!);
+        self.view.backgroundColor = RGBA(100, 100, 100, 0.5);
+        self.modalPresentationStyle = .overFullScreen;
+        self.modalTransitionStyle = .crossDissolve;
         
-        return instace;
+        self.actionSheet = DZActionSheet.actionSheet(withTitle: title);
+        self.actionSheet!.delegate = self;
+        
+        // tap to dismiss
+        let tap = UITapGestureRecognizer(target: self, action: #selector(hide));
+        self.view.addGestureRecognizer(tap);
+        
+        self.setCancelButton(withTitle: cancelTitle, handler: cancelHandler);
+        
+        self.view.addSubview(self.actionSheet!);
     }
     
+    private func setCancelButton(withTitle title: String = "Cancel", handler: (() -> Void)? = nil) {
+        self.actionSheet?.setCancelButton(withTitle: title);
+        self.cancelHandler = handler;
+    }
     
     public func addButton(withTitle buttonTitle: String,
                           characterColor: UIColor,
                           handler: (() -> Void)? = nil) {
         
-        self.actionSheet?.addButton(withTitle: buttonTitle,
-                       characterColor: characterColor,
-                       imageNormal: nil,
-                       imageHighlighted: nil,
-                       imageDisabled: nil,
-                       handler: handler);
+        let buttonIndex = self.actionSheet!.addButton(withTitle: buttonTitle,
+                                                      characterColor: characterColor,
+                                                      imageNormal: nil,
+                                                      imageHighlighted: nil,
+                                                      imageDisabled: nil);
+        
+        self.setHandler(handler, atButtonIndex: buttonIndex);
     }
     
     public func addButton(withTitle buttonTitle: String,
@@ -54,13 +65,26 @@ public class DZActionSheetController: UIViewController, DZActionSheetDelegate {
                           imageDisabled: String?,
                           handler: (() -> Void)? = nil) {
         
-        actionSheet?.addButton(withTitle: buttonTitle,
-                       characterColor: nil,
-                       imageNormal: imageNormal,
-                       imageHighlighted: imageHighlighted,
-                       imageDisabled: imageDisabled,
-                       handler: handler);
+        let buttonIndex = actionSheet!.addButton(withTitle: buttonTitle,
+                                                 characterColor: nil,
+                                                 imageNormal: imageNormal,
+                                                 imageHighlighted: imageHighlighted,
+                                                 imageDisabled: imageDisabled);
+        
+        self.setHandler(handler, atButtonIndex: buttonIndex);
     }
+    
+    
+    fileprivate func setHandler(_ handler:(() -> Void)?, atButtonIndex index:Int) {
+        if ( handler != nil ) {
+            self.handlerDictionary[index] = handler;
+        }
+        else {
+            self.handlerDictionary.removeValue(forKey: index);
+        }
+    }
+    
+// MARK: - animation
     
     let ANIMATION_SPEED:TimeInterval = 0.2;
     let ANIMATION_SCALE:CGFloat = 1.15;
@@ -82,10 +106,6 @@ public class DZActionSheetController: UIViewController, DZActionSheetDelegate {
         });
     }
     
-    public func hide() {
-        self.dismiss();
-    }
-    
     public override func dismiss(animated: Bool = true, completion: (() -> Void)? = nil) {
         if ( animated ) {
             UIView.animate(withDuration: self.ANIMATION_SPEED, delay: 0.0, options: .allowUserInteraction, animations: {
@@ -103,7 +123,30 @@ public class DZActionSheetController: UIViewController, DZActionSheetDelegate {
         }
     }
     
-// MARK: -
+    internal func hide() {
+        self.dismiss();
+    }
+    
+// MARK: - delegate func
+    
+    internal func onButtonClicked(atIndex index: Int) {
+        DebugLog("onButtonClicked at index \(index)");
+        let handler = self.handlerDictionary[index];
+        if ( handler != nil ) {
+            DebugLog("no handler");
+            handler!();
+        }
+        self.dismiss();
+    }
+    
+    internal func onCancelButtonClicked() {
+        DebugLog("onCancelButtonClicked");
+        self.cancelHandler?();
+        self.dismiss();
+    }
+    
+// MARK: - view transition
+    
     public override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         DebugLog("aaaa");
     }
