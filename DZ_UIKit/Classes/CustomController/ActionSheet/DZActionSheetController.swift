@@ -19,7 +19,7 @@ public class DZActionSheetController: UIViewController, DZActionSheetDelegate {
         fatalError("init(coder:) has not been implemented")
     }
 
-// MARK: - static create func
+// MARK: - init
 
     public init(title: String, cancelTitle: String = "Cancel", cancelHandler: (() -> Void)? = nil) {
         
@@ -40,6 +40,8 @@ public class DZActionSheetController: UIViewController, DZActionSheetDelegate {
         
         self.view.addSubview(self.actionSheet!);
     }
+    
+// MARK: - set buttons
     
     private func setCancelButton(withTitle title: String = "Cancel", handler: (() -> Void)? = nil) {
         self.actionSheet?.setCancelButton(withTitle: title);

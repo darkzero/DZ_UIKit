@@ -9,6 +9,12 @@
 import Foundation
 import UIKit
 
+// MARK: - delegate protocol
+internal protocol DZAlertViewDelegate {
+    func onButtonClicked(atIndex index: Int);
+    func onCancelButtonClicked();
+}
+
 open class DZAlertView : UIView {
     
 // MARK: - Class define
