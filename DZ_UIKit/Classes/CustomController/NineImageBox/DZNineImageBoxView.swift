@@ -10,7 +10,7 @@ import UIKit
 
 public protocol DZNineImageBoxViewDelegate {
     // tap event
-    func nineImageView(_ aButtonMenu: DZNineImageBoxView, tapImageAtIndex index: Int);
+    func nineImageBoxView(_ nineImageBoxView: DZNineImageBoxView, didTapImageAtIndex index: Int);
 }
 
 open class DZNineImageBoxView: UIView {
@@ -79,10 +79,10 @@ open class DZNineImageBoxView: UIView {
         return CGSize(width: 10, height: 10);
     }
     
-    func onTapImageAtIndex(_ sender: UITapGestureRecognizer) {
+    func onTapImage(_ sender: UITapGestureRecognizer) {
         if (delegate != nil) {
             let tag = sender.view?.tag;
-            delegate?.nineImageView(self, tapImageAtIndex: tag!-TAG_BASE);
+            delegate?.nineImageBoxView(self, didTapImageAtIndex: tag!-TAG_BASE);
         }
     }
     
@@ -104,12 +104,13 @@ open class DZNineImageBoxView: UIView {
                 let viewTag = TAG_BASE + i;
                 let rect = CGRect(x: (sideLength+IMAGE_SPACING)*(CGFloat(i).truncatingRemainder(dividingBy: countInOneLine)), y: (sideLength+IMAGE_SPACING)*floor(CGFloat(i)/countInOneLine), width: sideLength, height: sideLength);
                 let imageView = UIImageView(frame: rect);
-                let url = URL(string: self.imageUrlList[i])!;//"http://place-hold.it/200x200"
-                let image = url.getImageWithCache();
-                imageView.image = image;
+                imageView.contentMode = .scaleAspectFill;
+                imageView.clipsToBounds = true;
+                let url = URL(string: self.imageUrlList[i])!;
+                imageView.imageOfURL(url);
                 imageView.tag = viewTag;
                 imageView.isUserInteractionEnabled = true;
-                let tap = UITapGestureRecognizer(target: self, action: #selector(DZNineImageBoxView.onTapImageAtIndex(_:)));
+                let tap = UITapGestureRecognizer(target: self, action: #selector(DZNineImageBoxView.onTapImage(_:)));
                 imageView.addGestureRecognizer(tap);
                 self.addSubview(imageView);
             }

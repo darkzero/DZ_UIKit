@@ -51,7 +51,7 @@ class DetailViewController: UIViewController, DZNineImageBoxViewDelegate {
             break;
         case "DZNineImageBoxView":
             let imageArray = ["http://place-hold.it/200x200", "http://www.featurepics.com/FI/Thumb300/20091231/Red-Fire-Hydrant-1421559.jpg",
-                              "http://place-hold.it/200x200", "http://place-hold.it/200x200",
+                              "http://place-hold.it/100x100", "http://place-hold.it/300x300",
                               "http://place-hold.it/200x200", "http://place-hold.it/200x200",];
             let nineImgView = DZNineImageBoxView.nineImageBoxView(withImages: imageArray, frame: CGRect(x: 10,y: 10,width: 200,height: 200));
             nineImgView.delegate = self;
@@ -119,7 +119,6 @@ class DetailViewController: UIViewController, DZNineImageBoxViewDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
 
     /*
     // MARK: - Navigation
@@ -145,8 +144,8 @@ class DetailViewController: UIViewController, DZNineImageBoxViewDelegate {
     }
     
     //MARK: - DZNineImageBoxViewDelegate
-    func nineImageView(_ aButtonMenu: DZNineImageBoxView, tapImageAtIndex index: Int) {
-        print("on tap image : ", index);
+    func nineImageBoxView(_ nineImageBoxView: DZNineImageBoxView, didTapImageAtIndex index: Int) {
+        DebugLog("on tap image at ", index);
     }
 
 }
