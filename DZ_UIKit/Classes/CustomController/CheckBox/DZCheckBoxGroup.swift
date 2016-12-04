@@ -21,7 +21,7 @@ protocol DZCheckBoxGroupDelegate {
     func checkBoxOfGroup(_ group : DZCheckBoxGroup, atIndex theIndex : Int) -> DZCheckBox;
 }
 
-open class DZCheckBoxGroup : UIControl {
+public class DZCheckBoxGroup : UIControl {
     
 // MARK: - properties
     
@@ -43,9 +43,18 @@ open class DZCheckBoxGroup : UIControl {
         self.backgroundColor        = UIColor.clear;
     }
     
-    override init(frame: CGRect) {
+    override public init(frame: CGRect) {
         self.multipleCheckEnabled   = false;
         self.checkBoxArray          = [DZCheckBox]();
+        self.checkedIndexes         = [Int]();
+        
+        super.init(frame:frame);
+        self.backgroundColor        = UIColor.clear;
+    }
+    
+    public init(frame: CGRect, items : [DZCheckBox]) {
+        self.multipleCheckEnabled   = false;
+        self.checkBoxArray          = items;
         self.checkedIndexes         = [Int]();
         
         super.init(frame:frame);
@@ -57,16 +66,16 @@ open class DZCheckBoxGroup : UIControl {
         super.didMoveToSuperview();
     }
     
-    public class func checkBoxgroup(withFrame frame : CGRect) -> DZCheckBoxGroup {
+    /*public class func checkBoxgroup(withFrame frame : CGRect) -> DZCheckBoxGroup {
         let group:DZCheckBoxGroup! = DZCheckBoxGroup(frame:frame);
         return group;
     }
     
-    public class func checkBoxgroup(withFrame frame : CGRect, Items items : [DZCheckBox]) -> DZCheckBoxGroup {
+    public class func checkBoxgroup(withFrame frame : CGRect, items : [DZCheckBox]) -> DZCheckBoxGroup {
         let group = DZCheckBoxGroup(frame:frame);
         group.checkBoxArray.append(contentsOf: items);
         return group;
-    }
+    }*/
     
     public func addCheckBox(_ checkBox:DZCheckBox) {
         checkBox.addTarget(self, action: #selector(DZCheckBoxGroup.onCheckBoxCheckedChanged(_:)), for: UIControlEvents.valueChanged);

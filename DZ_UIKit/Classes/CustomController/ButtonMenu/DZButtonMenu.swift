@@ -32,7 +32,7 @@ public enum DZButtonMenuDirection: Int {
     case down   = 4;
 }
 
-protocol DZButtonMenuDelegate {
+public protocol DZButtonMenuDelegate {
     // click event
     func buttonMenu(_ aButtonMenu: DZButtonMenu, ClickedButtonAtIndex index: Int);
 }
@@ -72,7 +72,7 @@ open class DZButtonMenu : UIView {
         get {
             return CGRect(
                 x: PADDING,
-                y: self.superview!.frame.size.height - BUTTON_DIAMETER-PADDING,
+                y: self.superview!.frame.size.height - BUTTON_DIAMETER - PADDING,
                 width: BUTTON_DIAMETER,
                 height: BUTTON_DIAMETER);
         }
@@ -82,7 +82,7 @@ open class DZButtonMenu : UIView {
         get {
             return CGRect(
                 x: self.superview!.frame.size.width - BUTTON_DIAMETER-PADDING,
-                y: PADDING,
+                y: PADDING + topPadding,
                 width: BUTTON_DIAMETER,
                 height: BUTTON_DIAMETER);
         }
@@ -90,7 +90,7 @@ open class DZButtonMenu : UIView {
     
     var LOCATION_LEFT_TOP:CGRect {
         get {
-            return CGRect(x: PADDING,y: PADDING,width: BUTTON_DIAMETER,height: BUTTON_DIAMETER)
+            return CGRect(x: PADDING,y: PADDING + topPadding,width: BUTTON_DIAMETER,height: BUTTON_DIAMETER)
         }
     }
     
@@ -102,7 +102,9 @@ open class DZButtonMenu : UIView {
     
 // MARK: - public properties
     
-    var delegate:DZButtonMenuDelegate?;
+    public var delegate:DZButtonMenuDelegate?;
+    
+    public var topPadding: CGFloat = 0.0;
     
 // MARK: - internal properties
     
@@ -425,7 +427,7 @@ open class DZButtonMenu : UIView {
     
     // MARK: - button action
     func buttonClicked(_ sender:AnyObject) {
-        
+        self.delegate?.buttonMenu(self, ClickedButtonAtIndex: (sender.tag - TAG_MAIN_BUTTON));
     }
     
     internal func switchMenuStatus() {
@@ -527,8 +529,5 @@ open class DZButtonMenu : UIView {
             self.setFrame(withLocation: self.location);
             self.calcOpenFrame();
         }
-    }
-    
-    open override func layoutSubviews() {
     }
 }

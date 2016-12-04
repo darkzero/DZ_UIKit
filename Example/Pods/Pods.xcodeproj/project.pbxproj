@@ -39,6 +39,7 @@
 		EAB9ECE0C09463E227895D5026BAD632 /* DZSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094F8C66DC82C93B3E72C914DD0AA550 /* DZSwitch.swift */; };
 		EB66DAF04274722B39D1EA48E460A6F5 /* DZBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9466335770A7D3498A2439A3D75026 /* DZBlock.swift */; };
 		EF13B7921CFF63510061792C /* checked.png in Resources */ = {isa = PBXBuildFile; fileRef = EF13B7911CFF63510061792C /* checked.png */; };
+		EF5FDAFB1DEBD62B0084EDBF /* DZImagePreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5FDAFA1DEBD62B0084EDBF /* DZImagePreview.swift */; };
 		F9B91A8C9279C079558440868B37537E /* DZAnnularProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03544A53CB511EDB7720A1980BDC4CEF /* DZAnnularProgress.swift */; };
 		FD3FDB08F4B7393EDBEBE52091AB6E05 /* DZAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75CD6FCC7383C39B43225B0287D7F8B /* DZAlertView.swift */; };
 /* End PBXBuildFile section */
@@ -119,6 +120,7 @@
 		EA1C0F69C819CC7F3809347B1BDE5B3C /* Pods-DZ_UIKit_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-DZ_UIKit_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		ECDD092FE96EA9F03878F38C43154D88 /* UIImage+Color.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "UIImage+Color.swift"; sourceTree = "<group>"; };
 		EF13B7911CFF63510061792C /* checked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checked.png; sourceTree = "<group>"; };
+		EF5FDAFA1DEBD62B0084EDBF /* DZImagePreview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DZImagePreview.swift; sourceTree = "<group>"; };
 		F2866115A3BE05E988D0821325FB5FD2 /* Pods-DZ_UIKit_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-DZ_UIKit_Example-frameworks.sh"; sourceTree = "<group>"; };
 		FF5F2478FC2B35FF85DD8654886A8B9A /* Pods-DZ_UIKit_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-DZ_UIKit_Tests.modulemap"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -180,6 +182,7 @@
 			isa = PBXGroup;
 			children = (
 				A92B08E6B8E784A8FDDDA9D09570ECE9 /* DZNineImageBoxView.swift */,
+				EF5FDAFA1DEBD62B0084EDBF /* DZImagePreview.swift */,
 			);
 			path = NineImageBox;
 			sourceTree = "<group>";
@@ -561,6 +564,7 @@
 				719EB8589AAE5FCC006252CB78901D2E /* Define.swift in Sources */,
 				C12BD0181621F463A166AE3FABB3ABCC /* DZ_UIKit-dummy.m in Sources */,
 				9C410E4B54EACAC1AF938FF9AD26CC5A /* DZActionSheet.swift in Sources */,
+				EF5FDAFB1DEBD62B0084EDBF /* DZImagePreview.swift in Sources */,
 				FD3FDB08F4B7393EDBEBE52091AB6E05 /* DZAlertView.swift in Sources */,
 				F9B91A8C9279C079558440868B37537E /* DZAnnularProgress.swift in Sources */,
 				EB66DAF04274722B39D1EA48E460A6F5 /* DZBlock.swift in Sources */,

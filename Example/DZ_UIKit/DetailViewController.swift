@@ -9,15 +9,16 @@
 import UIKit
 import DZ_UIKit
 
-class DetailViewController: UIViewController, DZNineImageBoxViewDelegate {
+class DetailViewController: UIViewController, DZNineImageBoxViewDelegate, DZButtonMenuDelegate {
     
     @IBOutlet var mainView: UIView!;
     
     var viewTitle: String = "None";
 
     override func viewDidLoad() {
-        //super.viewDidLoad()
+        super.viewDidLoad();
         
+        // Do any additional setup after loading the view.
         switch viewTitle {
         case "DZAnnularProgress":
             let progress1 = DZAnnularProgress(frame: CGRect(x: 10, y: 10, width: 100, height: 100), annularWidth: 8, type: .progress);
@@ -58,7 +59,7 @@ class DetailViewController: UIViewController, DZNineImageBoxViewDelegate {
             self.mainView.addSubview(nineImgView);
             break;
         case "DZCheckBoxGroup":
-            let checkboxGroup = DZCheckBoxGroup.checkBoxgroup(withFrame: CGRect(x: 10, y: 100, width: 240, height: 48));
+            let checkboxGroup = DZCheckBoxGroup(frame: CGRect(x: 10, y: 100, width: 240, height: 48));
             checkboxGroup.backgroundColor = UIColor.red;
             //checkboxGroup.multipleCheckEnabled = true;
             checkboxGroup.multipleCheckEnabled = false;
@@ -86,7 +87,7 @@ class DetailViewController: UIViewController, DZNineImageBoxViewDelegate {
                     checkedColor: RGB_HEX("9988333", 1.0)));
             self.view.addSubview(checkboxGroup);
             
-            let checkBoxList = DZCheckBoxGroup.checkBoxgroup(withFrame: CGRect(x: 10, y: 180, width: 240, height: 240));
+            let checkBoxList = DZCheckBoxGroup(frame: CGRect(x: 10, y: 180, width: 240, height: 240));
             checkBoxList.style = .list;
             checkBoxList.addCheckBox(
                 DZCheckBox.checkBox(withFrame: CGRect(x: 0, y: 0, width: 32, height: 32),
@@ -103,6 +104,7 @@ class DetailViewController: UIViewController, DZNineImageBoxViewDelegate {
             let buttonMenuLB = DZButtonMenu(location: .leftBottom, direction: .right, closeImage: nil, openImage: nil, titleArray: ["Attack", "Defence", "Magic", "Run Away"], imageArray: nil);
             let buttonMenuRT = DZButtonMenu(location: .rightTop, direction: .left, closeImage: nil, openImage: nil, titleArray: ["Attack", "Defence", "Magic", "Run Away"], imageArray: nil);
             let buttonMenuLT = DZButtonMenu(location: .leftTop, direction: .down, closeImage: nil, openImage: nil, titleArray: ["Attack", "Defence", "Magic", "Run Away"], imageArray: nil);
+            buttonMenuRB.delegate = self;
             self.view.addSubview(buttonMenuRB);
             self.view.addSubview(buttonMenuLB);
             self.view.addSubview(buttonMenuRT);
@@ -111,8 +113,9 @@ class DetailViewController: UIViewController, DZNineImageBoxViewDelegate {
         default:
             break;
         }
-
-        // Do any additional setup after loading the view.
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
     }
 
     override func didReceiveMemoryWarning() {
@@ -143,9 +146,16 @@ class DetailViewController: UIViewController, DZNineImageBoxViewDelegate {
         }
     }
     
-    //MARK: - DZNineImageBoxViewDelegate
+    // MARK: - DZNineImageBoxViewDelegate
     func nineImageBoxView(_ nineImageBoxView: DZNineImageBoxView, didTapImageAtIndex index: Int) {
         DebugLog("on tap image at ", index);
+    }
+    
+    // MARK: -
+    func buttonMenu(_ aButtonMenu: DZButtonMenu, ClickedButtonAtIndex index: Int) {
+        //if ( aButtonMenu.isEqual(buttonMenuRB) ) {
+            DebugLog("on tap DZButtonMenu at button ", index);
+        //}
     }
 
 }
