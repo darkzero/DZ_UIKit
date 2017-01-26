@@ -27,4 +27,4 @@ darkzero, darkzero_mk2@hotmail.com
 
 ## License
 
-DZFiveStarBar is available under the MIT license. See the LICENSE file for more info.
+DZ_UIKit is available under the MIT license. See the LICENSE file for more info.
