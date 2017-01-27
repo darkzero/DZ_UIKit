@@ -75,27 +75,14 @@ internal class DZActionSheet : UIControl {
         super.init(frame: CGRect.zero);
     }
     
-    fileprivate init(title: String) {
+    public init(title: String, cancelTitle: String = "Cancel") {
         let rect:CGRect = CGRect(x: 0,
                                  y: SCREEN_BOUNDS().size.height - CANCEL_BUTTON_HEIGHT,
                                  width: SCREEN_BOUNDS().size.width,
                                  height: CANCEL_BUTTON_HEIGHT);
         super.init(frame: rect);
         self.title = title;
-        self.setCancelButton(withTitle: "Cancel");
-    }
-    
-// MARK: - class functions
-    
-    internal class func actionSheet(withTitle title: String) -> DZActionSheet {
-        let obj:DZActionSheet = DZActionSheet(title: title);
-        return obj;
-    }
-    
-    internal class func actionSheet(withTitle title: String, cancelTitle: String, cancelHandler: @escaping DZBlock) -> DZActionSheet {
-        let obj:DZActionSheet = DZActionSheet(title: title);
-        obj.setCancelButton(withTitle: cancelTitle);
-        return obj;
+        self.setCancelButton(withTitle: cancelTitle);
     }
     
 // MARK: - set Buttons

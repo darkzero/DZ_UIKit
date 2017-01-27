@@ -29,7 +29,7 @@ public class DZActionSheetController: UIViewController, DZActionSheetDelegate {
         self.modalPresentationStyle = .overFullScreen;
         self.modalTransitionStyle = .crossDissolve;
         
-        self.actionSheet = DZActionSheet.actionSheet(withTitle: title);
+        self.actionSheet = DZActionSheet(title: title);
         self.actionSheet!.delegate = self;
         
         // tap to dismiss
