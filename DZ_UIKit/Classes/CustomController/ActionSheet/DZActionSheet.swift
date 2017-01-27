@@ -8,25 +8,26 @@
 
 import Foundation
 import UIKit
-fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
-}
 
-fileprivate func >= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l >= r
-  default:
-    return !(lhs < rhs)
-  }
-}
+//private func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+//  switch (lhs, rhs) {
+//  case let (l?, r?):
+//    return l < r
+//  case (nil, _?):
+//    return true
+//  default:
+//    return false
+//  }
+//}
+//
+//private func >= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+//  switch (lhs, rhs) {
+//  case let (l?, r?):
+//    return l >= r
+//  default:
+//    return !(lhs < rhs)
+//  }
+//}
 
 // MARK: - delegate protocol
 internal protocol DZActionSheetDelegate {
@@ -49,14 +50,14 @@ internal class DZActionSheet : UIControl {
     
 // MARK: - private properties
     
-    fileprivate var title: String                      = "";
-    fileprivate var cancelButtonBgColor: UIColor       = UIColor.white;
-    fileprivate var cancelButtonTitleColor: UIColor    = RGB(109, 109, 109);
+    private var title: String                      = "";
+    private var cancelButtonBgColor: UIColor       = UIColor.white;
+    private var cancelButtonTitleColor: UIColor    = RGB(109, 109, 109);
     
-    fileprivate var buttonArray                = [UIButton]();
-    fileprivate var cancelButton               = UIButton(type: UIButtonType.custom);
-    fileprivate var titleLabel:UILabel?;
-    fileprivate var buttonBgView               = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.light));
+    private var buttonArray                = [UIButton]();
+    private var cancelButton               = UIButton(type: UIButtonType.custom);
+    private var titleLabel:UILabel?;
+    private var buttonBgView               = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.light));
     
 // MARK: - delegate
     var delegate: DZActionSheetDelegate?;
@@ -117,7 +118,7 @@ internal class DZActionSheet : UIControl {
             btnImage = UIImage(named: imageNormal!)!;
         }
         else {
-            let g = characterColor?.getGary();
+            let g = (characterColor != nil) ? characterColor!.getGary() : 0;
             btnImage = UIImage.imageWithColor(characterColor!, size: CGSize(width: 48, height: 48));
             let initialChar = buttonTitle.substring(to: buttonTitle.characters.index(buttonTitle.startIndex, offsetBy: 1));
             let lbl = UILabel(frame: CGRect(x: 0, y: 0, width: 48, height: 48));
