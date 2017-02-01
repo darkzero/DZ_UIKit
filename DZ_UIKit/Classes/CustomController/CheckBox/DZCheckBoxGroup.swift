@@ -66,17 +66,6 @@ public class DZCheckBoxGroup : UIControl {
         super.didMoveToSuperview();
     }
     
-    /*public class func checkBoxgroup(withFrame frame : CGRect) -> DZCheckBoxGroup {
-        let group:DZCheckBoxGroup! = DZCheckBoxGroup(frame:frame);
-        return group;
-    }
-    
-    public class func checkBoxgroup(withFrame frame : CGRect, items : [DZCheckBox]) -> DZCheckBoxGroup {
-        let group = DZCheckBoxGroup(frame:frame);
-        group.checkBoxArray.append(contentsOf: items);
-        return group;
-    }*/
-    
     public func addCheckBox(_ checkBox:DZCheckBox) {
         checkBox.addTarget(self, action: #selector(DZCheckBoxGroup.onCheckBoxCheckedChanged(_:)), for: UIControlEvents.valueChanged);
         self.checkBoxArray.append(checkBox);

@@ -104,15 +104,18 @@ open class DZCheckBox : UIControl {
         }
     };
     
-    public class func checkBox(withFrame frame:CGRect,
-        type:DZCheckBoxType,
-        title: String? = nil,
-        image: UIImage? = nil,
-        borderColor:UIColor? = nil,
-        uncheckedColor:UIColor? = nil,
-        checkedColor:UIColor? = nil) -> DZCheckBox
-    {
-        let checkbox:DZCheckBox! = DZCheckBox(frame:frame);
+    public init(frame:CGRect,
+                type:DZCheckBoxType,
+                title: String? = nil,
+                image: UIImage? = nil,
+                borderColor:UIColor? = nil,
+                uncheckedColor:UIColor? = nil,
+                checkedColor:UIColor? = nil) {
+        // init with properties
+        super.init(frame:frame);
+        self.createControllers();
+        
+        let checkbox = self;
         if ( checkbox != nil ) {
             if ( borderColor != nil ) {
                 checkbox.hasBorder      = true;
@@ -146,7 +149,6 @@ open class DZCheckBox : UIControl {
             }
             checkbox.type = type;
         }
-        return checkbox;
     }
     
     required public init?(coder aDecoder: NSCoder) {

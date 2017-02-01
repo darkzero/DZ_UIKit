@@ -46,7 +46,7 @@ open class DZNineImageBoxView: UIView {
         return obj;
     }
     
-    func calcFrame() {
+    private func calcFrame() {
         let imageCount = (self.imageUrlList.count > MAX_IMAGE_COUNT) ? MAX_IMAGE_COUNT : self.imageUrlList.count;
         let countInOneLine  = ceil(sqrt(CGFloat(imageCount)));              // 1 pic = 1, 2,3,4 pic = 2, 5,6,7,8,9 pic = 3
         let lineCount       = ceil(CGFloat(imageCount) / countInOneLine);   // 1,2 pic = 1, 3,4,5,6 pic = 2, 7,8,9 pic = 3

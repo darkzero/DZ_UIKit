@@ -61,16 +61,30 @@ open class DZAnnularProgress: UIView {
         super.init(coder: aDecoder);
     }
     
-    public class func annularProgress(withOuterRadius outerRadius: CGFloat, innerRadius: CGFloat, type: AnnularProgressType) -> DZAnnularProgress {
+    public init(outerRadius: CGFloat, innerRadius: CGFloat, type: AnnularProgressType) {
         let outerDiameter = outerRadius * 2.0;
         let innerDiameter = innerRadius * 2.0;
-        return DZAnnularProgress.annularProgress(withOuterDiameter: outerDiameter, innerDiameter: innerDiameter, type: type);
-    }
-    
-    public class func annularProgress(withOuterDiameter outerDiameter: CGFloat, innerDiameter: CGFloat, type: AnnularProgressType) -> DZAnnularProgress {
         let frame: CGRect           = CGRect(x: 0, y: 0, width: outerDiameter, height: outerDiameter);
         let annularWidth: CGFloat   = outerDiameter/2.0 - innerDiameter/2.0;
-        return DZAnnularProgress(frame: frame, annularWidth: annularWidth, type: type);
+        
+        super.init(frame: frame);
+        
+        self.progressType       = type;
+        self.annularWidth       = annularWidth;
+        self.backgroundColor    = UIColor.clear;
+        //DZAnnularProgress(outerDiameter: outerDiameter, innerDiameter: innerDiameter, type: type);
+    }
+    
+    public init(outerDiameter: CGFloat, innerDiameter: CGFloat, type: AnnularProgressType) {
+        let frame: CGRect           = CGRect(x: 0, y: 0, width: outerDiameter, height: outerDiameter);
+        let annularWidth: CGFloat   = outerDiameter/2.0 - innerDiameter/2.0;
+        
+        super.init(frame: frame);
+        
+        self.progressType       = type;
+        self.annularWidth       = annularWidth;
+        self.backgroundColor    = UIColor.clear;
+        //DZAnnularProgress(frame: frame, annularWidth: annularWidth, type: type);
     }
     
     public init(frame: CGRect, annularWidth: CGFloat, type: AnnularProgressType) {

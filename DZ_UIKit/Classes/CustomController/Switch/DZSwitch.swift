@@ -17,7 +17,7 @@ open class DZSwitch : UIControl {
     // MARK: - public properties
     open var on:Bool = false {
         didSet {
-            self.changeSwitchWithAnimationTo(self.on);
+            self.changeSwitch(self.on, animated: true);
         }
     }
     
@@ -56,9 +56,9 @@ open class DZSwitch : UIControl {
         self.backgroundColor        = UIColor.clear;
         self.layer.masksToBounds    = true;
         
-        let pan:UIPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(DZSwitch.onPanHandleImage(_:)));
+        let pan:UIPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(DZSwitch.onPanHandle(_:)));
         self.addGestureRecognizer(pan);
-        let tap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(DZSwitch.onTapHandleImage(_:)));
+        let tap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(DZSwitch.onTapHandle(_:)));
         self.addGestureRecognizer(tap);
         
         self.onImageView    = UIImageView(frame: self.bounds);
@@ -106,12 +106,12 @@ open class DZSwitch : UIControl {
     
     // MARK: - internal functions
     
-    func onTapHandleImage(_ tap: UITapGestureRecognizer) {
+    internal func onTapHandle(_ tap: UITapGestureRecognizer) {
         self.on = !self.on;
     }
     
     
-    func onPanHandleImage(_ pan: UIPanGestureRecognizer) {
+    internal func onPanHandle(_ pan: UIPanGestureRecognizer) {
         switch pan.state {
         case UIGestureRecognizerState.began:
             self.isPanning  = false;
@@ -158,8 +158,7 @@ open class DZSwitch : UIControl {
     
     // MARK: - private functions
     
-    fileprivate func changeSwitchWithAnimationTo(_ on:Bool)
-    {
+    fileprivate func changeSwitch(_ on:Bool, animated: Bool = true) {
         let standardOffset: CGFloat = self.onImageView.frame.size.width - self.thumbImageView.frame.size.width;
         if ( on ) {
             UIView.animate(withDuration: 0.2, delay: 0.0, options: UIViewAnimationOptions.allowUserInteraction, animations: { () -> Void in

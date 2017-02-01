@@ -218,7 +218,7 @@ open class DZButtonMenu : UIView {
         }
         
         // main button
-        self.createMainButtonCloseImage(closeImage, OpenImage: openImage);
+        self.createMainButton(closeImage: closeImage, openImage: openImage);
     }
     
     public init(location: DZButtonMenuLocation, direction: DZButtonMenuDirection, closeImage: String?, openImage: String?, imageArray: [String]) {
@@ -253,7 +253,7 @@ open class DZButtonMenu : UIView {
         }
         
         // main button
-        self.createMainButtonCloseImage(closeImage, OpenImage: openImage);
+        self.createMainButton(closeImage: closeImage, openImage: openImage);
         
         self.calcOpenFrame();
     }
@@ -284,7 +284,7 @@ open class DZButtonMenu : UIView {
         }
     }
     
-    fileprivate func createMainButtonCloseImage(_ closeImg: String?,  OpenImage openImg: String?)
+    fileprivate func createMainButton(closeImage: String?, openImage: String?)
     {
         let btnMain = UIButton(type: UIButtonType.custom);
         
@@ -292,8 +292,8 @@ open class DZButtonMenu : UIView {
         btnMain.backgroundColor = COLOR_SEARCH_ITEM_OFF;
     
         // image
-        if( closeImg != nil ) {
-            btnMain.setImage(UIImage(named: closeImg!), for:UIControlState());
+        if( closeImage != nil ) {
+            btnMain.setImage(UIImage(named: closeImage!), for:UIControlState());
         }
         else {
             btnMain.setTitle(MAIN_BTN_OPEN_STR, for:UIControlState());
@@ -425,7 +425,8 @@ open class DZButtonMenu : UIView {
         return ret;
     }
     
-    // MARK: - button action
+// MARK: - button action
+    
     func buttonClicked(_ sender:AnyObject) {
         self.delegate?.buttonMenu(self, ClickedButtonAtIndex: (sender.tag - TAG_MAIN_BUTTON));
     }
@@ -439,21 +440,20 @@ open class DZButtonMenu : UIView {
         }
     }
     
-    // MARK: - Menu Animations
+// MARK: - Menu Animations
+    
     fileprivate func showMenu(withAnimation animation:Bool = true) {
         self.menuState = .opening;
         
         self.superview?.addSubview(self.maskBg!);
         self.maskBg?.isHidden = false;
         self.superview?.bringSubview(toFront: self);
-//        self.mask
         
         UIView.animate(withDuration: ANIMATION_DURATION, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
             
             self.frame =  self.frameOpen;
             
             // set main button position
-            //var targetFrame = self.calcButtonFrame(0);
             let btnMain = self.viewWithTag(self.TAG_MAIN_BUTTON);
             let targetFrame = self.calcButtonFrame(0);
             btnMain?.frame = targetFrame;
@@ -523,7 +523,8 @@ open class DZButtonMenu : UIView {
         self.menuState = .closed;
     }
     
-    // MARK: - layoutSubviews
+// MARK: - layoutSubviews
+    
     open override func didMoveToSuperview() {
         if ( self.superview != nil ) {
             self.setFrame(withLocation: self.location);

@@ -130,12 +130,12 @@ internal class DZActionSheet : UIControl {
             btnImage = UIImage(named: imageNormal!)!;
         }
         else {
-            let g = characterColor?.getGary();
+            let gary = characterColor?.getGary();
             btnImage = UIImage.imageWithColor(characterColor!, size: CGSize(width: 48, height: 48));
             let initialChar = buttonTitle.substring(to: buttonTitle.characters.index(buttonTitle.startIndex, offsetBy: 1));
             let lbl = UILabel(frame: CGRect(x: 0, y: 0, width: 48, height: 48));
             lbl.font = UIFont.boldSystemFont(ofSize: 28.0);
-            if g >= 175 {
+            if gary >= 175 {
                 lbl.textColor = RGB_HEX("444444", 1.0);
             }
             else {
