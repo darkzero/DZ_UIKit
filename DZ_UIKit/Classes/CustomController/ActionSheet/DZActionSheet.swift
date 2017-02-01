@@ -9,27 +9,8 @@
 import Foundation
 import UIKit
 
-//private func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-//  switch (lhs, rhs) {
-//  case let (l?, r?):
-//    return l < r
-//  case (nil, _?):
-//    return true
-//  default:
-//    return false
-//  }
-//}
-//
-//private func >= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-//  switch (lhs, rhs) {
-//  case let (l?, r?):
-//    return l >= r
-//  default:
-//    return !(lhs < rhs)
-//  }
-//}
-
 // MARK: - delegate protocol
+
 internal protocol DZActionSheetDelegate {
     func onButtonClicked(atIndex index: Int);
     func onCancelButtonClicked();
@@ -60,6 +41,7 @@ internal class DZActionSheet : UIControl {
     private var buttonBgView               = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.light));
     
 // MARK: - delegate
+    
     var delegate: DZActionSheetDelegate?;
     
 // MARK: - init functions
@@ -72,9 +54,9 @@ internal class DZActionSheet : UIControl {
         super.init(frame:frame);
     }
     
-    public init() {
-        super.init(frame: CGRect.zero);
-    }
+//    public init() {
+//        super.init(frame: CGRect.zero);
+//    }
     
     public init(title: String, cancelTitle: String = "Cancel") {
         let rect:CGRect = CGRect(x: 0,
@@ -98,10 +80,10 @@ internal class DZActionSheet : UIControl {
     }
     
     internal func addButton (withTitle buttonTitle: String,
-                                characterColor: UIColor?,
-                                imageNormal: String?,
-                                imageHighlighted: String?,
-                                imageDisabled: String?) -> Int {
+                             characterColor: UIColor?,
+                             imageNormal: String?,
+                             imageHighlighted: String?,
+                             imageDisabled: String?) -> Int {
             
         let btn:UIButton! = UIButton(type: UIButtonType.custom);
         

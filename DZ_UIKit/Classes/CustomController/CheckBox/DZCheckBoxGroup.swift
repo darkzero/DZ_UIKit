@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 public enum DZCheckBoxGroupStyle: Int {
-    case `default`    = 0;
+    case `default`  = 0;
     case bar        = 1;
     case list       = 2;
 }
@@ -25,12 +25,12 @@ public class DZCheckBoxGroup : UIControl {
     
 // MARK: - properties
     
-    open var multipleCheckEnabled:Bool    = false;
-    open var style: DZCheckBoxGroupStyle  = .default;
+    @IBInspectable public var multipleCheckEnabled:Bool    = false;
+    @IBInspectable public var style: DZCheckBoxGroupStyle  = .default;
     
     open var checkedIndexes:[Int];
     
-    fileprivate var checkBoxArray:[DZCheckBox];
+    @IBInspectable fileprivate var checkBoxArray:[DZCheckBox];
 
 // MARK: - init
     
@@ -65,17 +65,6 @@ public class DZCheckBoxGroup : UIControl {
         self.backgroundColor = UIColor.clear;
         super.didMoveToSuperview();
     }
-    
-    /*public class func checkBoxgroup(withFrame frame : CGRect) -> DZCheckBoxGroup {
-        let group:DZCheckBoxGroup! = DZCheckBoxGroup(frame:frame);
-        return group;
-    }
-    
-    public class func checkBoxgroup(withFrame frame : CGRect, items : [DZCheckBox]) -> DZCheckBoxGroup {
-        let group = DZCheckBoxGroup(frame:frame);
-        group.checkBoxArray.append(contentsOf: items);
-        return group;
-    }*/
     
     public func addCheckBox(_ checkBox:DZCheckBox) {
         checkBox.addTarget(self, action: #selector(DZCheckBoxGroup.onCheckBoxCheckedChanged(_:)), for: UIControlEvents.valueChanged);

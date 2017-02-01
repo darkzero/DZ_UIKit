@@ -51,9 +51,12 @@ class DetailViewController: UIViewController, DZNineImageBoxViewDelegate, DZButt
             self.mainView.addSubview(progress1Ctrl2);
             break;
         case "DZNineImageBoxView":
-            let imageArray = ["http://place-hold.it/200x200", "http://www.featurepics.com/FI/Thumb300/20091231/Red-Fire-Hydrant-1421559.jpg",
-                              "http://place-hold.it/100x100", "http://place-hold.it/300x300",
-                              "http://place-hold.it/200x200", "http://place-hold.it/200x200",];
+            let imageArray = ["http://place-hold.it/200x200",
+                              "http://www.featurepics.com/FI/Thumb300/20091231/Red-Fire-Hydrant-1421559.jpg",
+                              "http://place-hold.it/100x100",
+                              "http://place-hold.it/300x300",
+                              "http://place-hold.it/200x200",
+                              "http://place-hold.it/200x200",];
             let nineImgView = DZNineImageBoxView.nineImageBoxView(withImages: imageArray, frame: CGRect(x: 10,y: 10,width: 200,height: 200));
             nineImgView.delegate = self;
             self.mainView.addSubview(nineImgView);
@@ -61,39 +64,38 @@ class DetailViewController: UIViewController, DZNineImageBoxViewDelegate, DZButt
         case "DZCheckBoxGroup":
             let checkboxGroup = DZCheckBoxGroup(frame: CGRect(x: 10, y: 100, width: 240, height: 48));
             checkboxGroup.backgroundColor = UIColor.red;
-            //checkboxGroup.multipleCheckEnabled = true;
             checkboxGroup.multipleCheckEnabled = false;
             checkboxGroup.addCheckBox(
-                DZCheckBox.checkBox(withFrame: CGRect(x: 0, y: 0, width: 48, height: 48),
-                    type: DZCheckBoxType.square));
+                DZCheckBox(withFrame: CGRect(x: 0, y: 0, width: 48, height: 48),
+                           type: DZCheckBoxType.square));
             checkboxGroup.addCheckBox(
-                DZCheckBox.checkBox(withFrame: CGRect(x: 0, y: 0, width: 48, height: 48),
-                    type: DZCheckBoxType.square,
-                    borderColor: UIColor.orange));
+                DZCheckBox(withFrame: CGRect(x: 0, y: 0, width: 48, height: 48),
+                           type: DZCheckBoxType.square,
+                           borderColor: UIColor.orange));
             checkboxGroup.addCheckBox(
-                DZCheckBox.checkBox(withFrame: CGRect(x: 0, y: 0, width: 48, height: 48),
-                    type: DZCheckBoxType.rounded));
+                DZCheckBox(withFrame: CGRect(x: 0, y: 0, width: 48, height: 48),
+                           type: DZCheckBoxType.rounded));
             checkboxGroup.addCheckBox(
-                DZCheckBox.checkBox(withFrame: CGRect(x: 0, y: 0, width: 48, height: 48),
-                    type: DZCheckBoxType.rounded,
-                    borderColor: UIColor.orange));
+                DZCheckBox(withFrame: CGRect(x: 0, y: 0, width: 48, height: 48),
+                           type: DZCheckBoxType.rounded,
+                           borderColor: UIColor.orange));
             checkboxGroup.addCheckBox(
-                DZCheckBox.checkBox(withFrame: CGRect(x: 0, y: 0, width: 48, height: 48),
-                    type: DZCheckBoxType.circular));
+                DZCheckBox(withFrame: CGRect(x: 0, y: 0, width: 48, height: 48),
+                           type: DZCheckBoxType.circular));
             checkboxGroup.addCheckBox(
-                DZCheckBox.checkBox(withFrame: CGRect(x: 0, y: 0, width: 48, height: 48),
-                    type: DZCheckBoxType.circular,
-                    borderColor: UIColor.orange,
-                    checkedColor: RGB_HEX("9988333", 1.0)));
+                DZCheckBox(withFrame: CGRect(x: 0, y: 0, width: 48, height: 48),
+                           type: DZCheckBoxType.circular,
+                           borderColor: UIColor.orange,
+                           checkedColor: RGB_HEX("9988333", 1.0)));
             self.view.addSubview(checkboxGroup);
             
             let checkBoxList = DZCheckBoxGroup(frame: CGRect(x: 10, y: 180, width: 240, height: 240));
             checkBoxList.style = .list;
             checkBoxList.addCheckBox(
-                DZCheckBox.checkBox(withFrame: CGRect(x: 0, y: 0, width: 32, height: 32),
+                DZCheckBox(withFrame: CGRect(x: 0, y: 0, width: 32, height: 32),
                     type: DZCheckBoxType.rounded, title: "Save Account", checkedColor: UIColor.orange));
             checkBoxList.addCheckBox(
-                DZCheckBox.checkBox(withFrame: CGRect(x: 0, y: 0, width: 32, height: 32),
+                DZCheckBox(withFrame: CGRect(x: 0, y: 0, width: 32, height: 32),
                     type: DZCheckBoxType.rounded, title: "Auto Login", borderColor: UIColor.orange));
             checkBoxList.checkedIndexes = [0];
             checkBoxList.multipleCheckEnabled = true;
@@ -101,7 +103,7 @@ class DetailViewController: UIViewController, DZNineImageBoxViewDelegate, DZButt
             break;
         case "DZButtonMenu" :
             let buttonMenuRB = DZButtonMenu(location: .rightBottom, direction: .up, closeImage: nil, openImage: nil, titleArray: ["Attack", "Defence", "Magic", "Run Away"], imageArray: nil);
-            let buttonMenuLB = DZButtonMenu(location: .leftBottom, direction: .right, closeImage: nil, openImage: nil, titleArray: ["Attack", "Defence", "Magic", "Run Away"], imageArray: nil);
+            let buttonMenuLB = DZButtonMenu(location: .leftBottom, direction: .up, closeImage: nil, openImage: nil, titleArray: ["Attack", "Defence", "Magic", "Run Away"], imageArray: nil);
             let buttonMenuRT = DZButtonMenu(location: .rightTop, direction: .left, closeImage: nil, openImage: nil, titleArray: ["Attack", "Defence", "Magic", "Run Away"], imageArray: nil);
             let buttonMenuLT = DZButtonMenu(location: .leftTop, direction: .down, closeImage: nil, openImage: nil, titleArray: ["Attack", "Defence", "Magic", "Run Away"], imageArray: nil);
             buttonMenuRB.delegate = self;
