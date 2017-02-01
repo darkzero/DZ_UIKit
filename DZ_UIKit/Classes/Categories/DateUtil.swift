@@ -10,17 +10,16 @@ import Foundation
 
 open class DateUtil {
     
-    open class func StringFromDate(Date date:Date, formatString:String) -> String
+    public class func StringFromDate(Date date:Date, formatString:String) -> String
     {
-        let formatter:DateFormatter   = DateFormatter();
-        formatter.dateFormat            = formatString;
-        formatter.timeZone              = TimeZone(identifier: "...");
-        let dateString                  = formatter.string(from: date);
-        
+        let formatter           = DateFormatter();
+        formatter.dateFormat    = formatString;
+        formatter.timeZone      = TimeZone(identifier: "...");
+        let dateString          = formatter.string(from: date);
         return dateString;
     }
     
-    open class func dateFromString(DateString dateString:String, FormatString formatString:String) -> Date
+    public class func dateFromString(DateString dateString:String, FormatString formatString:String) -> Date
     {
         let formatter:DateFormatter = DateFormatter();
         formatter.dateFormat        = formatString;
@@ -28,13 +27,13 @@ open class DateUtil {
         return theDate!;
     }
     
-    open class func adjustZeroClock(_ date: Date, withCalendar calendar: Calendar) -> Date
+    public class func adjustZeroClock(_ date: Date, withCalendar calendar: Calendar) -> Date
     {
         let components = calendar.dateComponents([.year, .month, .day], from: date);
         return calendar.date(from: components)!;
     }
     
-    open class func daysBetween(startDate: Date, endDate: Date?) -> Int
+    public class func daysBetween(startDate: Date, endDate: Date?) -> Int
     {
         if endDate == nil {
             return 0;

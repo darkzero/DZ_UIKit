@@ -26,27 +26,31 @@ open class DZCheckBox : UIControl {
     
 // MARK: - properties
     
-    @IBInspectable open var borderWidth:CGFloat = 4.0;
+    @IBInspectable public var borderWidth:CGFloat = 4.0;
     
-    fileprivate var backgroundLayer:CALayer!;
-    fileprivate var uncheckedLayer:CALayer!;
-    fileprivate var checkedLayer:CALayer!;
+    private var backgroundLayer:CALayer!;
+    private var uncheckedLayer:CALayer!;
+    private var checkedLayer:CALayer!;
     
-    fileprivate var imageView: UIImageView!;
+    private var imageView: UIImageView!;
     
-    fileprivate var titleLabel: UILabel!;
+    private var titleLabel: UILabel!;
     
     // for DZCheckBoxTypeCircular
-    fileprivate var expansionRect:CGRect!;
-    fileprivate var contractRect:CGRect!;
+    private var expansionRect:CGRect!;
+    private var contractRect:CGRect!;
     
     // for DZCheckBoxRounded
-    fileprivate var outterCornerRadius:CGFloat = 8.0;
-    fileprivate var innerCornerRadius:CGFloat = 4.0;
+    private var outterCornerRadius:CGFloat = 8.0;
+    private var innerCornerRadius:CGFloat = 4.0;
     
     @IBInspectable open var type:DZCheckBoxType = .none;
     
-    @IBInspectable open var checkBoxSize:CGSize = CGSize(width: 48, height: 48);
+    @IBInspectable open var checkBoxSize:CGSize = CGSize(width: 48, height: 48) {
+        didSet {
+            self.frame.size.height = checkBoxSize.height;
+        }
+    };
     
     var withTitle: Bool = false;
     public var title: String = "" {
@@ -55,10 +59,11 @@ open class DZCheckBox : UIControl {
                 self.titleLabel?.text = title;
                 titleLabel.isHidden = false;
                 titleLabel.text = self.title;
+                let attributes = [NSFontAttributeName : UIFont.systemFont(ofSize: frame.size.height-4)];
                 let rect = NSString(string: self.title).boundingRect(with: CGSize(width: 0, height: self.bounds.size.height),
-                                                                             options: NSStringDrawingOptions.usesLineFragmentOrigin,
-                                                                             attributes: [NSFontAttributeName : UIFont.systemFont(ofSize: frame.size.height-4)],
-                                                                             context: nil);
+                                                                     options: NSStringDrawingOptions.usesLineFragmentOrigin,
+                                                                     attributes: attributes,
+                                                                     context: nil);
                 titleLabel.frame.size = rect.size;
                 self.frame.size = CGSize(width: self.frame.size.width + 4 + rect.size.width, height: self.frame.height);
             }
@@ -95,14 +100,10 @@ open class DZCheckBox : UIControl {
     @IBInspectable public var image: UIImage? {
         didSet {
             self.imageView.image = image;
-            //self.setNeedsLayout();
         }
     };
     
-    internal var hasBorder:Bool = false {
-        didSet {
-        }
-    };
+    internal var hasBorder:Bool = false;
     
     public init(frame:CGRect,
                 type:DZCheckBoxType,
@@ -118,47 +119,51 @@ open class DZCheckBox : UIControl {
         let checkbox = self;
         if ( checkbox != nil ) {
             if ( borderColor != nil ) {
-                checkbox.hasBorder      = true;
-                checkbox.borderColor    = borderColor;
-                checkbox.borderWidth    = max(frame.width/16, 2);
-                checkbox.innerCornerRadius = checkbox.outterCornerRadius - checkbox.borderWidth;
+                self.hasBorder      = true;
+                self.borderColor    = borderColor;
+                self.borderWidth    = max(frame.width/16, 2);
+                self.innerCornerRadius = self.outterCornerRadius - self.borderWidth;
             }
             else {
-                checkbox.hasBorder      = false;
+                self.hasBorder      = false;
             }
-        
+            
             if ( uncheckedColor != nil ) {
-                checkbox.uncheckedColor     = uncheckedColor!;
+                self.uncheckedColor     = uncheckedColor!;
             }
-        
+            
             if ( checkedColor != nil ) {
-                checkbox.checkedColor       = checkedColor!;
+                self.checkedColor       = checkedColor!;
             }
             
             if title != nil {
-                checkbox.withTitle = true;
-                checkbox.title = title!;
+                self.withTitle = true;
+                self.title = title!;
+                self.setTitle();
             }
             
             if image != nil {
-                checkbox.image = image;
+                self.image = image;
             }
             else {
-                let imageStr = Bundle(for: DZCheckBox.self).path(forResource: "checked", ofType: "png");
-                checkbox.image = UIImage(data: try! Data(contentsOf: URL(fileURLWithPath: imageStr!)));
+                //let imageStr = Bundle(for: DZCheckBox.self).path(forResource: "checked", ofType: "png");
+                //self.image = UIImage(data: try! Data(contentsOf: URL(fileURLWithPath: imageStr!)));
             }
-            checkbox.type = type;
+            self.type = type;
         }
     }
     
-    required public init?(coder aDecoder: NSCoder) {
-        super.init(coder:aDecoder);
-        self.createControllers();
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame:frame);
-        self.createControllers();
+    private func setTitle() {
+        self.titleLabel?.text = title;
+        titleLabel.isHidden = false;
+        titleLabel.text = self.title;
+        let attributes = [NSFontAttributeName : UIFont.systemFont(ofSize: frame.size.height-4)];
+        let rect = NSString(string: self.title).boundingRect(with: CGSize(width: 0, height: self.bounds.size.height),
+                                                             options: NSStringDrawingOptions.usesLineFragmentOrigin,
+                                                             attributes: attributes,
+                                                             context: nil);
+        titleLabel.frame.size = rect.size;
+        self.frame.size = CGSize(width: self.frame.size.width + 4 + rect.size.width, height: self.frame.height);
     }
     
     fileprivate func createControllers() {
@@ -190,17 +195,16 @@ open class DZCheckBox : UIControl {
         checkedLayer.opacity = 0.0;
         self.layer.addSublayer(checkedLayer);
         
+        // set title
         titleLabel = UILabel();
         titleLabel.frame = CGRect(x: frame.size.width+4, y: 0, width: 0, height: frame.size.height);
         titleLabel.isHidden = true;
         self.addSubview(titleLabel);
         
-        imageView = UIImageView(frame: self.bounds);
         // set default image
-        if self.image == nil {
-            let imageStr = Bundle(for: DZCheckBox.self).path(forResource: "checked", ofType: "png");
-            self.image = UIImage(data: try! Data(contentsOf: URL(fileURLWithPath: imageStr!)));
-        }
+        imageView = UIImageView(frame: self.bounds);
+        let imageStr = Bundle(for: DZCheckBox.self).path(forResource: "checked", ofType: "png");
+        self.image = UIImage(data: try! Data(contentsOf: URL(fileURLWithPath: imageStr!)));
         self.addSubview(imageView);
         
         self.addTarget(self, action: #selector(DZCheckBox.onCheckBoxTouched(_:)), for: UIControlEvents.touchUpInside);
@@ -217,20 +221,19 @@ open class DZCheckBox : UIControl {
     fileprivate func playAnimation(_ checked:Bool)
     {
         if ( checked ) {
-            UIView.animate(withDuration: 0.1, delay: 0.1, options: UIViewAnimationOptions.allowUserInteraction, animations: { () -> Void in
+            UIView.animate(withDuration: 0.1, delay: 0.1, options: UIViewAnimationOptions.allowUserInteraction, animations: {
                 self.checkedLayer.opacity   = 1.0;
                 self.checkedLayer.frame     = self.expansionRect;
                 self.titleLabel.textColor   = self.checkedColor;
-            }, completion: { (result) -> Void in
+            }, completion: { (result) in
                 self.sendActions(for: UIControlEvents.valueChanged);
             });
         }
         else {
-            UIView.animate(withDuration: 0.3, delay: 0.1, options: UIViewAnimationOptions.allowUserInteraction, animations: { () -> Void in
-                self.checkedLayer.opacity   = 0.0;
+            UIView.animate(withDuration: 0.3, delay: 0.1, options: UIViewAnimationOptions.allowUserInteraction, animations: {                self.checkedLayer.opacity   = 0.0;
                 self.checkedLayer.frame     = self.contractRect;
                 self.titleLabel.textColor   = self.uncheckedColor;
-            }, completion: { (result) -> Void in
+            }, completion: { (result) in
                 self.sendActions(for: UIControlEvents.valueChanged);
             });
         }
@@ -238,11 +241,12 @@ open class DZCheckBox : UIControl {
     
 // MARK: - layoutSubviews
     
-    override open func layoutSubviews() {
-        super.layoutSubviews();
+    override open func draw(_ rect: CGRect) {
+        super.draw(rect);
         
         //self.backgroundColor = UIColor.redColor();
         if ( self.borderColor != nil ) {
+            self.backgroundLayer.backgroundColor = self.borderColor!.cgColor;
             self.hasBorder = true;
         }
         

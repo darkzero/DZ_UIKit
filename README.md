@@ -25,6 +25,8 @@ pod "DZ_UIKit"
 
 darkzero, darkzero_mk2@hotmail.com
 
+iOS developer, working in Tokyo.
+
 ## License
 
-DZFiveStarBar is available under the MIT license. See the LICENSE file for more info.
+DZ_UIKit is available under the MIT license. See the LICENSE file for more info.

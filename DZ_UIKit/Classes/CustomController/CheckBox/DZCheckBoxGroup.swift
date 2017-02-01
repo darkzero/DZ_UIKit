@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 public enum DZCheckBoxGroupStyle: Int {
-    case `default`    = 0;
+    case `default`  = 0;
     case bar        = 1;
     case list       = 2;
 }
@@ -25,12 +25,12 @@ public class DZCheckBoxGroup : UIControl {
     
 // MARK: - properties
     
-    open var multipleCheckEnabled:Bool    = false;
-    open var style: DZCheckBoxGroupStyle  = .default;
+    @IBInspectable public var multipleCheckEnabled:Bool    = false;
+    @IBInspectable public var style: DZCheckBoxGroupStyle  = .default;
     
     open var checkedIndexes:[Int];
     
-    fileprivate var checkBoxArray:[DZCheckBox];
+    @IBInspectable fileprivate var checkBoxArray:[DZCheckBox];
 
 // MARK: - init
     

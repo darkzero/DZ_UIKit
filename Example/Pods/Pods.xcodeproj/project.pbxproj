@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		00973946B3663062E1F91ECE72A26D1C /* Pods-DZ_UIKit_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 93EFF47F5997A40C58A769939AF23D25 /* Pods-DZ_UIKit_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		031D0E639AD9D0FFFBAF7F0E601735AA /* Pods-DZ_UIKit_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = C03A785BF978A0970D8855BDDA547712 /* Pods-DZ_UIKit_Example-dummy.m */; };
-		07FEE0CE6B5479EB3AD846361652B3D3 /* PIImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F14DD6B15B166005A56034C633D9C2 /* PIImageCache.swift */; };
 		105D8311208DBDDE738C8C54314F7761 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D31B096AB4A0164C61B63F0E59AD76C9 /* Foundation.framework */; };
 		38D7FB4EE7CDB1E93C7E4A4E9BF4ADA8 /* Pods-DZ_UIKit_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 42BA3034C8C55F81678DCD23A21D6485 /* Pods-DZ_UIKit_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3BC66A95FF653C536B20FD5673F137E0 /* Pods-DZ_UIKit_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E147EDD39111D93C536B60410BBA658 /* Pods-DZ_UIKit_Tests-dummy.m */; };
@@ -33,9 +32,10 @@
 		C8BF863F1D51F092005C6CB0 /* SwitchBackground_off.png in Resources */ = {isa = PBXBuildFile; fileRef = C8BF863C1D51F092005C6CB0 /* SwitchBackground_off.png */; };
 		C8BF86401D51F092005C6CB0 /* SwitchBackground_on.png in Resources */ = {isa = PBXBuildFile; fileRef = C8BF863D1D51F092005C6CB0 /* SwitchBackground_on.png */; };
 		C8BF86411D51F092005C6CB0 /* SwitchThumb.png in Resources */ = {isa = PBXBuildFile; fileRef = C8BF863E1D51F092005C6CB0 /* SwitchThumb.png */; };
+		C8E52DFC1E3B481A0028175F /* PIImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E52DF81E3B44250028175F /* PIImageCache.swift */; };
+		C8E52DFD1E3B481A0028175F /* PIImageCacheExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E52DF91E3B44250028175F /* PIImageCacheExtensions.swift */; };
 		C9AAFC56F646AFE3D329E127D3D0877F /* UIColor+RGBA.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF5E642EBD84B1A8BC79BA0190D95B1C /* UIColor+RGBA.swift */; };
 		DFD4EA015DEEEC8051AA8896F3C9694C /* DateUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B8ACFFE679BCB794582DB04FCFF0A3 /* DateUtil.swift */; };
-		E0DED9FCFD907A1CEC9BCC454978700E /* PIImageCacheExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE2924C53CB9AD3C3265A0B07ED664 /* PIImageCacheExtensions.swift */; };
 		EAB9ECE0C09463E227895D5026BAD632 /* DZSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094F8C66DC82C93B3E72C914DD0AA550 /* DZSwitch.swift */; };
 		EB66DAF04274722B39D1EA48E460A6F5 /* DZBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9466335770A7D3498A2439A3D75026 /* DZBlock.swift */; };
 		EF13B7921CFF63510061792C /* checked.png in Resources */ = {isa = PBXBuildFile; fileRef = EF13B7911CFF63510061792C /* checked.png */; };
@@ -81,8 +81,6 @@
 		5BD1C4915EF2BFACC3E4007BC193A110 /* DZ_UIKit-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "DZ_UIKit-umbrella.h"; sourceTree = "<group>"; };
 		5BD5483AF46DCE6B873E8552B776B932 /* DZ_UIKit-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "DZ_UIKit-dummy.m"; sourceTree = "<group>"; };
 		5F22249D1601B12B23B7C74FDEB73108 /* Pods-DZ_UIKit_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-DZ_UIKit_Example-acknowledgements.plist"; sourceTree = "<group>"; };
-		70AE2924C53CB9AD3C3265A0B07ED664 /* PIImageCacheExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PIImageCacheExtensions.swift; sourceTree = "<group>"; };
-		71F14DD6B15B166005A56034C633D9C2 /* PIImageCache.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PIImageCache.swift; sourceTree = "<group>"; };
 		7B47410C1D8E4E8B9A25872E9330C480 /* UIImage+WebCache.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "UIImage+WebCache.swift"; sourceTree = "<group>"; };
 		7FB9811AAA432808F693B4D6AD7D2550 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7FEB55ACD41586B817AF48185B4035E5 /* Pods-DZ_UIKit_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-DZ_UIKit_Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -111,6 +109,8 @@
 		C8BF863C1D51F092005C6CB0 /* SwitchBackground_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SwitchBackground_off.png; sourceTree = "<group>"; };
 		C8BF863D1D51F092005C6CB0 /* SwitchBackground_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SwitchBackground_on.png; sourceTree = "<group>"; };
 		C8BF863E1D51F092005C6CB0 /* SwitchThumb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SwitchThumb.png; sourceTree = "<group>"; };
+		C8E52DF81E3B44250028175F /* PIImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PIImageCache.swift; sourceTree = "<group>"; };
+		C8E52DF91E3B44250028175F /* PIImageCacheExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PIImageCacheExtensions.swift; sourceTree = "<group>"; };
 		CF5E642EBD84B1A8BC79BA0190D95B1C /* UIColor+RGBA.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "UIColor+RGBA.swift"; sourceTree = "<group>"; };
 		D16061C8E28C8CE1512283FDA8398AFB /* Pods-DZ_UIKit_Tests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-DZ_UIKit_Tests-resources.sh"; sourceTree = "<group>"; };
 		D31B096AB4A0164C61B63F0E59AD76C9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
@@ -276,8 +276,6 @@
 			isa = PBXGroup;
 			children = (
 				DF9466335770A7D3498A2439A3D75026 /* DZBlock.swift */,
-				71F14DD6B15B166005A56034C633D9C2 /* PIImageCache.swift */,
-				70AE2924C53CB9AD3C3265A0B07ED664 /* PIImageCacheExtensions.swift */,
 				C821C5721CF3E41D006B124D /* Stepper */,
 				A8B42EEABD3993DEB3F00CD2A86CDCC1 /* ActionSheet */,
 				05B1C442688B520D47E39D46F785E190 /* AlertView */,
@@ -385,6 +383,8 @@
 		E33554F9AA62F4298B6BE6CE8E69B87F /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				C8E52DF81E3B44250028175F /* PIImageCache.swift */,
+				C8E52DF91E3B44250028175F /* PIImageCacheExtensions.swift */,
 				36B8ACFFE679BCB794582DB04FCFF0A3 /* DateUtil.swift */,
 				CF5E642EBD84B1A8BC79BA0190D95B1C /* UIColor+RGBA.swift */,
 				ECDD092FE96EA9F03878F38C43154D88 /* UIImage+Color.swift */,
@@ -560,6 +560,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8E52DFC1E3B481A0028175F /* PIImageCache.swift in Sources */,
+				C8E52DFD1E3B481A0028175F /* PIImageCacheExtensions.swift in Sources */,
 				DFD4EA015DEEEC8051AA8896F3C9694C /* DateUtil.swift in Sources */,
 				719EB8589AAE5FCC006252CB78901D2E /* Define.swift in Sources */,
 				C12BD0181621F463A166AE3FABB3ABCC /* DZ_UIKit-dummy.m in Sources */,
@@ -575,8 +577,6 @@
 				C883CF4F1DDEEAA10039CC46 /* DZActionSheetController.swift in Sources */,
 				EAB9ECE0C09463E227895D5026BAD632 /* DZSwitch.swift in Sources */,
 				5B513ABDEFFB61529D08DECCE5C0BA4E /* DZNineImageBoxView.swift in Sources */,
-				07FEE0CE6B5479EB3AD846361652B3D3 /* PIImageCache.swift in Sources */,
-				E0DED9FCFD907A1CEC9BCC454978700E /* PIImageCacheExtensions.swift in Sources */,
 				C9AAFC56F646AFE3D329E127D3D0877F /* UIColor+RGBA.swift in Sources */,
 				BE3916F47645CADC9E3EA3EC8430F4E2 /* UIImage+Color.swift in Sources */,
 				62D67CBC23707447F7DFA90548FF65D4 /* UIImage+WebCache.swift in Sources */,
