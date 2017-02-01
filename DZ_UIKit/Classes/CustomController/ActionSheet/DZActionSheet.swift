@@ -100,7 +100,7 @@ internal class DZActionSheet : UIControl {
             btnImage = UIImage(named: imageNormal!)!;
         }
         else {
-            let gary = characterColor?.getGary();
+            var gary = ( characterColor != nil ) ? characterColor!.getGary() : 0;
             btnImage = UIImage.imageWithColor(characterColor!, size: CGSize(width: 48, height: 48));
             let initialChar = buttonTitle.substring(to: buttonTitle.characters.index(buttonTitle.startIndex, offsetBy: 1));
             let lbl = UILabel(frame: CGRect(x: 0, y: 0, width: 48, height: 48));

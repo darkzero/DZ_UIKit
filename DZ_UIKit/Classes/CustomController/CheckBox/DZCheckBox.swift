@@ -105,19 +105,27 @@ open class DZCheckBox : UIControl {
     
     internal var hasBorder:Bool = false;
     
-    public init(frame:CGRect,
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder:aDecoder);
+        self.createControllers();
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame:frame);
+        self.createControllers();
+    }
+    
+    
+    public init(frame frame:CGRect,
                 type:DZCheckBoxType,
                 title: String? = nil,
                 image: UIImage? = nil,
                 borderColor:UIColor? = nil,
                 uncheckedColor:UIColor? = nil,
                 checkedColor:UIColor? = nil) {
-        // init with properties
         super.init(frame:frame);
         self.createControllers();
-        
-        let checkbox = self;
-        if ( checkbox != nil ) {
+        if ( self != nil ) {
             if ( borderColor != nil ) {
                 self.hasBorder      = true;
                 self.borderColor    = borderColor;
