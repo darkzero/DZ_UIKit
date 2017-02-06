@@ -43,8 +43,8 @@ open class DZCheckBox : UIControl {
     private var cornerRadius:CGFloat = 8.0;
     
     // Border
-    @IBInspectable public var hasBorder: Bool = false;
-    @IBInspectable public var borderColor: UIColor?;
+    @IBInspectable public var hasBorder: Bool       = false;
+    @IBInspectable public var borderColor: UIColor  = UIColor.white;
     
     @IBInspectable public var type:DZCheckBoxType = .none;
     
@@ -117,7 +117,7 @@ open class DZCheckBox : UIControl {
         if ( self != nil ) {
             if ( borderColor != nil ) {
                 self.hasBorder      = true;
-                self.borderColor    = borderColor;
+                self.borderColor    = borderColor!;
             }
             
             if ( uncheckedColor != nil ) {
@@ -136,21 +136,6 @@ open class DZCheckBox : UIControl {
             
             self.createControllers();
         }
-    }
-    
-    private func setTitle() {
-        //self.titleLabel?.text = title;
-        titleLabel.isHidden = false;
-        titleLabel.text = self.title;
-        let attributes = [NSFontAttributeName : UIFont.systemFont(ofSize: frame.size.height-4)];
-        let rect = NSString(string: self.title!).boundingRect(with: CGSize(width: CGFloat.infinity,
-                                                                          height: self.bounds.size.height),
-                                                             options: NSStringDrawingOptions.usesLineFragmentOrigin,
-                                                             attributes: attributes,
-                                                             context: nil);
-        titleLabel.frame.size = NSString(string: self.title!).size(attributes: attributes);//rect.size;
-        //titleLabel.backgroundColor = UIColor.blue
-        self.frame.size = CGSize(width: self.frame.size.width + 4 + rect.size.width, height: self.frame.height);
     }
     
     fileprivate func createControllers() {
@@ -186,6 +171,16 @@ open class DZCheckBox : UIControl {
             self.setTitle();
         }
         
+        // set border layer
+        self.borderLayer = CALayer();
+        self.borderLayer.frame = UIEdgeInsetsInsetRect(self.expansionRect,
+                                                       UIEdgeInsetsMake(2, 2, 2, 2));
+        self.borderLayer.borderColor = UIColor.white.cgColor;//self.borderColor!.cgColor;
+        self.borderLayer.borderWidth = 1;
+        self.borderLayer.opacity = 1.0;
+        self.borderLayer.isHidden = true;
+        self.layer.addSublayer(borderLayer);
+        
         // set default image
         imageView = UIImageView(frame: self.bounds);
         let imageStr = Bundle(for: DZCheckBox.self).path(forResource: "checked", ofType: "png");
@@ -195,43 +190,22 @@ open class DZCheckBox : UIControl {
                                          height: self.expansionRect.size.height);
         self.addSubview(imageView);
         
-        
-        if ( self.hasBorder && self.borderColor != nil ) {
-            self.borderLayer = CALayer();
-            self.borderLayer.frame = UIEdgeInsetsInsetRect(self.expansionRect,
-                                                           UIEdgeInsetsMake(2, 2, 2, 2));
-            self.borderLayer.borderColor = UIColor.white.cgColor;//self.borderColor!.cgColor;
-            self.borderLayer.borderWidth = 1;
-            self.borderLayer.opacity = 1.0;
-            self.layer.addSublayer(borderLayer);
-            imageView.frame = CGRect(x: 4, y: 4,
-                                     width: self.expansionRect.size.width-8,
-                                     height: self.expansionRect.size.height-8);
-        }
-        
-        // Drawing code
-        switch self.type {
-        case .rounded :
-            self.uncheckedLayer.cornerRadius    = self.cornerRadius;
-            self.checkedLayer.cornerRadius      = self.cornerRadius;
-            self.borderLayer?.cornerRadius      = self.cornerRadius - 2;
-            break;
-        case .square :
-            break;
-        case .circular, .none :
-            self.uncheckedLayer.cornerRadius    = self.expansionRect.size.width / 2;
-            self.borderLayer?.cornerRadius      = (self.expansionRect.size.width - 4) / 2;
-            if self.checked {
-                self.checkedLayer.cornerRadius  = self.expansionRect.size.width / 2;
-            } else {
-                self.checkedLayer.cornerRadius  = self.cornerRadius;
-            }
-            break;
-        }
-
-        //self.backgroundColor = UIColor.red;
-        
         self.addTarget(self, action: #selector(DZCheckBox.onCheckBoxTouched(_:)), for: UIControlEvents.touchUpInside);
+    }
+    
+    private func setTitle() {
+        //self.titleLabel?.text = title;
+        titleLabel.isHidden = false;
+        titleLabel.text = self.title;
+        let attributes = [NSFontAttributeName : UIFont.systemFont(ofSize: frame.size.height-4)];
+        let rect = NSString(string: self.title!).boundingRect(with: CGSize(width: CGFloat.infinity,
+                                                                           height: self.bounds.size.height),
+                                                              options: NSStringDrawingOptions.usesLineFragmentOrigin,
+                                                              attributes: attributes,
+                                                              context: nil);
+        titleLabel.frame.size = NSString(string: self.title!).size(attributes: attributes);//rect.size;
+        //titleLabel.backgroundColor = UIColor.blue
+        self.frame.size = CGSize(width: self.frame.size.width + 4 + rect.size.width, height: self.frame.height);
     }
     
 // MARK: - touch handler
@@ -303,6 +277,24 @@ open class DZCheckBox : UIControl {
         
         uncheckedLayer.backgroundColor  = self.uncheckedColor.cgColor;
         checkedLayer.backgroundColor    = self.checkedColor.cgColor;
+        
+        self.borderLayer.frame = UIEdgeInsetsInsetRect(self.expansionRect,
+                                                       UIEdgeInsetsMake(2, 2, 2, 2));
+        self.borderLayer.borderColor = self.borderColor.cgColor;
+        self.borderLayer.borderWidth = 1;
+        if ( self.hasBorder && self.borderColor != nil ) {
+            
+            self.borderLayer.isHidden = false;
+            imageView.frame = CGRect(x: 4, y: 4,
+                                     width: self.expansionRect.size.width-8,
+                                     height: self.expansionRect.size.height-8);
+        }
+        else {
+            self.borderLayer.isHidden = true;
+            imageView.frame = CGRect(x: 0, y: 0,
+                                     width: self.expansionRect.size.width,
+                                     height: self.expansionRect.size.height);
+        }
         
         // Drawing code
         switch self.type {
