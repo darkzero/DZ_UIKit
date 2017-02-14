@@ -10,27 +10,20 @@ import Foundation
 import UIKit
 
 public enum DZCheckBoxGroupStyle: Int {
-    case `default`  = 0;
     case bar        = 1;
     case list       = 2;
-}
-
-protocol DZCheckBoxGroupDelegate {
-    func numberOfCheckBoxes() -> Int;
-    func checkBoxSizeOfGroup(_ group : DZCheckBoxGroup, atIndex theIndex : Int)-> CGSize;
-    func checkBoxOfGroup(_ group : DZCheckBoxGroup, atIndex theIndex : Int) -> DZCheckBox;
 }
 
 public class DZCheckBoxGroup : UIControl {
     
 // MARK: - properties
     
-    @IBInspectable public var multipleCheckEnabled:Bool    = false;
-    @IBInspectable public var style: DZCheckBoxGroupStyle  = .default;
+    public var multipleCheckEnabled:Bool    = false;
+    public var style: DZCheckBoxGroupStyle  = .bar;
     
     open var checkedIndexes:[Int];
     
-    @IBInspectable fileprivate var checkBoxArray:[DZCheckBox];
+    private var checkBoxArray:[DZCheckBox];
 
 // MARK: - init
     
@@ -40,6 +33,15 @@ public class DZCheckBoxGroup : UIControl {
         self.checkedIndexes         = [Int]();
         
         super.init(coder: aDecoder);
+        self.backgroundColor        = UIColor.clear;
+    }
+    
+    public init() {
+        self.multipleCheckEnabled   = false;
+        self.checkBoxArray          = [DZCheckBox]();
+        self.checkedIndexes         = [Int]();
+        
+        super.init(frame:CGRect.zero);
         self.backgroundColor        = UIColor.clear;
     }
     
@@ -67,17 +69,20 @@ public class DZCheckBoxGroup : UIControl {
     }
     
     public func addCheckBox(_ checkBox:DZCheckBox) {
-        checkBox.addTarget(self, action: #selector(DZCheckBoxGroup.onCheckBoxCheckedChanged(_:)), for: UIControlEvents.valueChanged);
+        checkBox.addTarget(nil,
+                           action: #selector(onCheckBoxCheckedChanged(_:)),
+                           for: UIControlEvents.valueChanged);
+        checkBox.group = self;
         self.checkBoxArray.append(checkBox);
-        //self.setNeedsLayout();
     }
     
     public func addCheckBoxes(_ items:[DZCheckBox]) {
         for checkBox in items {
-            checkBox.addTarget(self, action: #selector(DZCheckBoxGroup.onCheckBoxCheckedChanged(_:)), for: UIControlEvents.valueChanged);
+            checkBox.addTarget(nil,
+                               action: #selector(onCheckBoxCheckedChanged(_:)),
+                               for: UIControlEvents.valueChanged);
             self.checkBoxArray.append(checkBox);
         }
-        //self.setNeedsLayout();
     }
     
     internal func onCheckBoxCheckedChanged(_ sender: AnyObject)
@@ -126,7 +131,7 @@ public class DZCheckBoxGroup : UIControl {
                 self.addSubview(aCheckBox);
             }
             break;
-        case .bar, .default :
+        case .bar :
             theRect = CGRect( x: self.frame.origin.x, y: self.frame.origin.y,
                               width: (theCheckBox.frame.size.width + 5)*CGFloat(itemsCount), height: theCheckBox.frame.size.height);
             for i in 0 ... (itemsCount-1) {
@@ -147,10 +152,4 @@ public class DZCheckBoxGroup : UIControl {
             }
         }
     }
-    
-//    + (DZCheckBoxGroup*) checkBoxgroupWithFrame:(CGRect)frame;
-//    + (DZCheckBoxGroup*) checkBoxgroupWithFrame:(CGRect)frame items:(NSArray*)items;
-    
-//    - (void) addCheckBox:(DZCheckBox*)checkBox;
-//    - (void) addCheckBoxes:(NSArray*)items;
 }

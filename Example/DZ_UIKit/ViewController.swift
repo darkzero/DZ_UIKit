@@ -127,7 +127,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             break;
         case 5:
             // DZCheckBoxGroup
-            self.performSegue(withIdentifier: "ShowDetail", sender: "DZCheckBoxGroup");
+            self.performSegue(withIdentifier: "ShowCheckBox", sender: "DZCheckBoxGroup");
             break;
         case 6:
             // DZStepper
@@ -145,6 +145,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if ( segue.identifier == "ShowCheckBox" ) {
+            return;
+        }
         let viewController = segue.destination as! DetailViewController;
         viewController.viewTitle = sender as! String;
         if segue.identifier == "ShowDetail" {

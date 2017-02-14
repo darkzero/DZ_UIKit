@@ -16,15 +16,14 @@ let DEFAULT_CHECKED_COLOR
 let DEFAULT_UNCHECKED_COLOR
     = UIColor.colorWithDec(Red: 230, Green: 230, Blue: 230, Alpha: 1.0);    // RGB(230, 230, 230);
 
-public enum DZCheckBoxType {
-    case none
-    case circular
+public enum DZCheckBoxType: Int {
+    case circular = 1;
     case square
     case rounded
 }
 
 @IBDesignable
-open class DZCheckBox : UIControl {
+public class DZCheckBox : UIControl {
     
 // MARK: - properties
     
@@ -46,14 +45,17 @@ open class DZCheckBox : UIControl {
     @IBInspectable public var hasBorder: Bool       = false;
     @IBInspectable public var borderColor: UIColor  = UIColor.white;
     
-    @IBInspectable public var type:DZCheckBoxType = .none;
+    // Type
+    @IBInspectable public var type:DZCheckBoxType = .circular;
     
+    // Size
     @IBInspectable public var checkBoxSize:CGSize = CGSize(width: 48, height: 48) {
         didSet {
             self.frame.size.height = checkBoxSize.height;
         }
     };
     
+    // Title
     @IBInspectable public var title: String? {
         didSet {
             if ( title != nil ) {
@@ -71,12 +73,14 @@ open class DZCheckBox : UIControl {
         }
     }
     
+    // Checked
     @IBInspectable public var checked: Bool = false {
         didSet {
             self.playAnimation(checked);
         }
     }
     
+    // Color
     @IBInspectable public var uncheckedColor: UIColor = DEFAULT_UNCHECKED_COLOR {
         didSet {
             uncheckedLayer.backgroundColor = uncheckedColor.cgColor;
@@ -89,11 +93,19 @@ open class DZCheckBox : UIControl {
         }
     };
     
+    // Image
     @IBInspectable public var image: UIImage? {
         didSet {
             self.imageView.image = image;
         }
     };
+    
+    // Group
+    public var group: DZCheckBoxGroup? {
+        didSet {
+            //
+        }
+    }
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder:aDecoder);
@@ -230,7 +242,7 @@ open class DZCheckBox : UIControl {
                 case .square :
                     self.checkedLayer.cornerRadius      = 0;
                     break;
-                case .circular, .none :
+                case .circular :
                     self.checkedLayer.cornerRadius      = self.expansionRect.size.width / 2;
                     break;
                 }
@@ -305,7 +317,7 @@ open class DZCheckBox : UIControl {
             break;
         case .square :
             break;
-        case .circular, .none :
+        case .circular :
             self.uncheckedLayer.cornerRadius    = self.expansionRect.size.width / 2;
             self.borderLayer?.cornerRadius      = (self.expansionRect.size.width - 4) / 2;
             if self.checked {
