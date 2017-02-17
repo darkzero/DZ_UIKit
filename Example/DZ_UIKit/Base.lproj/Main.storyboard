@@ -88,6 +88,9 @@
                                         <integer key="value" value="0"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="onCheckBoxValueChanged:" destination="0PJ-iP-YId" eventType="valueChanged" id="654-OS-dXF"/>
+                                </connections>
                             </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="888-sL-4La" customClass="DZCheckBox" customModule="DZ_UIKit">
                                 <rect key="frame" x="72" y="72" width="48" height="48"/>
@@ -107,6 +110,9 @@
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="image" keyPath="image" value="typeIcon_commodity"/>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="onCheckBoxValueChanged:" destination="0PJ-iP-YId" eventType="valueChanged" id="zco-F2-DdW"/>
+                                </connections>
                             </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tx6-Cs-lIt" customClass="DZCheckBox" customModule="DZ_UIKit">
                                 <rect key="frame" x="128" y="72" width="48" height="48"/>

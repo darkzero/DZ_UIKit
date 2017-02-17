@@ -69,18 +69,13 @@ public class DZCheckBoxGroup : UIControl {
     }
     
     public func addCheckBox(_ checkBox:DZCheckBox) {
-        checkBox.addTarget(nil,
-                           action: #selector(onCheckBoxCheckedChanged(_:)),
-                           for: UIControlEvents.valueChanged);
         checkBox.group = self;
         self.checkBoxArray.append(checkBox);
     }
     
     public func addCheckBoxes(_ items:[DZCheckBox]) {
         for checkBox in items {
-            checkBox.addTarget(nil,
-                               action: #selector(onCheckBoxCheckedChanged(_:)),
-                               for: UIControlEvents.valueChanged);
+            checkBox.group = self;
             self.checkBoxArray.append(checkBox);
         }
     }
@@ -113,7 +108,7 @@ public class DZCheckBoxGroup : UIControl {
 // MARK: - layoutSubviews
     
     override open func layoutSubviews() {
-        var _ = self.subviews.map { $0.removeFromSuperview() };
+        //var _ = self.subviews.map { $0.removeFromSuperview() };
         
         let itemsCount:Int  = self.checkBoxArray.count;
         let theCheckBox     = self.checkBoxArray[0] as! DZCheckBox;

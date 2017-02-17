@@ -6,15 +6,15 @@
 //  Copyright (c) 2014 Dora.Yuan All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 //let VALUE_KEY_CHECKED   = "_checked";
 
-let DEFAULT_CHECKED_COLOR
-    = UIColor.colorWithDec(Red: 184, Green: 208, Blue: 98, Alpha: 1.0);     // RGB(184, 208, 98);
-let DEFAULT_UNCHECKED_COLOR
-    = UIColor.colorWithDec(Red: 230, Green: 230, Blue: 230, Alpha: 1.0);    // RGB(230, 230, 230);
+let DEFAULT_CHECKED_COLOR   // RGB(184, 208, 98);
+    = UIColor.colorWithDec(Red: 184, Green: 208, Blue: 98, Alpha: 1.0);
+
+let DEFAULT_UNCHECKED_COLOR // RGB(230, 230, 230);
+    = UIColor.colorWithDec(Red: 230, Green: 230, Blue: 230, Alpha: 1.0);
 
 public enum DZCheckBoxType: Int {
     case circular = 1;
@@ -215,8 +215,7 @@ public class DZCheckBox : UIControl {
                                                               options: NSStringDrawingOptions.usesLineFragmentOrigin,
                                                               attributes: attributes,
                                                               context: nil);
-        titleLabel.frame.size = NSString(string: self.title!).size(attributes: attributes);//rect.size;
-        //titleLabel.backgroundColor = UIColor.blue
+        titleLabel.frame.size = NSString(string: self.title!).size(attributes: attributes);
         self.frame.size = CGSize(width: self.frame.size.width + 4 + rect.size.width, height: self.frame.height);
     }
     
@@ -226,6 +225,12 @@ public class DZCheckBox : UIControl {
     {
         let oldValue:Bool = self.checked;
         self.checked = !oldValue;
+        if ( self.group == nil ) {
+            self.sendActions(for: UIControlEvents.valueChanged);
+        }
+        else {
+            self.group?.onCheckBoxCheckedChanged(self);
+        }
     }
     
     fileprivate func playAnimation(_ checked:Bool)
@@ -247,7 +252,12 @@ public class DZCheckBox : UIControl {
                     break;
                 }
             }, completion: { (result) in
-                self.sendActions(for: UIControlEvents.valueChanged);
+//                if ( self.group == nil ) {
+//                    self.sendActions(for: UIControlEvents.valueChanged);
+//                }
+//                else {
+//                    self.group?.onCheckBoxCheckedChanged(self);
+//                }
             });
         }
         else {
@@ -256,7 +266,6 @@ public class DZCheckBox : UIControl {
                 self.checkedLayer.frame     = self.contractRect;
                 self.titleLabel.textColor   = self.uncheckedColor;
             }, completion: { (result) in
-                self.sendActions(for: UIControlEvents.valueChanged);
             });
         }
     }
