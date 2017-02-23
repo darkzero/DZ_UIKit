@@ -231,34 +231,30 @@ open class DZAlertView : UIView {
                 height: ONLY_ONE_BUTTON_FRAME.size.height);
         }
         else if ( self.buttonArray.count == 2 ) {
-            for item in self.buttonArray {
-                if let btn = item as? UIButton {
-                    self.addSubview(btn);
-                    let btnIdx:Int = btn.tag;
-                    btn.layer.cornerRadius = 4.0;
-                    btn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18.0);
-                    btn.frame = CGRect(
-                        x: 10.0 + 135.0 * CGFloat(btnIdx),
-                        y: self.frame.size.height - 55.0,
-                        width: BUTTON_FRAME.size.width,
-                        height: BUTTON_FRAME.size.height);
-                }
+            for btn in self.buttonArray {
+                self.addSubview(btn);
+                let btnIdx:Int = btn.tag;
+                btn.layer.cornerRadius = 4.0;
+                btn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18.0);
+                btn.frame = CGRect(
+                    x: 10.0 + 135.0 * CGFloat(btnIdx),
+                    y: self.frame.size.height - 55.0,
+                    width: BUTTON_FRAME.size.width,
+                    height: BUTTON_FRAME.size.height);
             }
         }
         else
         {
-            for item in self.buttonArray {
-                if let btn = item as? UIButton {
-                    self.addSubview(btn);
-                    let btnIdx:Int = btn.tag;
-                    btn.layer.cornerRadius = 4.0;
-                    btn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18.0);
-                    btn.frame = CGRect(
-                        x: 10.0,
-                        y: self.frame.size.height - 55.0 * CGFloat(btnIdx+1),
-                        width: ONLY_ONE_BUTTON_FRAME.size.width,
-                        height: ONLY_ONE_BUTTON_FRAME.size.height);
-                }
+            for btn in self.buttonArray {
+                self.addSubview(btn);
+                let btnIdx:Int = btn.tag;
+                btn.layer.cornerRadius = 4.0;
+                btn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18.0);
+                btn.frame = CGRect(
+                    x: 10.0,
+                    y: self.frame.size.height - 55.0 * CGFloat(btnIdx+1),
+                    width: ONLY_ONE_BUTTON_FRAME.size.width,
+                    height: ONLY_ONE_BUTTON_FRAME.size.height);
             }
         }
     }

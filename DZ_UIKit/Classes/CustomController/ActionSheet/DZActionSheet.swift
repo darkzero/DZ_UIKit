@@ -100,7 +100,7 @@ internal class DZActionSheet : UIControl {
             btnImage = UIImage(named: imageNormal!)!;
         }
         else {
-            var gary = ( characterColor != nil ) ? characterColor!.getGary() : 0;
+            let gary = ( characterColor != nil ) ? characterColor!.getGary() : 0;
             btnImage = UIImage.imageWithColor(characterColor!, size: CGSize(width: 48, height: 48));
             let initialChar = buttonTitle.substring(to: buttonTitle.characters.index(buttonTitle.startIndex, offsetBy: 1));
             let lbl = UILabel(frame: CGRect(x: 0, y: 0, width: 48, height: 48));
@@ -179,7 +179,7 @@ internal class DZActionSheet : UIControl {
     
     override open func layoutSubviews() {
         
-        UITraitCollection(horizontalSizeClass: .regular);
+        let _ = UITraitCollection(horizontalSizeClass: .regular);
         
         let rect:CGRect = CGRect(x: 0.0, y: 0.0, width: CANCEL_BUTTON_WIDTH, height: TITLE_LABEL_HEIGHT);
         
@@ -222,17 +222,15 @@ internal class DZActionSheet : UIControl {
         // calc buttons' location
         let countInOneLine = ceil(CGFloat(self.buttonArray.count) / CGFloat(lineCount));
         let btnSpacing: CGFloat = (CANCEL_BUTTON_WIDTH - countInOneLine*BUTTON_FRAME.width) / (countInOneLine+1.0);
-        for item in self.buttonArray {
-            if let btn = item as? UIButton {
-                self.buttonBgView.addSubview(btn);
-                let idx = btn.tag;
-                let btnRect:CGRect  = CGRect(
-                    x: (btnSpacing + CGFloat(idx).truncatingRemainder(dividingBy: countInOneLine) * (btnSpacing + BUTTON_FRAME.size.width)),
-                    y: titleHeight + BUTTON_ROW_HEIGHT*CGFloat(idx/Int(countInOneLine)) + 5,
-                    width: BUTTON_FRAME.size.width,
-                    height: BUTTON_FRAME.size.height);
-                btn.frame = btnRect;
-            }
+        for btn in self.buttonArray {
+            self.buttonBgView.addSubview(btn);
+            let idx = btn.tag;
+            let btnRect:CGRect  = CGRect(
+                x: (btnSpacing + CGFloat(idx).truncatingRemainder(dividingBy: countInOneLine) * (btnSpacing + BUTTON_FRAME.size.width)),
+                y: titleHeight + BUTTON_ROW_HEIGHT*CGFloat(idx/Int(countInOneLine)) + 5,
+                width: BUTTON_FRAME.size.width,
+                height: BUTTON_FRAME.size.height);
+            btn.frame = btnRect;
         }
         
         self.backgroundColor = UIColor.clear; //RGBA(255, 255, 255, 0.7);//

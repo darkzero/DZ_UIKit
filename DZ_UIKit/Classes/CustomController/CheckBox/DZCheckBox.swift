@@ -118,36 +118,35 @@ public class DZCheckBox : UIControl {
     }
     
     
-    public init(frame frame:CGRect,
-                type:DZCheckBoxType,
+    public init(frame: CGRect,
+                type: DZCheckBoxType,
                 title: String? = nil,
                 image: UIImage? = nil,
-                borderColor:UIColor? = nil,
-                uncheckedColor:UIColor? = nil,
-                checkedColor:UIColor? = nil) {
+                borderColor: UIColor? = nil,
+                uncheckedColor: UIColor? = nil,
+                checkedColor: UIColor? = nil) {
         super.init(frame:frame);
-        if ( self != nil ) {
-            if ( borderColor != nil ) {
-                self.hasBorder      = true;
-                self.borderColor    = borderColor!;
-            }
-            
-            if ( uncheckedColor != nil ) {
-                self.uncheckedColor     = uncheckedColor!;
-            }
-            
-            if ( checkedColor != nil ) {
-                self.checkedColor       = checkedColor!;
-            }
-            
-            self.title = title;
-            
-            self.image = image;
-            
-            self.type = type;
-            
-            self.createControllers();
+        
+        if ( borderColor != nil ) {
+            self.hasBorder      = true;
+            self.borderColor    = borderColor!;
         }
+        
+        if ( uncheckedColor != nil ) {
+            self.uncheckedColor     = uncheckedColor!;
+        }
+        
+        if ( checkedColor != nil ) {
+            self.checkedColor       = checkedColor!;
+        }
+        
+        self.title = title;
+        
+        self.image = image;
+        
+        self.type = type;
+        
+        self.createControllers();
     }
     
     fileprivate func createControllers() {
@@ -303,7 +302,7 @@ public class DZCheckBox : UIControl {
                                                        UIEdgeInsetsMake(2, 2, 2, 2));
         self.borderLayer.borderColor = self.borderColor.cgColor;
         self.borderLayer.borderWidth = 1;
-        if ( self.hasBorder && self.borderColor != nil ) {
+        if ( self.hasBorder ) {
             
             self.borderLayer.isHidden = false;
             imageView.frame = CGRect(x: 4, y: 4,
