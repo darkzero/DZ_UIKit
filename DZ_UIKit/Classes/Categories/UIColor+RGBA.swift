@@ -1,6 +1,6 @@
 //
 //  UIColor+RGBA.swift
-//  DZLib
+//  DZ_UIKit
 //
 //  Created by Dora.Yuan on 2014/10/08.
 //  Copyright (c) 2014 Dora.Yuan All rights reserved.
@@ -66,7 +66,7 @@ extension UIColor {
     
     /**
      Return gray level of the color object
-     - Return: gary
+     - Return: gray color
      */
     public func getGary() -> Int {
         var r: CGFloat = 1.0;
@@ -79,5 +79,3 @@ extension UIColor {
         return gray;
     }
 }
-
-//let RGB(r,g,b) = UIColor.colorWithDec(r,g,b);

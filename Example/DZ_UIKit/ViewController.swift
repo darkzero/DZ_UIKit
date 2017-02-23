@@ -13,11 +13,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     @IBOutlet var listTableView: UITableView!;
     
-//    lazy var controllerList: NSArray? = {
-//        let path = NSBundle.mainBundle().pathForResource("Controllers", ofType:"plist")
-//        let list = NSArray(contentsOfFile: path);
-//        return list;
-//    }();
     var controllerList: NSArray?;
 
     override func viewDidLoad() {
@@ -76,69 +71,51 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         tableView.deselectRow(at: indexPath, animated: false);
         switch (indexPath as NSIndexPath).row {
         case 0:
-            // DZActionSheet
-            let actionSheet = DZActionSheet.actionSheetWithTitle("DZ_UIKit DZActionSheet");
-            actionSheet.addButtonWithTitle("Action", CharacterColor: UIColor.red, Handler: {
-                //;
-            });
-            actionSheet.addButtonWithTitle("Block", CharacterColor: UIColor.green, Handler: {
-                //;
-            });
-            actionSheet.addButtonWithTitle("Continue", CharacterColor: UIColor.cyan, Handler: {
-                //;
-            });
-            actionSheet.addButtonWithTitle("Delete", CharacterColor: UIColor.orange, Handler: {
-                //;
-            });
-            actionSheet.addButtonWithTitle("Edit", CharacterColor: UIColor.brown, Handler: {
-                //;
-            });
-            actionSheet.addButtonWithTitle("FaceToFace", CharacterColor: UIColor.red, Handler: {
-                //;
-            });
-            actionSheet.addButtonWithTitle("Game", CharacterColor: UIColor.green, Handler: {
-                //;
-            });
-            actionSheet.addButtonWithTitle("Hit&Run", CharacterColor: UIColor.cyan, Handler: {
-                //;
-            });
-            actionSheet.addButtonWithTitle("Increasement", CharacterColor: UIColor.orange, Handler: {
-                //;
-            });
-            actionSheet.addButtonWithTitle("JoinUs", CharacterColor: UIColor.white, Handler: {
-                //;
-            });
-            actionSheet.show();
+            let actionSheetController = DZActionSheetController(title: "- ActionSheet Test -");
+            actionSheetController.addButton(withTitle: "Action", characterColor: UIColor.red, handler: nil);
+            actionSheetController.addButton(withTitle: "Block", characterColor: UIColor.green, handler: nil);
+            actionSheetController.addButton(withTitle: "Continue", characterColor: UIColor.cyan, handler: nil);
+            actionSheetController.addButton(withTitle: "Delete", characterColor: UIColor.orange, handler: nil);
+            actionSheetController.addButton(withTitle: "Edit", characterColor: UIColor.brown, handler: nil);
+            actionSheetController.addButton(withTitle: "FaceToFace", characterColor: UIColor.red, handler: nil);
+            actionSheetController.addButton(withTitle: "Game", characterColor: UIColor.green, handler: nil);
+            actionSheetController.addButton(withTitle: "Hit&Run", characterColor: UIColor.cyan, handler: nil);
+            actionSheetController.addButton(withTitle: "Increasement", characterColor: UIColor.orange, handler: nil);
+            actionSheetController.addButton(withTitle: "JoinUs", characterColor: UIColor.white, handler: nil);
+            
+            //actionSheetController.addButton(withTitle: "Increasement", characterColor: UIColor.orange, handler: nil);
+            //actionSheetController.addButton(withTitle: "JoinUs", characterColor: UIColor.white, handler: nil);
+            //actionSheetController.addButton(withTitle: "Increasement", characterColor: UIColor.orange, handler: nil);
+            //actionSheetController.addButton(withTitle: "JoinUs", characterColor: UIColor.white, handler: nil);
+            
+            actionSheetController.show(inViewController: self, animated: true);
             break;
         case 1:
             // DZAlertView 2 button
-            let alert = DZAlertView.alertViewWithTitle("DZ_UIKit", Message: "DZAlertView");
-            alert.setCancelButtonWithTitle("Cancel", handler: {
+            let alert = DZAlertViewController(title: "DZ_UIKit");
+            alert.setCancelButton(title: "Cancel", handler: {
                 //
                 print("Cancel button is clicked");
             });
-            alert.addButtonWithTitle("Button 01", handler: {
+            alert.addButton(title: "Button 01", handler: {
                 //
                 print("Button 01 is clicked");
             });
-            alert.show();
+            alert.show(inViewController: self);
             break;
         case 2:
             // DZAlertView 3 button
-            let alert = DZAlertView.alertViewWithTitle("DZ_UIKit", Message: "DZAlertView DZAlertView DZAlertView DZAlertView DZAlertView DZAlertView");
-            alert.setCancelButtonWithTitle("Cancel", bgColor:UIColor.red, handler: {
+            let alert = DZAlertViewController(title: "DZ_UIKit", message: "DZAlertView DZAlertView DZAlertView DZAlertView DZAlertView DZAlertView");
+            alert.setCancelButton(title: "Cancel", bgColor:UIColor.red, handler: {
                 //
                 print("Cancel button is clicked");
             });
-            alert.addButtonWithTitle("Button 01", bgColor:RGB_HEX("0099FF", 1.0),  handler: {
+            alert.addButton(title: "Button 01", bgColor:RGB_HEX("0099FF", 1.0),  handler: {
                 //
                 print("Button 01 is clicked");
             });
-            alert.addButtonWithTitle("Button 02", handler: {
-                //
-                print("Button 02 is clicked");
-            });
-            alert.show();
+            alert.addButton(title: "Button 02");
+            alert.show(inViewController: self);
             break;
         case 3:
             // DZAnnularProgress
@@ -150,7 +127,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             break;
         case 5:
             // DZCheckBoxGroup
-            self.performSegue(withIdentifier: "ShowDetail", sender: "DZCheckBoxGroup");
+            self.performSegue(withIdentifier: "ShowCheckBox", sender: "DZCheckBoxGroup");
             break;
         case 6:
             // DZStepper
@@ -158,12 +135,19 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         case 7:
             // DZSwitch
             break;
+        case 8:
+            // DZButtonMenu
+            self.performSegue(withIdentifier: "ShowDetail", sender: "DZButtonMenu");
+            break;
         default:
             break;
         }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if ( segue.identifier == "ShowCheckBox" ) {
+            return;
+        }
         let viewController = segue.destination as! DetailViewController;
         viewController.viewTitle = sender as! String;
         if segue.identifier == "ShowDetail" {

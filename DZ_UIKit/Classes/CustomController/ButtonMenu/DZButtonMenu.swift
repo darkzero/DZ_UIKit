@@ -1,6 +1,6 @@
 //
 //  DZButtonMenu.swift
-//  DZLib
+//  DZ_UIKit
 //
 //  Created by Dora.Yuan on 14/10/25.
 //  Copyright (c) 2014年 Dora.Yuan All rights reserved.
@@ -32,14 +32,17 @@ public enum DZButtonMenuDirection: Int {
     case down   = 4;
 }
 
-protocol DZButtonMenuDelegate {
+public protocol DZButtonMenuDelegate {
     // click event
     func buttonMenu(_ aButtonMenu: DZButtonMenu, ClickedButtonAtIndex index: Int);
 }
 
+let MAIN_BTN_OPEN_STR: String   = "▲";
+let MAIN_BTN_CLOSE_STR: String  = "▼";
+
 open class DZButtonMenu : UIView {
     
-    // MARK: - Class define
+// MARK: - Class define
     
     let PADDING:CGFloat             = 10.0;
     let BUTTON_DIAMETER:CGFloat     = 48.0;
@@ -69,7 +72,7 @@ open class DZButtonMenu : UIView {
         get {
             return CGRect(
                 x: PADDING,
-                y: self.superview!.frame.size.height - BUTTON_DIAMETER-PADDING,
+                y: self.superview!.frame.size.height - BUTTON_DIAMETER - PADDING,
                 width: BUTTON_DIAMETER,
                 height: BUTTON_DIAMETER);
         }
@@ -79,7 +82,7 @@ open class DZButtonMenu : UIView {
         get {
             return CGRect(
                 x: self.superview!.frame.size.width - BUTTON_DIAMETER-PADDING,
-                y: PADDING,
+                y: PADDING + topPadding,
                 width: BUTTON_DIAMETER,
                 height: BUTTON_DIAMETER);
         }
@@ -87,7 +90,7 @@ open class DZButtonMenu : UIView {
     
     var LOCATION_LEFT_TOP:CGRect {
         get {
-            return CGRect(x: PADDING,y: PADDING,width: BUTTON_DIAMETER,height: BUTTON_DIAMETER)
+            return CGRect(x: PADDING,y: PADDING + topPadding,width: BUTTON_DIAMETER,height: BUTTON_DIAMETER)
         }
     }
     
@@ -97,10 +100,14 @@ open class DZButtonMenu : UIView {
         }
     }
     
-    // MARK: - public properties
-    var delegate:DZButtonMenuDelegate?;
+// MARK: - public properties
     
-    // MARK: - internal properties
+    public var delegate:DZButtonMenuDelegate?;
+    
+    public var topPadding: CGFloat = 0.0;
+    
+// MARK: - internal properties
+    
     var location:DZButtonMenuLocation   = .free;
     var direction:DZButtonMenuDirection = .none;
     var menuState:DZButtonMenuState     = .closed;
@@ -112,25 +119,25 @@ open class DZButtonMenu : UIView {
     
     var maxLabelWidth:CGFloat = 0.0;
     
-    var openImage   = "";
-    var closeImage  = "";
+    var openImage: String?;
+    var closeImage: String?;
     
-     //open var mask: UIView?;
+     open var maskBg: UIView?;
     
-    // MARK: - private properties
+// MARK: - private properties
     
-    // MARK: - init
+// MARK: - init
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public init(location: DZButtonMenuLocation, direction: DZButtonMenuDirection, closeImage: String, openImage: String?, titleArray: NSArray, imageArray: NSArray?) {
+    public init(location: DZButtonMenuLocation, direction: DZButtonMenuDirection, closeImage: String?, openImage: String?, titleArray: [String], imageArray: [String]?) {
         super.init(frame: CGRect.zero);
         
-        self.mask = UIView.init(frame: UIScreen.main.bounds);
-        self.mask?.backgroundColor = RGB_HEX("ffffff", 0.7);
-        self.mask?.isHidden = true;
+        self.maskBg = UIView.init(frame: UIScreen.main.bounds);
+        self.maskBg?.backgroundColor = RGB_HEX("ffffff", 0.7);
+        self.maskBg?.isHidden = true;
         
         self.clipsToBounds = false;
         
@@ -150,7 +157,7 @@ open class DZButtonMenu : UIView {
         if ( imageArray != nil ) {
             // create buttons
             for i in 1 ... imageArray!.count {
-                let imgName             = imageArray!.object(at: i-1) as! String;
+                let imgName             = imageArray![i-1];
                 let btn                 = UIButton(type: UIButtonType.custom);
                 btn.frame               = CGRect(x: 0, y: 0, width: BUTTON_DIAMETER, height: BUTTON_DIAMETER);
                 btn.backgroundColor     = COLOR_SEARCH_ITEM_OFF;
@@ -167,13 +174,14 @@ open class DZButtonMenu : UIView {
         else {
             // create buttons
             for i in 1 ... titleArray.count {
-                let title               = titleArray.object(at: i-1) as! String;
+                let title               = titleArray[i-1];
                 let btn                 = UIButton(type: UIButtonType.custom);
                 btn.frame               = CGRect(x: 0, y: 0, width: BUTTON_DIAMETER, height: BUTTON_DIAMETER);
                 btn.backgroundColor     = COLOR_SEARCH_ITEM_OFF;
                 btn.layer.cornerRadius  = BUTTON_DIAMETER/2
                 btn.tag                 = TAG_MAIN_BUTTON + i;
                 btn.alpha               = 0.0;
+                btn.titleLabel?.font    = UIFont.boldSystemFont(ofSize: 16);
                 btn.setTitle(title.substring(to: title.characters.index(title.startIndex, offsetBy: 1)).uppercased(), for:UIControlState());
                 btn.titleLabel?.font = UIFont.systemFont(ofSize: 24.0);
                 self.addSubview(btn);
@@ -186,7 +194,7 @@ open class DZButtonMenu : UIView {
         // create labels
         maxLabelWidth = 0.0;
         for j in 1 ... titleArray.count {
-            let titleStr = titleArray.object(at: j-1) as! String;
+            let titleStr = titleArray[j-1];
             let lbl = UILabel.init();
             lbl.font = UIFont.systemFont(ofSize: 12.0);
             lbl.numberOfLines = 1;
@@ -210,10 +218,10 @@ open class DZButtonMenu : UIView {
         }
         
         // main button
-        self.createMainButtonCloseImage(closeImage, OpenImage: openImage);
+        self.createMainButton(closeImage: closeImage, openImage: openImage);
     }
     
-    public init(location: DZButtonMenuLocation, direction: DZButtonMenuDirection, closeImage: String, openImage: String?, imageArray: NSArray) {
+    public init(location: DZButtonMenuLocation, direction: DZButtonMenuDirection, closeImage: String?, openImage: String?, imageArray: [String]) {
         super.init(frame: CGRect.zero);
         
         self.location   = location;
@@ -230,7 +238,7 @@ open class DZButtonMenu : UIView {
         
         // create buttons
         for i in 1 ... imageArray.count {
-            let imgName             = imageArray.object(at: i-1) as! String;
+            let imgName             = imageArray[i-1];
             let btn                 = UIButton(type: UIButtonType.custom);
             btn.frame               = CGRect(x: 0, y: 0, width: BUTTON_DIAMETER, height: BUTTON_DIAMETER);
             btn.backgroundColor     = COLOR_SEARCH_ITEM_OFF;
@@ -245,7 +253,7 @@ open class DZButtonMenu : UIView {
         }
         
         // main button
-        self.createMainButtonCloseImage(closeImage, OpenImage: openImage);
+        self.createMainButton(closeImage: closeImage, openImage: openImage);
         
         self.calcOpenFrame();
     }
@@ -255,7 +263,7 @@ open class DZButtonMenu : UIView {
     // MARK: - public functions
     
     // MARK: - private functions
-    fileprivate func setFrameWithLocation(_ location: DZButtonMenuLocation)
+    fileprivate func setFrame(withLocation location: DZButtonMenuLocation)
     {
         switch location {
             case .rightBottom:
@@ -276,7 +284,7 @@ open class DZButtonMenu : UIView {
         }
     }
     
-    fileprivate func createMainButtonCloseImage(_ closeImg: String?,  OpenImage openImg: String?)
+    fileprivate func createMainButton(closeImage: String?, openImage: String?)
     {
         let btnMain = UIButton(type: UIButtonType.custom);
         
@@ -284,13 +292,11 @@ open class DZButtonMenu : UIView {
         btnMain.backgroundColor = COLOR_SEARCH_ITEM_OFF;
     
         // image
-        if( closeImg != nil )
-        {
-            btnMain.setImage(UIImage(named: closeImg!), for:UIControlState());
+        if( closeImage != nil ) {
+            btnMain.setImage(UIImage(named: closeImage!), for:UIControlState());
         }
-        else
-        {
-            btnMain.setTitle("▲", for:UIControlState());
+        else {
+            btnMain.setTitle(MAIN_BTN_OPEN_STR, for:UIControlState());
         }
         
         btnMain.tag = TAG_MAIN_BUTTON;
@@ -314,35 +320,31 @@ open class DZButtonMenu : UIView {
                   self.frame.origin.y,
                   BUTTON_DIAMETER*(buttonCount+1)+BUTTON_PADDING*buttonCount,
                   BUTTON_DIAMETER);
-            self.frameOpen
-                = CGRect(x: self.frame.origin.x-BUTTON_DIAMETER*buttonCount-BUTTON_PADDING*buttonCount,
-                             y: self.frame.origin.y,
-                             width: BUTTON_DIAMETER*(buttonCount+1)+BUTTON_PADDING*buttonCount,
-                             height: BUTTON_DIAMETER);
+            self.frameOpen = CGRect(x: self.frame.origin.x-BUTTON_DIAMETER*buttonCount-BUTTON_PADDING*buttonCount,
+                                    y: self.frame.origin.y,
+                                    width: BUTTON_DIAMETER*(buttonCount+1)+BUTTON_PADDING*buttonCount,
+                                    height: BUTTON_DIAMETER);
             break;
         case .right:
             //
-            self.frameOpen
-                = CGRect(x: self.frame.origin.x,
-                             y: self.frame.origin.y,
-                             width: BUTTON_DIAMETER*(buttonCount+1)+BUTTON_PADDING*buttonCount,
-                             height: BUTTON_DIAMETER);
+            self.frameOpen = CGRect(x: self.frame.origin.x,
+                                    y: self.frame.origin.y,
+                                    width: BUTTON_DIAMETER*(buttonCount+1)+BUTTON_PADDING*buttonCount,
+                                    height: BUTTON_DIAMETER);
             break;
         case .up:
             //
-            self.frameOpen
-                = CGRect(x: self.frame.origin.x,
-                             y: self.frame.origin.y-BUTTON_DIAMETER*buttonCount-BUTTON_PADDING*buttonCount,
-                             width: BUTTON_DIAMETER,
-                             height: BUTTON_DIAMETER*(buttonCount+1)+BUTTON_PADDING*buttonCount);
+            self.frameOpen = CGRect(x: self.frame.origin.x,
+                                    y: self.frame.origin.y-BUTTON_DIAMETER*buttonCount-BUTTON_PADDING*buttonCount,
+                                    width: BUTTON_DIAMETER,
+                                    height: BUTTON_DIAMETER*(buttonCount+1)+BUTTON_PADDING*buttonCount);
             break;
         case .down:
             //
-            self.frameOpen
-                = CGRect(x: self.frame.origin.x,
-                             y: self.frame.origin.y,
-                             width: BUTTON_DIAMETER,
-                             height: BUTTON_DIAMETER*(buttonCount+1)+BUTTON_PADDING*buttonCount);
+            self.frameOpen = CGRect(x: self.frame.origin.x,
+                                    y: self.frame.origin.y,
+                                    width: BUTTON_DIAMETER,
+                                    height: BUTTON_DIAMETER*(buttonCount+1)+BUTTON_PADDING*buttonCount);
             break;
         default:
             break;
@@ -423,35 +425,35 @@ open class DZButtonMenu : UIView {
         return ret;
     }
     
-    // MARK: - button action
+// MARK: - button action
+    
     func buttonClicked(_ sender:AnyObject) {
-        
+        self.delegate?.buttonMenu(self, ClickedButtonAtIndex: (sender.tag - TAG_MAIN_BUTTON));
     }
     
-    @objc fileprivate func switchMenuStatus() {
+    internal func switchMenuStatus() {
         if ( self.menuState == .closed ) {
-            self.showMenuWithAnimation(true);
+            self.showMenu(withAnimation: true);
         }
         else if ( self.menuState == .opened ) {
-            self.hideMenuWithAnimation(true);
+            self.hideMenu(withAnimation: true);
         }
     }
     
-    // MARK: - Menu Animations
-    fileprivate func showMenuWithAnimation(_ animation:Bool) {
+// MARK: - Menu Animations
+    
+    fileprivate func showMenu(withAnimation animation:Bool = true) {
         self.menuState = .opening;
         
-        self.superview?.addSubview(self.mask!);
-        self.mask?.isHidden = false;
+        self.superview?.addSubview(self.maskBg!);
+        self.maskBg?.isHidden = false;
         self.superview?.bringSubview(toFront: self);
-//        self.mask
         
         UIView.animate(withDuration: ANIMATION_DURATION, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
             
             self.frame =  self.frameOpen;
             
             // set main button position
-            //var targetFrame = self.calcButtonFrame(0);
             let btnMain = self.viewWithTag(self.TAG_MAIN_BUTTON);
             let targetFrame = self.calcButtonFrame(0);
             btnMain?.frame = targetFrame;
@@ -477,11 +479,16 @@ open class DZButtonMenu : UIView {
     
     fileprivate func afterShow() {
         let mainBtn = self.viewWithTag(self.TAG_MAIN_BUTTON) as! UIButton;
-        mainBtn.setImage(UIImage(named: self.openImage), for: UIControlState());
+        if ( self.openImage != nil ) {
+            mainBtn.setImage(UIImage(named: self.openImage!), for: UIControlState());
+        }
+        else {
+            mainBtn.setTitle(MAIN_BTN_CLOSE_STR, for:UIControlState());
+        }
         self.menuState = .opened;
     }
     
-    fileprivate func hideMenuWithAnimation(_ animation:Bool) {
+    fileprivate func hideMenu(withAnimation animation:Bool = true) {
         self.menuState = .closing;
         
         UIView.animate(withDuration: ANIMATION_DURATION, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
@@ -503,22 +510,25 @@ open class DZButtonMenu : UIView {
     }
     
     fileprivate func afterHide() {
-        self.mask?.removeFromSuperview();
-        self.mask?.isHidden = true;
+        self.maskBg?.removeFromSuperview();
+        self.maskBg?.isHidden = true;
         
         let mainBtn = self.viewWithTag(self.TAG_MAIN_BUTTON) as! UIButton;
-        mainBtn.setImage(UIImage(named: self.closeImage), for: UIControlState());
+        if ( self.closeImage != nil ) {
+            mainBtn.setImage(UIImage(named: self.closeImage!), for: UIControlState());
+        }
+        else {
+            mainBtn.setTitle(MAIN_BTN_OPEN_STR, for:UIControlState());
+        }
         self.menuState = .closed;
     }
     
-    // MARK: - layoutSubviews
+// MARK: - layoutSubviews
+    
     open override func didMoveToSuperview() {
         if ( self.superview != nil ) {
-            self.setFrameWithLocation(self.location);
+            self.setFrame(withLocation: self.location);
             self.calcOpenFrame();
         }
-    }
-    
-    open override func layoutSubviews() {
     }
 }

@@ -9,18 +9,19 @@
 import UIKit
 import DZ_UIKit
 
-class DetailViewController: UIViewController, DZNineImageBoxViewDelegate {
+class DetailViewController: UIViewController, DZNineImageBoxViewDelegate, DZButtonMenuDelegate {
     
     @IBOutlet var mainView: UIView!;
     
     var viewTitle: String = "None";
 
     override func viewDidLoad() {
-        //super.viewDidLoad()
+        super.viewDidLoad();
         
+        // Do any additional setup after loading the view.
         switch viewTitle {
         case "DZAnnularProgress":
-            let progress1 = DZAnnularProgress(Frame: CGRect(x: 10, y: 10, width: 100, height: 100), AnnularWidth: 8, Type: AnnularProgressType.progress);
+            let progress1 = DZAnnularProgress(frame: CGRect(x: 10, y: 10, width: 100, height: 100), annularWidth: 8, type: .progress);
             progress1.tag = 101;
             progress1.annularBackColor = UIColor.lightGray;
             progress1.annularFrontColor = UIColor.orange;
@@ -32,7 +33,7 @@ class DetailViewController: UIViewController, DZNineImageBoxViewDelegate {
             progress1Ctrl1.tag = 102;
             progress1Ctrl1.addTarget(self, action: #selector(DetailViewController.onProgressCtrlValueChanged(_:)), for: UIControlEvents.valueChanged);
             
-            let progress2 = DZAnnularProgress(Frame: CGRect(x: 10, y: 160, width: 100, height: 100), AnnularWidth: 8, Type: AnnularProgressType.percent);
+            let progress2 = DZAnnularProgress(frame: CGRect(x: 10, y: 160, width: 100, height: 100), annularWidth: 8, type: .percent);
             progress2.tag = 103;
             progress2.annularBackColor = UIColor.lightGray;
             progress2.annularFrontColor = UIColor.orange;
@@ -50,65 +51,41 @@ class DetailViewController: UIViewController, DZNineImageBoxViewDelegate {
             self.mainView.addSubview(progress1Ctrl2);
             break;
         case "DZNineImageBoxView":
-            let imageArray = ["http://place-hold.it/200x200", "http://www.featurepics.com/FI/Thumb300/20091231/Red-Fire-Hydrant-1421559.jpg",
-                              "http://place-hold.it/200x200", "http://place-hold.it/200x200",
-                              "http://place-hold.it/200x200", "http://place-hold.it/200x200",];
-            let nineImgView = DZNineImageBoxView.nineImageBoxViewWithImages(imageArray, frame: CGRect(x: 10,y: 10,width: 200,height: 200));
+            let imageArray = ["http://place-hold.it/200x200",
+                              "http://www.featurepics.com/FI/Thumb300/20091231/Red-Fire-Hydrant-1421559.jpg",
+                              "http://place-hold.it/100x100",
+                              "http://place-hold.it/300x300",
+                              "http://place-hold.it/200x200",
+                              "http://place-hold.it/200x200",];
+            let nineImgView = DZNineImageBoxView.nineImageBoxView(withImages: imageArray, frame: CGRect(x: 10,y: 10,width: 200,height: 200));
             nineImgView.delegate = self;
             self.mainView.addSubview(nineImgView);
             break;
         case "DZCheckBoxGroup":
-            let checkboxGroup = DZCheckBoxGroup.checkBoxgroupWithFrame(CGRect(x: 10, y: 100, width: 240, height: 48));
-            checkboxGroup.backgroundColor = UIColor.red;
-            //checkboxGroup.multipleCheckEnabled = true;
-            checkboxGroup.addCheckBox(
-                DZCheckBox.checkBoxWithFrame(CGRect(x: 0, y: 0, width: 48, height: 48),
-                    Type: DZCheckBoxType.square));
-            checkboxGroup.addCheckBox(
-                DZCheckBox.checkBoxWithFrame(CGRect(x: 0, y: 0, width: 48, height: 48),
-                    Type: DZCheckBoxType.square,
-                    BorderColorOrNil: UIColor.orange));
-            checkboxGroup.addCheckBox(
-                DZCheckBox.checkBoxWithFrame(CGRect(x: 0, y: 0, width: 48, height: 48),
-                    Type: DZCheckBoxType.rounded));
-            checkboxGroup.addCheckBox(
-                DZCheckBox.checkBoxWithFrame(CGRect(x: 0, y: 0, width: 48, height: 48),
-                    Type: DZCheckBoxType.rounded,
-                    BorderColorOrNil: UIColor.orange));
-            checkboxGroup.addCheckBox(
-                DZCheckBox.checkBoxWithFrame(CGRect(x: 0, y: 0, width: 48, height: 48),
-                    Type: DZCheckBoxType.circular));
-            checkboxGroup.addCheckBox(
-                DZCheckBox.checkBoxWithFrame(CGRect(x: 0, y: 0, width: 48, height: 48),
-                    Type: DZCheckBoxType.circular,
-                    BorderColorOrNil: UIColor.orange,
-                    CheckedColorOrNil: RGB_HEX("9988333", 1.0)));
-            self.view.addSubview(checkboxGroup);
-            
-            let checkBoxList = DZCheckBoxGroup.checkBoxgroupWithFrame(CGRect(x: 10, y: 180, width: 240, height: 240));
-            checkBoxList.style = .list;
-            checkBoxList.addCheckBox(
-                DZCheckBox.checkBoxWithFrame(CGRect(x: 0, y: 0, width: 32, height: 32),
-                    Type: DZCheckBoxType.rounded, Title: "Save Account", CheckedColorOrNil: UIColor.orange));
-            checkBoxList.addCheckBox(
-                DZCheckBox.checkBoxWithFrame(CGRect(x: 0, y: 0, width: 32, height: 32),
-                    Type: DZCheckBoxType.rounded, Title: "Auto Login", BorderColorOrNil: UIColor.orange));
-            checkBoxList.checkedIndexes = [0];
-            checkBoxList.multipleCheckEnabled = true;
-            self.view.addSubview(checkBoxList);
+            break;
+        case "DZButtonMenu" :
+            let buttonMenuRB = DZButtonMenu(location: .rightBottom, direction: .up, closeImage: nil, openImage: nil, titleArray: ["Attack", "Defence", "Magic", "Run Away"], imageArray: nil);
+            let buttonMenuLB = DZButtonMenu(location: .leftBottom, direction: .up, closeImage: nil, openImage: nil, titleArray: ["Attack", "Defence", "Magic", "Run Away"], imageArray: nil);
+            let buttonMenuRT = DZButtonMenu(location: .rightTop, direction: .left, closeImage: nil, openImage: nil, titleArray: ["Attack", "Defence", "Magic", "Run Away"], imageArray: nil);
+            let buttonMenuLT = DZButtonMenu(location: .leftTop, direction: .down, closeImage: nil, openImage: nil, titleArray: ["Attack", "Defence", "Magic", "Run Away"], imageArray: nil);
+            buttonMenuRB.delegate = self;
+            self.view.addSubview(buttonMenuRB);
+            self.view.addSubview(buttonMenuLB);
+            self.view.addSubview(buttonMenuRT);
+            self.view.addSubview(buttonMenuLT);
             break;
         default:
             break;
         }
-
-        // Do any additional setup after loading the view.
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
 
     /*
     // MARK: - Navigation
@@ -133,9 +110,16 @@ class DetailViewController: UIViewController, DZNineImageBoxViewDelegate {
         }
     }
     
-    //MARK: - DZNineImageBoxViewDelegate
-    func nineImageView(_ aButtonMenu: DZNineImageBoxView, tapImageAtIndex index: Int) {
-        print("on tap image : ", index);
+    // MARK: - DZNineImageBoxViewDelegate
+    func nineImageBoxView(_ nineImageBoxView: DZNineImageBoxView, didTapImageAtIndex index: Int) {
+        DebugLog("on tap image at ", index);
+    }
+    
+    // MARK: -
+    func buttonMenu(_ aButtonMenu: DZButtonMenu, ClickedButtonAtIndex index: Int) {
+        //if ( aButtonMenu.isEqual(buttonMenuRB) ) {
+            DebugLog("on tap DZButtonMenu at button ", index);
+        //}
     }
 
 }

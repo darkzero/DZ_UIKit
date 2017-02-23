@@ -1,6 +1,6 @@
 //
 //  DZAlertView.swift
-//  DZLib
+//  DZ_UIKit
 //
 //  Created by Dora.Yuan on 14/10/25.
 //  Copyright (c) 2014年 Dora.Yuan All rights reserved.
@@ -8,6 +8,12 @@
 
 import Foundation
 import UIKit
+
+// MARK: - delegate protocol
+internal protocol DZAlertViewDelegate {
+    func onButtonClicked(atIndex index: Int);
+    func onCancelButtonClicked();
+}
 
 open class DZAlertView : UIView {
     
@@ -20,8 +26,8 @@ open class DZAlertView : UIView {
     
 // MARK: - public properties
     
-    open fileprivate(set) var title: String    = "";
-    open fileprivate(set) var message: String  = "";
+    internal fileprivate(set) var title: String    = "";
+    internal fileprivate(set) var message: String?;
     
     // cancel button color / text color
     fileprivate let cancelButtonColor:UIColor       = RGB(92, 177, 173);
@@ -33,13 +39,16 @@ open class DZAlertView : UIView {
     
 // MARK: - internal properties
     
-    fileprivate var buttonArray:NSMutableArray                  = NSMutableArray();
-    fileprivate var blockDictionary:Dictionary<Int, DZBlock>    = Dictionary();
+// MARK: - private properties
+    
+    fileprivate var buttonArray             = [UIButton]();
+    fileprivate var blockDictionary         = [Int: DZBlock]();
     fileprivate var titleLabel:UILabel      = UILabel();
     fileprivate var messageLabel:UILabel    = UILabel();
-    fileprivate var theWindow:UIWindow      = UIWindow(frame: UIScreen.main.bounds);
-    
-// MARK: - private properties
+    //fileprivate var buttonBgView            = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.light));
+
+// MARK: - delegate
+    var delegate: DZAlertViewDelegate?;
     
 // MARK: - init
     
@@ -47,7 +56,7 @@ open class DZAlertView : UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    fileprivate init(title: String, Message message: String) {
+    internal init(title: String, message: String? = nil, cancelTitle: String = "Cancel") {
         let rect:CGRect = CGRect(x: 0, y: 0, width: ALERT_VIEW_WIDTH, height: 100);
         
         super.init(frame: rect);
@@ -55,215 +64,87 @@ open class DZAlertView : UIView {
         self.frame = CGRect(x: 0, y: 0, width: ALERT_VIEW_WIDTH, height: 100);
         
         // cancel button
-        self.addCancelButtonWithTitle("Cancel", CancelBlock:nil);
+        self.addCancelButton(title: cancelTitle);
         
-        self.backgroundColor = UIColor.white;
-        
-        self.title      = title;
-        self.message    = message;
-    }
-    
-    fileprivate init(title: String, Message message: String = "", CancelTitle cancelTitle: String, CancelBlock cancelBlock:@escaping DZBlock) {
-        let rect:CGRect = CGRect(x: 0, y: 0, width: ALERT_VIEW_WIDTH, height: 100);
-        
-        super.init(frame: rect);
-        
-        self.frame = CGRect(x: 0, y: 0, width: ALERT_VIEW_WIDTH, height: 100);
-        
-        // cancel button
-        self.addCancelButtonWithTitle(cancelTitle, CancelBlock:cancelBlock);
-        
-        self.backgroundColor = UIColor.white;
+        self.backgroundColor = RGB_HEX("ffffff", 0.7);
         
         self.title      = title;
         self.message    = message;
-    }
-    
-// MARK: - class functions
-    
-    open class func alertViewWithTitle(_ title: String, Message message: String = "") -> DZAlertView {
-        return DZAlertView(title: title, Message: message);
     }
     
 // MARK: - internal functions
     
-    internal func addCancelButtonWithTitle(_ cancelTitle: String, CancelBlock cancelBlock:DZBlock?) {
-        let btn = UIButton(type: UIButtonType.custom);
-        btn.setTitle(cancelTitle, for: UIControlState());
-        btn.backgroundColor = self.cancelButtonColor;
+    internal func addCancelButton(title: String) {
+        let btn = UIButton(type: .custom);
+        btn.setTitle(title, for: .normal);
+        btn.setBackgroundImage(UIImage.imageWithColor(self.cancelButtonColor), for: .normal);
+        btn.setBackgroundImage(UIImage.imageWithColor(self.cancelButtonColor.withAlphaComponent(0.6)), for: .highlighted);
+        
         btn.frame           = BUTTON_FRAME;
         btn.tag             = CANCEL_BUTTON_TAG;
-        btn.addTarget(self, action: #selector(DZAlertView.buttonClicked(_:)), for: UIControlEvents.touchUpInside);
-        self.buttonArray.add(btn);
-    
-        if ( cancelBlock != nil ) {
-            self.blockDictionary[CANCEL_BUTTON_TAG] = cancelBlock;
-        }
-        else {
-            self.blockDictionary.removeValue(forKey: CANCEL_BUTTON_TAG);
-        }
+        btn.clipsToBounds = true;
+        
+        btn.addTarget(self, action: #selector(cancelButtonClicked), for: UIControlEvents.touchUpInside);
+        self.buttonArray.append(btn);
     }
     
-    internal func setHandler(_ handler:DZBlock?, forButtonAtIndex index:Int) {
-        if ( handler != nil ) {
-            self.blockDictionary[index] = handler;
-        }
-        else {
-            self.blockDictionary.removeValue(forKey: index);
-        }
+    internal func cancelButtonClicked() {
+        self.delegate?.onCancelButtonClicked();
     }
     
-    internal func buttonClicked(_ sender: AnyObject) {
+    internal func buttonClicked(sender: AnyObject) {
         let btnIdx = sender.tag;
-        
-        let block:DZBlock? = self.blockDictionary[btnIdx!];
-        
-        if ( block != nil ) {
-            block?();
-        }
-        
-        self.dismiss();
+        self.delegate?.onButtonClicked(atIndex: btnIdx!);
         return;
     }
     
 // MARK: - public functions
     
-    open func setCancelButtonWithTitle(_ title: String, bgColor: UIColor? = nil, textColor: UIColor? = nil, handler: DZBlock?) {
-        var btn:UIButton! = self.buttonArray.object(at: CANCEL_BUTTON_TAG) as? UIButton;
+    public func setCancelButton(title: String, bgColor: UIColor? = nil, textColor: UIColor? = nil) {
+        var btn:UIButton! = self.buttonArray[CANCEL_BUTTON_TAG];
         if ( btn == nil ) {
-            btn = UIButton(type: UIButtonType.custom);
+            btn = UIButton(type: .custom);
+            btn.frame           = BUTTON_FRAME;
+            btn.tag             = CANCEL_BUTTON_TAG;
+            btn.addTarget(self, action: #selector(cancelButtonClicked), for: UIControlEvents.touchUpInside);
         }
         
-        btn.setTitle(title, for: UIControlState());
-        btn.backgroundColor = (bgColor == nil) ? self.cancelButtonColor : bgColor;
-        btn.setTitleColor((textColor == nil) ? self.cancelButtonTextColor : textColor, for: UIControlState());
-        btn.frame           = BUTTON_FRAME;
-        btn.tag             = CANCEL_BUTTON_TAG;
-        btn.addTarget(self, action: #selector(DZAlertView.buttonClicked(_:)), for: UIControlEvents.touchUpInside);
-        self.setHandler(handler, forButtonAtIndex: CANCEL_BUTTON_TAG);
-    }
-    
-    open func addButtonWithTitle(_ title: String, bgColor: UIColor? = nil, textColor: UIColor? = nil, handler:DZBlock?) {
-        let btn = UIButton(type: UIButtonType.custom);
+        btn.setTitle(title, for: .normal);
         
-        btn.setTitle(title, for: UIControlState());
-        self.buttonArray.add(btn);
-        btn.backgroundColor = (bgColor == nil) ? self.normalButtonColor : bgColor;
-        btn.setTitleColor((textColor == nil) ? self.normalButtonTextColor : textColor, for: UIControlState());
-        btn.frame           = BUTTON_FRAME;
-        let index:Int       = self.buttonArray.index(of: btn);
-        btn.tag             = index;
-        btn.addTarget(self, action: #selector(DZAlertView.buttonClicked(_:)), for: UIControlEvents.touchUpInside);
+        let _bgColor    = bgColor ?? self.cancelButtonColor;
+        let _textColor  = textColor ?? self.cancelButtonTextColor;
         
-        self.setHandler(handler, forButtonAtIndex: index);
+        btn.setBackgroundImage(UIImage.imageWithColor(_bgColor), for: .normal);
+        btn.setBackgroundImage(UIImage.imageWithColor(_bgColor.withAlphaComponent(0.6)), for: .highlighted);
+        
+        btn.setTitleColor(_textColor, for: .normal);
+        
         return;
     }
     
-    // MARK: - popup and dissmis
-    
-    let ANIMATION_SPEED:TimeInterval = 0.2;
-    let ANIMATION_SCALE:CGFloat = 1.15;
-    fileprivate var queue:DispatchQueue?;
-    fileprivate var group:DispatchGroup?;
-    fileprivate var semaphore:DispatchSemaphore?;
-    
-    open func show() {
-        self.showWithAnimation(true);
-    }
-    
-    open func dismiss() {
-        self.dismissWithAnimation(true);
-    }
-    
-    open func showWithAnimation(_ flag:Bool) {
+    public func addButton(title: String, bgColor: UIColor? = nil, textColor: UIColor? = nil) -> Int {
+        let btn = UIButton(type: .custom);
         
-        // set all items
-        self.setNeedsLayout();
-        self.theWindow.isHidden = false;
+        btn.setTitle(title, for: UIControlState());
         
-        //self.theWindow = UIWindow(frame: UIScreen.mainScreen().bounds);
-        self.theWindow.windowLevel = UIWindowLevelNormal;
-        self.theWindow.isOpaque = false;
-        self.theWindow.backgroundColor = RGBA(0, 0, 0, 0.3);
+        self.buttonArray.append(btn);
         
-        self.theWindow.addSubview(self);
+        let _bgColor    = bgColor ?? self.normalButtonColor;
+        let _textColor  = textColor ?? self.normalButtonTextColor;
         
-        if flag {
-            self.theWindow.alpha = 0.0;
-            self.theWindow.transform = CGAffineTransform(scaleX: ANIMATION_SCALE, y: ANIMATION_SCALE);
-            
-            UIView.animate(withDuration: ANIMATION_SPEED, delay: 0.0, options: UIViewAnimationOptions.allowUserInteraction,
-                animations: { () -> Void in
-                    self.theWindow.alpha = 1.0;
-                    self.theWindow.transform = CGAffineTransform.identity;
-                },
-                completion: nil);
-        }
+        btn.setBackgroundImage(UIImage.imageWithColor(_bgColor), for: .normal);
+        btn.setBackgroundImage(UIImage.imageWithColor(_bgColor.withAlphaComponent(0.6)), for: .highlighted);
         
-        self.queue = DispatchQueue.global();
-        self.group = DispatchGroup();
-        self.semaphore = DispatchSemaphore(value: 0);
+        btn.setTitleColor(_textColor, for: .normal);
         
-        // 参考 http://www.swiftmi.com/topic/96.html
-        self.queue!.async(group: self.group!, execute: { () -> Void in
-            var _:DispatchTimeoutResult = self.semaphore!.wait(timeout: DispatchTime.distantFuture);
-        });
-    }
-    
-    open func dismissWithAnimation(_ flag:Bool) {
-        self.dismissWindowWithAnimation(true, Finish:true);
-    }
-    
-    fileprivate func dismissWindowWithAnimation(_ animated:Bool, Finish finish:Bool) {
+        btn.frame   = BUTTON_FRAME;
+        let index   = self.buttonArray.index(of: btn)!;
+        btn.tag     = index;
+        btn.clipsToBounds = true;
         
-        self.theWindow.alpha = 1.0;
-        self.theWindow.transform = CGAffineTransform.identity;
-
-        if( animated ) {
-            UIView.animate(withDuration: ANIMATION_SPEED,
-                animations: { () -> Void in
-                    self.onWindowWillDismiss();
-                }, completion: { (finished) -> Void in
-                    self.onWindowDidDismiss(finish);
-            });
-        }
-        else {
-            self.onWindowWillDismiss();
-            self.onWindowDidDismiss(finish);
-        }
-    }
-    
-    fileprivate func onWindowWillDismiss() {
-        self.theWindow.alpha = 0.0;
-        self.theWindow.transform = CGAffineTransform( scaleX: ANIMATION_SCALE, y: ANIMATION_SCALE );
-    }
-    
-    fileprivate func onWindowDidDismiss(_ finish:Bool) {
-        self.theWindow.isHidden = true;
-        self.removeFromSuperview();
-        self.theWindow.removeFromSuperview();
-        //self.theWindow = nil;
+        btn.addTarget(self, action: #selector(buttonClicked(sender:)), for: UIControlEvents.touchUpInside);
         
-        if( self.group != nil && self.queue != nil ) {
-            weak var weakSelf:DZAlertView? = self;
-            self.queue!.async( group: self.group!, execute: { ()->Void in
-                let strongSelf:DZAlertView? = weakSelf;
-                
-                if( strongSelf != nil && strongSelf?.semaphore != nil ) {
-                    strongSelf!.semaphore!.signal();
-                    
-                    //dispatch_release( strongSelf.semaphore );
-                    strongSelf?.semaphore = nil;
-                    
-                    if( strongSelf?.group != nil ) {
-                        //dispatch_release( strongSelf.group );
-                        strongSelf?.group = nil;
-                    }
-                    
-                    strongSelf?.queue = nil;
-                }
-            });
-        }
+        return index;
     }
     
 // MARK: - layoutSubviews
@@ -272,6 +153,16 @@ open class DZAlertView : UIView {
         self.layer.cornerRadius = 8.0;
         
         var rect:CGRect             = CGRect(x: 10, y: 5, width: ALERT_VIEW_WIDTH - 20, height: 40);
+        
+        self.layer.shadowColor      = UIColor.gray.cgColor;
+        self.layer.shadowOffset     = CGSize(width: 0, height: 0);
+        self.layer.shadowRadius     = 4.0;
+        self.layer.shadowOpacity    = 0.6;
+        
+        //self.buttonBgView.layer.cornerRadius = 8.0;
+        //self.buttonBgView.clipsToBounds = true;
+        //self.buttonBgView.backgroundColor = RGB_HEX("ffffff", 0.3);
+        //self.addSubview(self.buttonBgView);
         
         var alertViewHeight:CGFloat = rect.size.height + 10.0;
         // labels
@@ -283,10 +174,8 @@ open class DZAlertView : UIView {
         self.titleLabel.text                = self.title;
         self.addSubview(self.titleLabel);
         
-        //var messageSize:CGSize = self.message.sizeWithAttributes([NSFontAttributeName: UIFont.systemFontOfSize(16.0)]);
-        
-        if self.message != "" {
-            let msgRect:CGRect = self.message.boundingRect(
+        if self.message != nil {
+            let msgRect:CGRect = self.message!.boundingRect(
                 with: CGSize(width: ALERT_VIEW_WIDTH - 20, height: CGFloat.greatestFiniteMagnitude),
                 options: NSStringDrawingOptions.usesLineFragmentOrigin,
                 attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 16.0)],
@@ -311,7 +200,7 @@ open class DZAlertView : UIView {
             self.addSubview(self.messageLabel);
         }
         else {
-            alertViewHeight += 30.0;
+            alertViewHeight += 10.0;
         }
         
         //
@@ -323,15 +212,14 @@ open class DZAlertView : UIView {
         }
         
         self.frame                  = CGRect(x: 0, y: 0, width: 280, height: alertViewHeight);
-        self.center                 = self.theWindow.center;
-        self.layer.shadowColor      = UIColor.gray.cgColor;
-        self.layer.shadowOffset     = CGSize(width: 0, height: 0);
-        self.layer.shadowRadius     = 4.0;
-        self.layer.shadowOpacity    = 0.6;
+        
+        self.center = CGPoint(x: SCREEN_BOUNDS().size.width/2,
+                              y: SCREEN_BOUNDS().size.height/2);
+        self.alpha = 0.2;
         
         // buttons
         if ( self.buttonArray.count == 1 ) {
-            let btn = self.buttonArray.object(at: 0) as! UIButton;
+            let btn = self.buttonArray[0];
             self.addSubview(btn);
             let btnIdx:Int = btn.tag;
             btn.layer.cornerRadius = 4.0;

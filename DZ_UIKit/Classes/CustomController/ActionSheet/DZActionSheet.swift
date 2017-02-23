@@ -1,6 +1,6 @@
 //
 //  DZActionSheet.swift
-//  DZLib
+//  DZ_UIKit
 //
 //  Created by Dora.Yuan on 2014/10/21.
 //  Copyright (c) 2014 Dora.Yuan All rights reserved.
@@ -8,53 +8,44 @@
 
 import Foundation
 import UIKit
-fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
+
+// MARK: - delegate protocol
+
+internal protocol DZActionSheetDelegate {
+    func onButtonClicked(atIndex index: Int);
+    func onCancelButtonClicked();
 }
 
-fileprivate func >= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l >= r
-  default:
-    return !(lhs < rhs)
-  }
-}
-
-
-open class DZActionSheet : UIView {
+internal class DZActionSheet : UIControl {
     
 // MARK: - class define
+    
     let BUTTON_FRAME: CGRect            = CGRect(x: 0.0, y: 0.0, width: 64.0, height: 70.0);
     let CANCEL_BUTTON_HEIGHT: CGFloat   = 44.0;
-    let CANCEL_BUTTON_WIDTH: CGFloat    = SCREEN_BOUNDS.size.width - 20;
+    let CANCEL_BUTTON_WIDTH: CGFloat    = min(SCREEN_BOUNDS().size.width, SCREEN_BOUNDS().size.height) - 20;
+    let VIEW_WIDTH: CGFloat             = min(SCREEN_BOUNDS().size.width, SCREEN_BOUNDS().size.height);
     let BUTTON_ROW_HEIGHT: CGFloat      = 70.0;
     let TITLE_LABEL_HEIGHT: CGFloat     = 30.0;
     
-// MARK: - public properties
-    open var title: String = "";
-    open var cancelButtonBgColor: UIColor = UIColor.white;
-    open var cancelButtonTitleColor: UIColor = RGB(109, 109, 109);
-    
 // MARK: - internal properties
-    internal var buttonArray:NSMutableArray = NSMutableArray();
-    internal var blockDictionary            = Dictionary<Int, DZBlock>();
-    internal var cancelButton               = UIButton(type: UIButtonType.custom);
-    internal var cancelBlock:DZBlock?;
-    internal var titleLabel:UILabel?;
-    internal var theWindow                  = UIWindow(frame: UIScreen.main.bounds);
-    internal var buttonBgView               = UIView(frame: CGRect.zero);
     
 // MARK: - private properties
     
+    private var title: String                      = "";
+    private var cancelButtonBgColor: UIColor       = UIColor.white;
+    private var cancelButtonTitleColor: UIColor    = RGB(109, 109, 109);
+    
+    private var buttonArray                = [UIButton]();
+    private var cancelButton               = UIButton(type: UIButtonType.custom);
+    private var titleLabel:UILabel?;
+    private var buttonBgView               = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.light));
+    
+// MARK: - delegate
+    
+    var delegate: DZActionSheetDelegate?;
+    
 // MARK: - init functions
+    
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -63,81 +54,36 @@ open class DZActionSheet : UIView {
         super.init(frame:frame);
     }
     
-    fileprivate init(title: String) {
-        let rect:CGRect = CGRect(x: 0, y: SCREEN_BOUNDS.size.height - CANCEL_BUTTON_HEIGHT, width: SCREEN_BOUNDS.size.width, height: CANCEL_BUTTON_HEIGHT);
+//    public init() {
+//        super.init(frame: CGRect.zero);
+//    }
+    
+    public init(title: String, cancelTitle: String = "Cancel") {
+        let rect:CGRect = CGRect(x: 0,
+                                 y: SCREEN_BOUNDS().size.height - CANCEL_BUTTON_HEIGHT,
+                                 width: SCREEN_BOUNDS().size.width,
+                                 height: CANCEL_BUTTON_HEIGHT);
         super.init(frame: rect);
         self.title = title;
-        self.setCancelButtonWithTitle("Cancel", CancelBlock: nil);
-        
-        // tap to dismiss
-        let tap = UITapGestureRecognizer(target: self, action: #selector(DZActionSheet.dismiss));
-        self.theWindow.addGestureRecognizer(tap);
-    }
-    
-// MARK: - class functions
-    open class func actionSheetWithTitle(_ title: String) -> DZActionSheet {
-        
-        let obj:DZActionSheet = DZActionSheet(title: title);
-        return obj;
-    }
-    
-    open class func actionSheetWith(Title title: String, CancelTitle cancelTitle: String, CancelBlock cancelBlock: @escaping DZBlock) -> DZActionSheet {
-        let obj:DZActionSheet = DZActionSheet(title: title);
-        obj.setCancelButtonWithTitle(cancelTitle, CancelBlock: cancelBlock);
-        return obj;
+        self.setCancelButton(withTitle: cancelTitle);
     }
     
 // MARK: - set Buttons
-    open func setCancelButtonWithTitle(_ cancelTitle: String, CancelBlock cancelBlock: DZBlock?) {
-        
+    
+    internal func setCancelButton(withTitle title: String = "Cancel") {
         self.cancelButton.frame            = CGRect(x: 0, y: 0, width: CANCEL_BUTTON_WIDTH, height: CANCEL_BUTTON_HEIGHT);
         self.cancelButton.backgroundColor  = RGB_HEX("ffffff", 1.0);
         self.cancelButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20.0);
-        self.cancelButton.setTitle(cancelTitle, for: UIControlState());
-        //Red:0.220000 Green:0.330000 Blue:0.530000 Alpha:1.000000
+        self.cancelButton.setTitle(title, for: UIControlState());
         self.cancelButton.setTitleColor(RGB(109, 109, 109), for: UIControlState());
         self.cancelButton.addTarget(self, action: #selector(DZActionSheet.cancelButtonClicked(_:)), for: UIControlEvents.touchUpInside);
-        
-        self.cancelBlock = cancelBlock;
     }
     
-    
-    open func addButtonWithTitle(
-        _ buttonTitle: String,
-        CharacterColor characterColor: UIColor,
-        Handler buttonBlock: DZBlock?) {
-        
-        self.addButtonWithTitle(buttonTitle,
-                                CharacterColor: characterColor,
-                                ImageNormal: nil,
-                                ImageHighlighted: nil,
-                                ImageDisabled: nil,
-                                Handler: buttonBlock);
-    }
-    
-    open func addButtonWithTitle(
-        _ buttonTitle: String,
-        ImageNormal buttonImageNormal: String,
-        ImageHighlighted buttonImageHighlighted: String?,
-        ImageDisabled buttonImageDisabled: String?,
-        Handler buttonBlock: DZBlock?) {
-        
-        self.addButtonWithTitle(buttonTitle,
-                                CharacterColor: nil,
-                                ImageNormal: buttonImageNormal,
-                                ImageHighlighted: buttonImageHighlighted,
-                                ImageDisabled: buttonImageDisabled,
-                                Handler: buttonBlock);
-    }
-
-    ///
-    ///
-    fileprivate func addButtonWithTitle (
-        _ buttonTitle: String,
-        CharacterColor characterColor: UIColor?,
-        ImageNormal buttonImageNormal: String?,
-        ImageHighlighted buttonImageHighlighted: String?,
-        ImageDisabled buttonImageDisabled: String?, Handler buttonBlock: DZBlock?) {
+    internal func addButton (withTitle buttonTitle: String,
+                             characterColor: UIColor?,
+                             imageNormal: String?,
+                             imageHighlighted: String?,
+                             imageDisabled: String?) -> Int {
             
         let btn:UIButton! = UIButton(type: UIButtonType.custom);
         
@@ -150,16 +96,16 @@ open class DZActionSheet : UIView {
         btn.imageView?.frame.size = CGSize(width: 48, height: 48);
         btn.imageView?.layer.cornerRadius = 24.0;
         var btnImage: UIImage;
-        if ( buttonImageNormal != nil ) {
-            btnImage = UIImage(named: buttonImageNormal!)!;
+        if ( imageNormal != nil ) {
+            btnImage = UIImage(named: imageNormal!)!;
         }
         else {
-            let g = characterColor?.getGary();
+            var gary = ( characterColor != nil ) ? characterColor!.getGary() : 0;
             btnImage = UIImage.imageWithColor(characterColor!, size: CGSize(width: 48, height: 48));
             let initialChar = buttonTitle.substring(to: buttonTitle.characters.index(buttonTitle.startIndex, offsetBy: 1));
             let lbl = UILabel(frame: CGRect(x: 0, y: 0, width: 48, height: 48));
             lbl.font = UIFont.boldSystemFont(ofSize: 28.0);
-            if g >= 175 {
+            if gary >= 175 {
                 lbl.textColor = RGB_HEX("444444", 1.0);
             }
             else {
@@ -174,40 +120,31 @@ open class DZActionSheet : UIView {
         
         btn.layer.cornerRadius = 8.0;
         
-        if ( buttonImageHighlighted != nil ) {
-            btn.setImage(UIImage(named: buttonImageHighlighted!), for: UIControlState.highlighted);
+        if ( imageHighlighted != nil ) {
+            btn.setImage(UIImage(named: imageHighlighted!), for: UIControlState.highlighted);
         }
-        if ( buttonImageDisabled != nil ) {
-            btn.setImage(UIImage(named: buttonImageDisabled!), for: UIControlState.disabled);
+        if ( imageDisabled != nil ) {
+            btn.setImage(UIImage(named: imageDisabled!), for: UIControlState.disabled);
         }
         btn.frame = BUTTON_FRAME;
         //btn.backgroundColor = UIColor.redColor();
     
-        self.buttonArray.add(btn);
+        self.buttonArray.append(btn);
         
         btn.contentHorizontalAlignment  = UIControlContentHorizontalAlignment.center;
         btn.contentVerticalAlignment    = UIControlContentVerticalAlignment.top;
         btn.imageEdgeInsets             = UIEdgeInsetsMake(0.0, 8.0, 22.0, 8.0);
         btn.titleEdgeInsets             = UIEdgeInsetsMake(50, -1*btnImage.size.width, 0, 0);
         
-        let index:Int = self.buttonArray.index(of: btn);
+        let index:Int = self.buttonArray.index(of: btn)!;
         btn.tag = index;
         btn.addTarget(self, action: #selector(DZActionSheet.buttonClicked(_:)), for: UIControlEvents.touchUpInside);
-        self.setHandler(buttonBlock!, forButtonAtIndex: index);
-        return;
+        
+        return index;
     }
     
-    internal func setHandler(_ block:DZBlock?, forButtonAtIndex index:Int) {
-        if ( block != nil ) {
-            self.blockDictionary[index] = block;
-        }
-        else {
-            self.blockDictionary.removeValue(forKey: index);
-        }
-    }
-    
-    open func setButtonState(_ buttonState:UIControlState, AtIndex buttonIndex:Int) {
-        let btn = self.buttonArray.object(at: buttonIndex) as! UIButton;
+    internal func setButtonState(_ buttonState:UIControlState, AtIndex buttonIndex:Int) {
+        let btn = self.buttonArray[buttonIndex];
         
         switch ( buttonState ) {
         case UIControlState() :
@@ -229,141 +166,21 @@ open class DZActionSheet : UIView {
     
     internal func buttonClicked(_ sender:AnyObject) {
         let btnIdx = sender.tag;
-        let block:DZBlock? = self.blockDictionary[btnIdx!];
-        if block != nil {
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64(NSEC_PER_SEC/2)) / Double(NSEC_PER_SEC), execute: block!);
-        }
-        
-        self.dismiss();
-        
+        self.delegate?.onButtonClicked(atIndex: btnIdx!);
         return;
     }
     
     internal func cancelButtonClicked(_ sender:AnyObject) {
-        if self.cancelBlock != nil {
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64(NSEC_PER_SEC/2)) / Double(NSEC_PER_SEC), execute: self.cancelBlock!);
-        }
-        
-        self.dismiss();
+        self.delegate?.onCancelButtonClicked();
         return;
-    }
-    
-// MARK: - popup and dismiss
-    
-    let ANIMATION_SPEED:TimeInterval = 0.2;
-    let ANIMATION_SCALE:CGFloat = 1.15;
-    fileprivate var queue:DispatchQueue?;
-    fileprivate var group:DispatchGroup?;
-    fileprivate var semaphore:DispatchSemaphore?;
-    
-    open func show() {
-        self.showWithAnimation(true);
-    }
-    
-    open func dismiss() {
-        self.dismissWithAnimation(true);
-    }
-    
-    open func showWithAnimation(_ flag:Bool) {
-        
-        // set all items
-        self.setNeedsLayout();
-        
-        //self.theWindow = UIWindow(frame: UIScreen.mainScreen().bounds);
-        self.theWindow.windowLevel = UIWindowLevelNormal;
-        self.theWindow.isOpaque = false;
-        self.theWindow.backgroundColor = RGBA(0, 0, 0, 0.3);
-        
-        self.theWindow.addSubview(self);
-        self.theWindow.isHidden = false;
-        
-        self.theWindow.alpha = 0.0;
-        self.theWindow.transform = CGAffineTransform(scaleX: ANIMATION_SCALE, y: ANIMATION_SCALE);
-        
-        UIView.animate(withDuration: 0.1, delay: 0.0, options: UIViewAnimationOptions.allowUserInteraction, animations: { () -> Void in
-            self.theWindow.alpha = 1.0;
-            self.theWindow.transform = CGAffineTransform.identity;
-            }, completion: { (finished) -> Void in
-            UIView.animate(withDuration: self.ANIMATION_SPEED, delay: 0.0, options: UIViewAnimationOptions.allowUserInteraction, animations: { () -> Void in
-                self.frame = CGRect(x: 0, y: SCREEN_BOUNDS.size.height - self.frame.size.height, width: 320, height: self.frame.size.height);
-            }, completion: { (finished) -> Void in
-                //
-            })
-        });
-        
-        self.queue = DispatchQueue.global();
-        self.group = DispatchGroup();
-        self.semaphore = DispatchSemaphore(value: 0);
-        
-        // 参考 http://www.swiftmi.com/topic/96.html
-        self.queue!.async(group: self.group!, execute: { () -> Void in
-            var _:DispatchTimeoutResult = self.semaphore!.wait(timeout: DispatchTime.distantFuture);
-        });
-    }
-    
-    open func dismissWithAnimation(_ flag:Bool) {
-        self.dismissWindowWithAnimation(true, Finish:true);
-    }
-    
-    fileprivate func dismissWindowWithAnimation(_ animated:Bool, Finish finish:Bool) {
-        
-        self.theWindow.alpha = 1.0;
-        self.theWindow.transform = CGAffineTransform.identity;
-    
-        if( animated ) {
-            UIView.animate(withDuration: ANIMATION_SPEED, animations: { () -> Void in
-                self.frame = CGRect(x: 0, y: SCREEN_BOUNDS.size.height, width: 320, height: self.frame.size.height);
-                self.onWindowWillDismiss();
-            }, completion: { (finished) -> Void in
-                UIView.animate(withDuration: 0.1, animations: { () -> Void in
-                    //self.onWindowWillDismiss();
-                }, completion: { (finished) -> Void in
-                    self.onWindowDidDismiss(finish);
-                })
-            });
-        }
-        else {
-            self.onWindowWillDismiss();
-            self.onWindowDidDismiss(finish);
-        }
-    }
-    
-    fileprivate func onWindowWillDismiss() {
-        self.theWindow.alpha = 0.0;
-        self.theWindow.transform = CGAffineTransform( scaleX: ANIMATION_SCALE, y: ANIMATION_SCALE );
-    }
-    
-    fileprivate func onWindowDidDismiss(_ finish:Bool) {
-        self.theWindow.isHidden = true;
-        self.removeFromSuperview();
-        self.theWindow.removeFromSuperview();
-        //self.theWindow = nil;
-    
-        if( self.group != nil && self.queue != nil ) {
-            weak var weakSelf:DZActionSheet? = self;
-            self.queue!.async( group: self.group!, execute: { ()->Void in
-                let strongSelf:DZActionSheet? = weakSelf;
-    
-                if( strongSelf != nil && strongSelf?.semaphore != nil ) {
-                    strongSelf!.semaphore!.signal();
-    
-                    //dispatch_release( strongSelf.semaphore );
-                    strongSelf?.semaphore = nil;
-            
-                    if( strongSelf?.group != nil ) {
-                        //dispatch_release( strongSelf.group );
-                        strongSelf?.group = nil;
-                    }
-            
-                    strongSelf?.queue = nil;
-                }
-            });
-        }
     }
     
 // MARK: - layoutSubviews
     
     override open func layoutSubviews() {
+        
+        UITraitCollection(horizontalSizeClass: .regular);
+        
         let rect:CGRect = CGRect(x: 0.0, y: 0.0, width: CANCEL_BUTTON_WIDTH, height: TITLE_LABEL_HEIGHT);
         
         // calc the height
@@ -384,20 +201,14 @@ open class DZActionSheet : UIView {
     
         // buttons
         // calc the height
-        self.frame = CGRect(x: 0, y: SCREEN_BOUNDS.size.height - 20 - actionSheetHeight, width: 320, height: actionSheetHeight);
+        self.frame = CGRect(x: 0, y: SCREEN_BOUNDS().size.height - 20 - actionSheetHeight, width: VIEW_WIDTH, height: actionSheetHeight);
         
         self.buttonBgView.frame = CGRect(x: 10, y: 0, width: CANCEL_BUTTON_WIDTH, height: buttonAreaHeight + titleHeight);
-        self.buttonBgView.backgroundColor = RGB_HEX("ffffff", 0.9);
         self.buttonBgView.layer.cornerRadius = 8.0;
         self.buttonBgView.clipsToBounds = true;
         self.addSubview(self.buttonBgView);
         
-        if SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO("8.0") {
-            self.buttonBgView.backgroundColor = RGB_HEX("ffffff", 0.3);
-            let effectView = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.light))
-            effectView.frame = CGRect(x: 0, y: 0, width: CANCEL_BUTTON_WIDTH, height: buttonAreaHeight + titleHeight);
-            self.buttonBgView.addSubview(effectView);
-        }
+        self.buttonBgView.backgroundColor = RGB_HEX("ffffff", 0.3);
         
         if ( self.titleLabel != nil ) {
             buttonBgView.addSubview(self.titleLabel!);
@@ -425,6 +236,7 @@ open class DZActionSheet : UIView {
         }
         
         self.backgroundColor = UIColor.clear; //RGBA(255, 255, 255, 0.7);//
-        self.frame = CGRect(x: 0, y: SCREEN_BOUNDS.size.height, width: 320, height: self.frame.size.height);
+        self.frame.size = CGSize(width: VIEW_WIDTH, height: self.frame.size.height);
+        self.center = CGPoint(x: SCREEN_BOUNDS().size.width/2, y: SCREEN_BOUNDS().size.height + self.frame.size.height/2);
     }
 }
