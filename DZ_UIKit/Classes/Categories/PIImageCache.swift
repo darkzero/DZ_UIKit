@@ -124,13 +124,10 @@ open class PIImageCache {
             let allFileName: [String]? = try fileManager.contentsOfDirectory(atPath: path);
             if allFileName != nil {
                 for fileName in allFileName! {
-                    if let attr: [FileAttributeKey: Any]? = try fileManager.attributesOfItem(atPath: path + fileName) {
-                        if ( attr != nil ) {
-                            let diff = Date().timeIntervalSince( (attr![FileAttributeKey.modificationDate] as? Date) ?? Date() )
-                            if Double(diff) > Double(config.diskCacheExpireMinutes * 60) {
-                                try fileManager.removeItem(atPath: path + fileName);
-                            }
-                        }
+                    let attr: [FileAttributeKey: Any] = try fileManager.attributesOfItem(atPath: path + fileName);
+                    let diff = Date().timeIntervalSince( (attr[FileAttributeKey.modificationDate] as? Date) ?? Date() )
+                    if Double(diff) > Double(config.diskCacheExpireMinutes * 60) {
+                        try fileManager.removeItem(atPath: path + fileName);
                     }
                 }
             }
