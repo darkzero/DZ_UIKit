@@ -72,16 +72,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         switch (indexPath as NSIndexPath).row {
         case 0:
             let actionSheetController = DZActionSheetController(title: "- ActionSheet Test -");
-            actionSheetController.addButton(withTitle: "Action", characterColor: UIColor.red, handler: nil);
-            actionSheetController.addButton(withTitle: "Block", characterColor: UIColor.green, handler: nil);
-            actionSheetController.addButton(withTitle: "Continue", characterColor: UIColor.cyan, handler: nil);
-            actionSheetController.addButton(withTitle: "Delete", characterColor: UIColor.orange, handler: nil);
-            actionSheetController.addButton(withTitle: "Edit", characterColor: UIColor.brown, handler: nil);
-            actionSheetController.addButton(withTitle: "FaceToFace", characterColor: UIColor.red, handler: nil);
-            actionSheetController.addButton(withTitle: "Game", characterColor: UIColor.green, handler: nil);
-            actionSheetController.addButton(withTitle: "Hit&Run", characterColor: UIColor.cyan, handler: nil);
-            actionSheetController.addButton(withTitle: "Increasement", characterColor: UIColor.orange, handler: nil);
-            actionSheetController.addButton(withTitle: "JoinUs", characterColor: UIColor.white, handler: nil);
+            actionSheetController.addButton(title: "Action", characterColor: UIColor.red, handler: nil);
+            actionSheetController.addButton(title: "Block", characterColor: UIColor.green, handler: nil);
+            actionSheetController.addButton(title: "Continue", characterColor: UIColor.cyan, handler: nil);
+            actionSheetController.addButton(title: "Delete", characterColor: UIColor.orange, handler: nil);
+            actionSheetController.addButton(title: "Edit", characterColor: UIColor.brown, handler: nil);
+            actionSheetController.addButton(title: "FaceToFace", characterColor: UIColor.red, handler: nil);
+            actionSheetController.addButton(title: "Game", characterColor: UIColor.green, handler: nil);
+            actionSheetController.addButton(title: "Hit&Run", characterColor: UIColor.cyan, handler: nil);
+            actionSheetController.addButton(title: "Increasement", characterColor: UIColor.orange, handler: nil);
+            actionSheetController.addButton(title: "JoinUs", characterColor: UIColor.white, handler: nil);
             
             //actionSheetController.addButton(withTitle: "Increasement", characterColor: UIColor.orange, handler: nil);
             //actionSheetController.addButton(withTitle: "JoinUs", characterColor: UIColor.white, handler: nil);

@@ -237,7 +237,7 @@ open class DZAlertView : UIView {
                 btn.layer.cornerRadius = 4.0;
                 btn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18.0);
                 btn.frame = CGRect(
-                    x: 10.0 + 135.0 * CGFloat(btnIdx),
+                    x: 10.0 + 135.0 * CGFloat(1 - btnIdx),
                     y: self.frame.size.height - 55.0,
                     width: BUTTON_FRAME.size.width,
                     height: BUTTON_FRAME.size.height);

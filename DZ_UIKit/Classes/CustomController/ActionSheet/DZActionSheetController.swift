@@ -36,23 +36,23 @@ public class DZActionSheetController: UIViewController, DZActionSheetDelegate {
         let tap = UITapGestureRecognizer(target: self, action: #selector(hide));
         self.view.addGestureRecognizer(tap);
         
-        self.setCancelButton(withTitle: cancelTitle, handler: cancelHandler);
+        self.setCancelButton(title: cancelTitle, handler: cancelHandler);
         
         self.view.addSubview(self.actionSheet!);
     }
     
 // MARK: - set buttons
     
-    private func setCancelButton(withTitle title: String = "Cancel", handler: (() -> Void)? = nil) {
-        self.actionSheet?.setCancelButton(withTitle: title);
+    private func setCancelButton(title: String = "Cancel", handler: (() -> Void)? = nil) {
+        self.actionSheet?.setCancelButton(title: title);
         self.cancelHandler = handler;
     }
     
-    public func addButton(withTitle buttonTitle: String,
+    public func addButton(title: String,
                           characterColor: UIColor,
                           handler: (() -> Void)? = nil) {
         
-        let buttonIndex = self.actionSheet!.addButton(withTitle: buttonTitle,
+        let buttonIndex = self.actionSheet!.addButton(title: title,
                                                       characterColor: characterColor,
                                                       imageNormal: nil,
                                                       imageHighlighted: nil,
@@ -61,13 +61,13 @@ public class DZActionSheetController: UIViewController, DZActionSheetDelegate {
         self.setHandler(handler, atButtonIndex: buttonIndex);
     }
     
-    public func addButton(withTitle buttonTitle: String,
+    public func addButton(title: String,
                           imageNormal: String,
                           imageHighlighted: String?,
                           imageDisabled: String?,
                           handler: (() -> Void)? = nil) {
         
-        let buttonIndex = actionSheet!.addButton(withTitle: buttonTitle,
+        let buttonIndex = actionSheet!.addButton(title: title,
                                                  characterColor: nil,
                                                  imageNormal: imageNormal,
                                                  imageHighlighted: imageHighlighted,

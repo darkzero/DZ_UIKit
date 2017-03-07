@@ -65,12 +65,12 @@ internal class DZActionSheet : UIControl {
                                  height: CANCEL_BUTTON_HEIGHT);
         super.init(frame: rect);
         self.title = title;
-        self.setCancelButton(withTitle: cancelTitle);
+        self.setCancelButton(title: cancelTitle);
     }
     
 // MARK: - set Buttons
     
-    internal func setCancelButton(withTitle title: String = "Cancel") {
+    internal func setCancelButton(title: String = "Cancel") {
         self.cancelButton.frame            = CGRect(x: 0, y: 0, width: CANCEL_BUTTON_WIDTH, height: CANCEL_BUTTON_HEIGHT);
         self.cancelButton.backgroundColor  = RGB_HEX("ffffff", 1.0);
         self.cancelButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20.0);
@@ -79,7 +79,7 @@ internal class DZActionSheet : UIControl {
         self.cancelButton.addTarget(self, action: #selector(DZActionSheet.cancelButtonClicked(_:)), for: UIControlEvents.touchUpInside);
     }
     
-    internal func addButton (withTitle buttonTitle: String,
+    internal func addButton (title: String,
                              characterColor: UIColor?,
                              imageNormal: String?,
                              imageHighlighted: String?,
@@ -87,7 +87,7 @@ internal class DZActionSheet : UIControl {
             
         let btn:UIButton! = UIButton(type: UIButtonType.custom);
         
-        btn.setTitle(buttonTitle, for: UIControlState());
+        btn.setTitle(title, for: UIControlState());
         btn.setTitleColor(UIColor.darkGray, for: UIControlState());
         btn.titleLabel?.font = UIFont.systemFont(ofSize: 12.0);
         btn.titleLabel?.adjustsFontSizeToFitWidth = true;
@@ -102,7 +102,7 @@ internal class DZActionSheet : UIControl {
         else {
             let gary = ( characterColor != nil ) ? characterColor!.getGary() : 0;
             btnImage = UIImage.imageWithColor(characterColor!, size: CGSize(width: 48, height: 48));
-            let initialChar = buttonTitle.substring(to: buttonTitle.characters.index(buttonTitle.startIndex, offsetBy: 1));
+            let initialChar = title.substring(to: title.characters.index(title.startIndex, offsetBy: 1));
             let lbl = UILabel(frame: CGRect(x: 0, y: 0, width: 48, height: 48));
             lbl.font = UIFont.boldSystemFont(ofSize: 28.0);
             if gary >= 175 {
