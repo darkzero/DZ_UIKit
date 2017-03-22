@@ -115,13 +115,13 @@ public class DZActionSheetController: UIViewController, DZActionSheetDelegate {
                                                   y: SCREEN_BOUNDS().size.height + self.actionSheet!.frame.size.height/2);
             }, completion: { (finished) in
                 //
-                super.dismiss(animated: true, completion: nil);
+                super.dismiss(animated: true, completion: completion);
             });
         }
         else {
             self.actionSheet!.center = CGPoint(x: SCREEN_BOUNDS().size.width/2,
                                                y: SCREEN_BOUNDS().size.height + self.actionSheet!.frame.size.height/2);
-            super.dismiss(animated: true, completion: nil);
+            super.dismiss(animated: true, completion: completion);
         }
     }
     
@@ -136,9 +136,12 @@ public class DZActionSheetController: UIViewController, DZActionSheetDelegate {
         let handler = self.handlerDictionary[index];
         if ( handler != nil ) {
             DebugLog("call handler");
-            handler!();
+            self.dismiss(animated: true, completion: handler);
+            //handler!();
         }
-        self.dismiss();
+        else {
+            self.dismiss();
+        }
     }
     
     internal func onCancelButtonClicked() {
