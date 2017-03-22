@@ -82,6 +82,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             actionSheetController.addButton(title: "Hit&Run", characterColor: UIColor.cyan, handler: nil);
             actionSheetController.addButton(title: "Increasement", characterColor: UIColor.orange, handler: nil);
             actionSheetController.addButton(title: "JoinUs", characterColor: UIColor.white, handler: nil);
+            actionSheetController.addButton(title: "OnMoreTime", characterColor: UIColor.white, handler: {
+                actionSheetController.show(inViewController: self, animated: true);
+            })
             
             //actionSheetController.addButton(withTitle: "Increasement", characterColor: UIColor.orange, handler: nil);
             //actionSheetController.addButton(withTitle: "JoinUs", characterColor: UIColor.white, handler: nil);
