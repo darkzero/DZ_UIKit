@@ -106,12 +106,12 @@ open class DZSwitch : UIControl {
     
     // MARK: - internal functions
     
-    internal func onTapHandle(_ tap: UITapGestureRecognizer) {
+    @objc internal func onTapHandle(_ tap: UITapGestureRecognizer) {
         self.on = !self.on;
     }
     
     
-    internal func onPanHandle(_ pan: UIPanGestureRecognizer) {
+    @objc internal func onPanHandle(_ pan: UIPanGestureRecognizer) {
         switch pan.state {
         case UIGestureRecognizerState.began:
             self.isPanning  = false;

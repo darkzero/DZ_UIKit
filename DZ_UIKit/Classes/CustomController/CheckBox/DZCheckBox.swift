@@ -62,7 +62,7 @@ public class DZCheckBox : UIControl {
                 //self.titleLabel?.text = title;
                 titleLabel.isHidden = false;
                 titleLabel.text = self.title;
-                let attributes = [NSFontAttributeName : UIFont.systemFont(ofSize: frame.size.height-4)];
+                let attributes = [NSAttributedStringKey.font : UIFont.systemFont(ofSize: frame.size.height-4)];
                 let rect = NSString(string: self.title!).boundingRect(with: CGSize(width: 0, height: self.bounds.size.height),
                                                                      options: NSStringDrawingOptions.usesLineFragmentOrigin,
                                                                      attributes: attributes,
@@ -208,19 +208,19 @@ public class DZCheckBox : UIControl {
         //self.titleLabel?.text = title;
         titleLabel.isHidden = false;
         titleLabel.text = self.title;
-        let attributes = [NSFontAttributeName : UIFont.systemFont(ofSize: frame.size.height-4)];
+        let attributes = [NSAttributedStringKey.font : UIFont.systemFont(ofSize: frame.size.height-4)];
         let rect = NSString(string: self.title!).boundingRect(with: CGSize(width: CGFloat.infinity,
                                                                            height: self.bounds.size.height),
                                                               options: NSStringDrawingOptions.usesLineFragmentOrigin,
                                                               attributes: attributes,
                                                               context: nil);
-        titleLabel.frame.size = NSString(string: self.title!).size(attributes: attributes);
+        titleLabel.frame.size = NSString(string: self.title!).size(withAttributes: attributes);
         self.frame.size = CGSize(width: self.frame.size.width + 4 + rect.size.width, height: self.frame.height);
     }
     
 // MARK: - touch handler
     
-    internal func onCheckBoxTouched(_ sender:AnyObject)
+    @objc internal func onCheckBoxTouched(_ sender:AnyObject)
     {
         let oldValue:Bool = self.checked;
         self.checked = !oldValue;

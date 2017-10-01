@@ -125,7 +125,7 @@ public class DZActionSheetController: UIViewController, DZActionSheetDelegate {
         }
     }
     
-    internal func hide() {
+    @objc internal func hide() {
         self.dismiss();
     }
     

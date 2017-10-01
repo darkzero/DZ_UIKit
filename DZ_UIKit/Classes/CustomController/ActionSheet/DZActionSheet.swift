@@ -164,13 +164,13 @@ internal class DZActionSheet : UIControl {
         }
     }
     
-    internal func buttonClicked(_ sender:AnyObject) {
+    @objc internal func buttonClicked(_ sender:AnyObject) {
         let btnIdx = sender.tag;
         self.delegate?.onButtonClicked(atIndex: btnIdx!);
         return;
     }
     
-    internal func cancelButtonClicked(_ sender:AnyObject) {
+    @objc internal func cancelButtonClicked(_ sender:AnyObject) {
         self.delegate?.onCancelButtonClicked();
         return;
     }

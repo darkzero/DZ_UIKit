@@ -115,8 +115,8 @@ open class DZAnnularProgress: UIView {
         processBackgroundPath.lineCapStyle      = CGLineCap.butt;
         let center: CGPoint     = CGPoint(x: self.bounds.width / 2, y: self.bounds.height / 2);
         let radius: CGFloat     = (self.bounds.width - lineWidth) / 2;
-        var startAngle: CGFloat = ((self.currectValue/self.maxValue) * 2 * CGFloat(M_PI)) - (CGFloat(M_PI) / 2); // + startAngle;
-        var endAngle: CGFloat   = (2 * CGFloat(M_PI)) - (CGFloat(M_PI) / 2);// + startAngle;
+        var startAngle: CGFloat = ((self.currectValue/self.maxValue) * 2 * CGFloat(Float.pi)) - (CGFloat(Float.pi) / 2); // + startAngle;
+        var endAngle: CGFloat   = (2 * CGFloat(Float.pi)) - (CGFloat(Float.pi) / 2);// + startAngle;
         processBackgroundPath.addArc(withCenter: center, radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: true);
         self.annularBackColor.set();
         processBackgroundPath.stroke();
@@ -125,8 +125,8 @@ open class DZAnnularProgress: UIView {
         let processPath = UIBezierPath();
         processPath.lineWidth       = lineWidth;
         processPath.lineCapStyle    = CGLineCap.butt;
-        startAngle                  = -(CGFloat(M_PI) / 2);
-        endAngle                    = ((self.currectValue/self.maxValue) * 2 * CGFloat(M_PI)) + startAngle;
+        startAngle                  = -(CGFloat(Float.pi) / 2);
+        endAngle                    = ((self.currectValue/self.maxValue) * 2 * CGFloat(Float.pi)) + startAngle;
         processPath.addArc(withCenter: center, radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: true);
         self.annularFrontColor.set();
         processPath.stroke();
@@ -147,7 +147,7 @@ open class DZAnnularProgress: UIView {
             let paragraphStyle: NSMutableParagraphStyle = NSMutableParagraphStyle();
             paragraphStyle.lineBreakMode = NSLineBreakMode.byClipping;
             paragraphStyle.alignment = NSTextAlignment.center;
-            (self.title as NSString).draw(in: titleRect, withAttributes:[NSFontAttributeName: self.titleFont, NSParagraphStyleAttributeName: paragraphStyle])
+            (self.title as NSString).draw(in: titleRect, withAttributes:[NSAttributedStringKey.font: self.titleFont, NSAttributedStringKey.paragraphStyle: paragraphStyle])
             break;
         case .progress :
             self.title = "\(self.currectValue)";
@@ -163,8 +163,8 @@ open class DZAnnularProgress: UIView {
             let paragraphStyle: NSMutableParagraphStyle = NSMutableParagraphStyle();
             paragraphStyle.lineBreakMode = NSLineBreakMode.byClipping;
             paragraphStyle.alignment = NSTextAlignment.center;
-            (self.title as NSString).draw(in: titleRect, withAttributes:[NSFontAttributeName: self.titleFont, NSParagraphStyleAttributeName: paragraphStyle])// darw subtitle
-            (self.subtitle as NSString).draw(in: subtitleRect, withAttributes: [NSFontAttributeName: self.subtitleFont, NSParagraphStyleAttributeName: paragraphStyle]);
+            (self.title as NSString).draw(in: titleRect, withAttributes:[NSAttributedStringKey.font: self.titleFont, NSAttributedStringKey.paragraphStyle: paragraphStyle])// darw subtitle
+            (self.subtitle as NSString).draw(in: subtitleRect, withAttributes: [NSAttributedStringKey.font: self.subtitleFont, NSAttributedStringKey.paragraphStyle: paragraphStyle]);
             break;
         default :
             break;

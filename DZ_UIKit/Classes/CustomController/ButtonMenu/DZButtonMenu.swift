@@ -200,7 +200,7 @@ open class DZButtonMenu : UIView {
             lbl.numberOfLines = 1;
             let lblRect = titleStr.boundingRect(with: CGSize(width: 200, height: LABEL_HEIGHT),
                                                         options: NSStringDrawingOptions.usesLineFragmentOrigin,
-                                                        attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 12.0)],
+                                                        attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12.0)],
                                                         context: nil);
             if ( lblRect.size.width > maxLabelWidth ) {
                 maxLabelWidth = lblRect.size.width;
@@ -427,11 +427,11 @@ open class DZButtonMenu : UIView {
     
 // MARK: - button action
     
-    func buttonClicked(_ sender:AnyObject) {
+    @objc func buttonClicked(_ sender:AnyObject) {
         self.delegate?.buttonMenu(self, ClickedButtonAtIndex: (sender.tag - TAG_MAIN_BUTTON));
     }
     
-    internal func switchMenuStatus() {
+    @objc internal func switchMenuStatus() {
         if ( self.menuState == .closed ) {
             self.showMenu(withAnimation: true);
         }
