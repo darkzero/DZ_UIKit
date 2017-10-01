@@ -46,7 +46,7 @@ public class DZCheckBox : UIControl {
     @IBInspectable public var borderColor: UIColor  = UIColor.white;
     
     // Type
-    @IBInspectable public var type:DZCheckBoxType = .circular;
+    public var type:DZCheckBoxType = .circular;
     
     // Size
     @IBInspectable public var checkBoxSize:CGSize = CGSize(width: 48, height: 48) {

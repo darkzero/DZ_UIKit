@@ -97,9 +97,7 @@ public class DZActionSheetController: UIViewController, DZActionSheetDelegate {
                 UIView.animate(withDuration: self.ANIMATION_SPEED, delay: 0.0, options: .allowUserInteraction, animations: {
                     self.actionSheet!.center = CGPoint(x: SCREEN_BOUNDS().size.width/2,
                                                        y: SCREEN_BOUNDS().size.height - self.actionSheet!.frame.size.height/2);
-                }, completion: { (finished) in
-                    //
-                });
+                }, completion: nil);
             }
             else {
                 self.actionSheet!.center = CGPoint(x: SCREEN_BOUNDS().size.width/2,

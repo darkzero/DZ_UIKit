@@ -102,7 +102,7 @@ internal class DZActionSheet : UIControl {
         else {
             let gary = ( characterColor != nil ) ? characterColor!.getGary() : 0;
             btnImage = UIImage.imageWithColor(characterColor!, size: CGSize(width: 48, height: 48));
-            let initialChar = title.substring(to: title.characters.index(title.startIndex, offsetBy: 1));
+            let initialChar = title.prefix(1);//.substring(to: title.characters.index(title.startIndex, offsetBy: 1));
             let lbl = UILabel(frame: CGRect(x: 0, y: 0, width: 48, height: 48));
             lbl.font = UIFont.boldSystemFont(ofSize: 28.0);
             if gary >= 175 {
@@ -112,7 +112,7 @@ internal class DZActionSheet : UIControl {
                 lbl.textColor = RGB_HEX("FFFFFF", 1.0);
             }
             lbl.textAlignment = NSTextAlignment.center;
-            lbl.text = initialChar;
+            lbl.text = String(initialChar);
             btn.imageView?.addSubview(lbl);
         }
         btn.contentMode = UIViewContentMode.scaleAspectFill;
@@ -193,11 +193,11 @@ internal class DZActionSheet : UIControl {
     
         // labels
         self.titleLabel                     = UILabel(frame: rect);
-        self.titleLabel?.textAlignment      = NSTextAlignment.center;
-        self.titleLabel?.backgroundColor    = UIColor.clear;
-        self.titleLabel?.font               = UIFont.systemFont(ofSize: 14.0);
-        self.titleLabel?.textColor          = UIColor.darkGray;
-        self.titleLabel?.text               = self.title;
+        self.titleLabel!.textAlignment      = NSTextAlignment.center;
+        self.titleLabel!.backgroundColor    = UIColor.clear;
+        self.titleLabel!.font               = UIFont.systemFont(ofSize: 14.0);
+        self.titleLabel!.textColor          = UIColor.darkGray;
+        self.titleLabel!.text               = self.title;
     
         // buttons
         // calc the height
@@ -210,9 +210,9 @@ internal class DZActionSheet : UIControl {
         
         self.buttonBgView.backgroundColor = RGB_HEX("ffffff", 0.3);
         
-        if ( self.titleLabel != nil ) {
-            buttonBgView.addSubview(self.titleLabel!);
-        }
+        //if ( self.titleLabel != nil ) {
+            self.addSubview(self.titleLabel!);
+        //}
     
         // cancel button
         self.cancelButton.frame = CGRect(x: 10, y: self.frame.size.height - CANCEL_BUTTON_HEIGHT - 10, width: CANCEL_BUTTON_WIDTH, height: CANCEL_BUTTON_HEIGHT);
@@ -223,7 +223,7 @@ internal class DZActionSheet : UIControl {
         let countInOneLine = ceil(CGFloat(self.buttonArray.count) / CGFloat(lineCount));
         let btnSpacing: CGFloat = (CANCEL_BUTTON_WIDTH - countInOneLine*BUTTON_FRAME.width) / (countInOneLine+1.0);
         for btn in self.buttonArray {
-            self.buttonBgView.addSubview(btn);
+            self.addSubview(btn);
             let idx = btn.tag;
             let btnRect:CGRect  = CGRect(
                 x: (btnSpacing + CGFloat(idx).truncatingRemainder(dividingBy: countInOneLine) * (btnSpacing + BUTTON_FRAME.size.width)),

@@ -178,7 +178,7 @@ open class DZAlertView : UIView {
             let msgRect:CGRect = self.message!.boundingRect(
                 with: CGSize(width: ALERT_VIEW_WIDTH - 20, height: CGFloat.greatestFiniteMagnitude),
                 options: NSStringDrawingOptions.usesLineFragmentOrigin,
-                attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 16.0)],
+                attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16.0)],
                 context: nil);
             
             rect = CGRect(x: 10, y: 10 + 40, width: ALERT_VIEW_WIDTH-20, height: msgRect.size.height);

@@ -182,7 +182,7 @@ open class DZButtonMenu : UIView {
                 btn.tag                 = TAG_MAIN_BUTTON + i;
                 btn.alpha               = 0.0;
                 btn.titleLabel?.font    = UIFont.boldSystemFont(ofSize: 16);
-                btn.setTitle(title.substring(to: title.characters.index(title.startIndex, offsetBy: 1)).uppercased(), for:UIControlState());
+                btn.setTitle(title.prefix(1).uppercased(), for:UIControlState());
                 btn.titleLabel?.font = UIFont.systemFont(ofSize: 24.0);
                 self.addSubview(btn);
                 

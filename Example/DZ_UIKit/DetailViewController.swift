@@ -97,7 +97,7 @@ class DetailViewController: UIViewController, DZNineImageBoxViewDelegate, DZButt
     }
     */
     
-    func onProgressCtrlValueChanged(_ sender: AnyObject) {
+    @objc func onProgressCtrlValueChanged(_ sender: AnyObject) {
         if ( sender.tag == 102 ) {
             let progress = self.view.viewWithTag(101) as! DZAnnularProgress;
             //if ( (sender as! UISlider).value != nil ) {

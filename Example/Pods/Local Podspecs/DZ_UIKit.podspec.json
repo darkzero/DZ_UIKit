@@ -1,8 +1,8 @@
 {
   "name": "DZ_UIKit",
-  "version": "0.2.0",
+  "version": "0.5.3",
   "summary": "Custom UIs that be used in Topeko",
-  "description": "TODO: Add long description of the pod here.",
+  "description": "0.2.4\nAdd DZStepper, which can be used in both code or storyboard.",
   "homepage": "https://github.com/darkzero/DZ_UIKit",
   "license": "MIT",
   "authors": {
@@ -10,10 +10,14 @@
   },
   "source": {
     "git": "https://github.com/darkzero/DZ_UIKit.git",
-    "tag": "0.2.0"
+    "tag": "0.5.3"
   },
+  "social_media_url": "https://twitter.com/darkzero_mk2",
   "platforms": {
-    "ios": "8.0"
+    "ios": "8.3"
   },
-  "source_files": "DZ_UIKit/Classes/**/*"
+  "source_files": "DZ_UIKit/Classes/**/*",
+  "resources": [
+    "DZ_UIKit/Assets/*.png"
+  ]
 }
