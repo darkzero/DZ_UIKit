@@ -78,7 +78,7 @@ class CheckBoxViewController: UIViewController {
         debugPrint("AAAAAAAA");
     }
     
-    internal func onCheckBoxGroupValueChanged(_ sender: AnyObject) {
+    @objc internal func onCheckBoxGroupValueChanged(_ sender: AnyObject) {
         let group = sender as! DZCheckBoxGroup;
         debugPrint(group.checkedIndexes);
     }

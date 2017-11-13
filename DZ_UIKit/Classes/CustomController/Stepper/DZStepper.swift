@@ -107,7 +107,7 @@ open class DZStepper: UIControl {
         }
     }
     
-    internal func increase() {
+    @objc internal func increase() {
         self.pushedDur += 0.5;
         //DebugLog("self.pushedDur =  ", self.pushedDur);
         if  self.pushedDur > 5.0 {
@@ -121,7 +121,7 @@ open class DZStepper: UIControl {
         }
     }
     
-    internal func decrease() {
+    @objc internal func decrease() {
         if ( self.currentValue > self.minValue ) {
             self.decreaseButton.backgroundColor = self.decreaseButton.backgroundColor?.withAlphaComponent(0.5);
             self.currentValue = (self.currentValue-stepLength<self.minValue) ? self.minValue : (self.currentValue-stepLength);

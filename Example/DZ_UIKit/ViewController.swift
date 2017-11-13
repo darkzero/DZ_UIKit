@@ -82,15 +82,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             actionSheetController.addButton(title: "Hit&Run", characterColor: UIColor.cyan, handler: nil);
             actionSheetController.addButton(title: "Increasement", characterColor: UIColor.orange, handler: nil);
             actionSheetController.addButton(title: "JoinUs", characterColor: UIColor.white, handler: nil);
-            actionSheetController.addButton(title: "OnMoreTime", characterColor: UIColor.white, handler: {
-                actionSheetController.show(inViewController: self, animated: true);
-            })
-            
-            //actionSheetController.addButton(withTitle: "Increasement", characterColor: UIColor.orange, handler: nil);
-            //actionSheetController.addButton(withTitle: "JoinUs", characterColor: UIColor.white, handler: nil);
-            //actionSheetController.addButton(withTitle: "Increasement", characterColor: UIColor.orange, handler: nil);
-            //actionSheetController.addButton(withTitle: "JoinUs", characterColor: UIColor.white, handler: nil);
-            
+            actionSheetController.addButton(title: "OnMoreTime", characterColor: UIColor.white, handler: nil);
             actionSheetController.show(inViewController: self, animated: true);
             break;
         case 1:
@@ -165,7 +157,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
     }
     
-    func onStepperChanged(_ sender: DZStepper) {
+    @objc func onStepperChanged(_ sender: DZStepper) {
         //print("onStepperChanged ", sender.currentValue);
     }
 }

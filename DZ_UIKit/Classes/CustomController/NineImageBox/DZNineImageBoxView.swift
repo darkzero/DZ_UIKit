@@ -79,7 +79,7 @@ open class DZNineImageBoxView: UIView {
         return CGSize(width: 10, height: 10);
     }
     
-    func onTapImage(_ sender: UITapGestureRecognizer) {
+    @objc func onTapImage(_ sender: UITapGestureRecognizer) {
         if (delegate != nil) {
             let tag = sender.view?.tag;
             delegate?.nineImageBoxView(self, didTapImageAtIndex: tag!-TAG_BASE);

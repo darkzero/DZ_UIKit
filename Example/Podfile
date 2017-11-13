@@ -1,9 +1,11 @@
+platform :ios, 8.3
+
 use_frameworks!
 
-target 'DZ_UIKit_Example', :exclusive => true do
+target 'DZ_UIKit_Example' do
     pod 'DZ_UIKit', :path => '../'
 end
 
-target 'DZ_UIKit_Tests', :exclusive => true do
+target 'DZ_UIKit_Tests' do
   pod 'DZ_UIKit', :path => '../'
 end
