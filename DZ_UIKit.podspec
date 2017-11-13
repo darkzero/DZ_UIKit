@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   	s.name             = "DZ_UIKit"
-  	s.version          = "0.5.3"
+  	s.version          = "0.6.0"
   	s.summary          = "Custom UIs that be used in Topeko"
 
 # This description is used to generate tags and improve search results.
@@ -18,7 +18,10 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
 	s.description      = <<-DESC
-0.2.4
+* 0.6.0
+Update to Swift4.
+---
+* 0.2.4
 Add DZStepper, which can be used in both code or storyboard.
                        DESC
 
