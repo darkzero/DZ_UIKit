@@ -11,10 +11,10 @@ import UIKit
 //let VALUE_KEY_CHECKED   = "_checked";
 
 let DEFAULT_CHECKED_COLOR   // RGB(184, 208, 98);
-    = UIColor.colorWithDec(Red: 184, Green: 208, Blue: 98, Alpha: 1.0);
+    = RGBA(184, 208, 98, 1.0);
 
 let DEFAULT_UNCHECKED_COLOR // RGB(230, 230, 230);
-    = UIColor.colorWithDec(Red: 230, Green: 230, Blue: 230, Alpha: 1.0);
+    = RGBA(230, 230, 230, 1.0);
 
 public enum DZCheckBoxType: Int {
     case circular = 1;

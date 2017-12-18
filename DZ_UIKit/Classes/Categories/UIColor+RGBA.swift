@@ -32,8 +32,7 @@ extension UIColor {
      - Parameters alpha: alpha
      - Return: color
      */
-    public class func colorWithHex( Hex hex:String, Alpha alpha:CGFloat ) -> UIColor
-    {
+    fileprivate class func colorWithHex( Hex hex:String, Alpha alpha:CGFloat ) -> UIColor {
         let colorScanner:Scanner = Scanner(string: hex);
         var color:uint = 0;
         colorScanner.scanHexInt32(&color);
@@ -53,7 +52,7 @@ extension UIColor {
      - Parameters Alpha: alpha ( 0.0 ~ 1.0 )
      - Return: color
      */
-    public class func colorWithDec(Red r:Int, Green g:Int, Blue b:Int, Alpha alpha:CGFloat) -> UIColor {
+    fileprivate class func colorWithDec(Red r:Int, Green g:Int, Blue b:Int, Alpha alpha:CGFloat) -> UIColor {
         return UIColor(
             red: CGFloat(r)/MAX_COLOR_RGB,
             green: CGFloat(g)/MAX_COLOR_RGB,
