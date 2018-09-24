@@ -50,7 +50,7 @@ public class DZCheckBoxGroup : UIControl {
         self.backgroundColor        = UIColor.clear;
     }
     
-    @available(*, deprecated)
+    @available(*, deprecated, message: "no longer available ...")
     public init(frame: CGRect, items : [DZCheckBox]) {
         self.multipleCheckEnabled   = false;
         self.checkBoxArray          = items;
