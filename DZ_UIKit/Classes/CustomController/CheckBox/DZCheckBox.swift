@@ -205,17 +205,19 @@ public class DZCheckBox : UIControl {
     }
     
     private func setTitle() {
-        //self.titleLabel?.text = title;
         titleLabel.isHidden = false;
         titleLabel.text = self.title;
-        let attributes = [NSAttributedStringKey.font : UIFont.systemFont(ofSize: frame.size.height-4)];
+        let font = UIFont.boldSystemFont(ofSize: frame.size.height/2)
+        titleLabel.font = font
+        let attributes = [NSAttributedStringKey.font : font];
         let rect = NSString(string: self.title!).boundingRect(with: CGSize(width: CGFloat.infinity,
                                                                            height: self.bounds.size.height),
                                                               options: NSStringDrawingOptions.usesLineFragmentOrigin,
                                                               attributes: attributes,
                                                               context: nil);
-        titleLabel.frame.size = NSString(string: self.title!).size(withAttributes: attributes);
-        self.frame.size = CGSize(width: self.frame.size.width + 4 + rect.size.width, height: self.frame.height);
+        DebugLog(rect)
+        titleLabel.frame.size = rect.size
+        self.frame.size = CGSize(width: self.frame.size.width + rect.size.width + 10, height: self.frame.height);
     }
     
 // MARK: - touch handler

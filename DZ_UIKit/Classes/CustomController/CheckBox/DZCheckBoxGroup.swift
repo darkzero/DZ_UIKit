@@ -15,18 +15,14 @@ public enum DZCheckBoxGroupStyle: Int {
 }
 
 public class DZCheckBoxGroup : UIControl {
-    
-// MARK: - properties
-    
+    // MARK: - properties
     public var multipleCheckEnabled:Bool    = false;
     public var style: DZCheckBoxGroupStyle  = .bar;
-    
     open var checkedIndexes:[Int];
-    
     private var checkBoxArray:[DZCheckBox];
 
-// MARK: - init
-    
+
+    /// init
     required public init?(coder aDecoder: NSCoder) {
         self.multipleCheckEnabled   = false;
         self.checkBoxArray          = [DZCheckBox]();
@@ -54,6 +50,7 @@ public class DZCheckBoxGroup : UIControl {
         self.backgroundColor        = UIColor.clear;
     }
     
+    @available(*, deprecated, message: "no longer available ...")
     public init(frame: CGRect, items : [DZCheckBox]) {
         self.multipleCheckEnabled   = false;
         self.checkBoxArray          = items;
@@ -68,18 +65,20 @@ public class DZCheckBoxGroup : UIControl {
         super.didMoveToSuperview();
     }
     
+    /// add check box at end
     public func addCheckBox(_ checkBox:DZCheckBox) {
         checkBox.group = self;
         self.checkBoxArray.append(checkBox);
     }
     
+    /// add check boxes at end
     public func addCheckBoxes(_ items:[DZCheckBox]) {
         for checkBox in items {
             checkBox.group = self;
             self.checkBoxArray.append(checkBox);
         }
     }
-    
+
     internal func onCheckBoxCheckedChanged(_ sender: AnyObject)
     {
         let box     = sender as! DZCheckBox;
@@ -103,15 +102,12 @@ public class DZCheckBoxGroup : UIControl {
         self.sendActions(for: UIControlEvents.valueChanged);
     }
     
-// MARK: - layoutSubviews
-    
+
+    /// layoutSubviews
     override open func layoutSubviews() {
-        //var _ = self.subviews.map { $0.removeFromSuperview() };
-        
         let itemsCount:Int  = self.checkBoxArray.count;
         let theCheckBox     = self.checkBoxArray[0];
         var theRect:CGRect  = CGRect.zero;
-        
         
         switch self.style {
         case .list :
@@ -127,10 +123,11 @@ public class DZCheckBoxGroup : UIControl {
         case .bar :
             theRect = CGRect( x: self.frame.origin.x, y: self.frame.origin.y,
                               width: (theCheckBox.frame.size.width + 5)*CGFloat(itemsCount), height: theCheckBox.frame.size.height);
+            var preWidth: CGFloat = 0.0
             for i in 0 ... (itemsCount-1) {
                 let aCheckBox = self.checkBoxArray[i];
-                aCheckBox.frame.origin = CGPoint(x: (aCheckBox.frame.size.width+5)*CGFloat(i), y: 0);
-                
+                aCheckBox.frame.origin = CGPoint(x: preWidth, y: 0);
+                preWidth = preWidth + aCheckBox.frame.width + 6.0
                 self.addSubview(aCheckBox);
             }
             break;
