@@ -61,14 +61,32 @@ class CheckBoxViewController: UIViewController {
         checkboxGroup.addTarget(self, action: #selector(onCheckBoxGroupValueChanged(_:)), for: .valueChanged);
         self.view.addSubview(checkboxGroup);
         
-        let checkBoxList = DZCheckBoxGroup(frame: CGRect(x: 10, y: 280, width: 240, height: 240));
+        let checkBoxBar = DZCheckBoxGroup(frame: CGRect(x: 10, y: 280, width: 0, height: 240));
+        checkBoxBar.style = .bar;
+        checkBoxBar.addCheckBox(
+            DZCheckBox(frame: CGRect(x: 0, y: 0, width: 32, height: 32),
+                       type: DZCheckBoxType.circular, title: "CheckBar 01", checkedColor: UIColor.orange));
+        checkBoxBar.addCheckBox(
+            DZCheckBox(frame: CGRect(x: 0, y: 0, width: 32, height: 32),
+                       type: DZCheckBoxType.circular, title: "CheckBar 02", borderColor: UIColor.orange));
+        checkBoxBar.addCheckBox(
+            DZCheckBox(frame: CGRect(x: 0, y: 0, width: 32, height: 32),
+                       type: DZCheckBoxType.circular, title: "CheckBar 03", borderColor: UIColor.orange));
+        checkBoxBar.checkedIndexes = [0];
+        checkBoxBar.multipleCheckEnabled = false;
+        self.view.addSubview(checkBoxBar);
+        
+        let checkBoxList = DZCheckBoxGroup(frame: CGRect(x: 10, y: 340, width: 200, height: 240));
         checkBoxList.style = .list;
         checkBoxList.addCheckBox(
             DZCheckBox(frame: CGRect(x: 0, y: 0, width: 32, height: 32),
-                       type: DZCheckBoxType.rounded, title: "Save Account", checkedColor: UIColor.orange));
+                       type: DZCheckBoxType.circular, title: "CheckList 01", checkedColor: UIColor.orange));
         checkBoxList.addCheckBox(
             DZCheckBox(frame: CGRect(x: 0, y: 0, width: 32, height: 32),
-                       type: DZCheckBoxType.rounded, title: "Auto Login", borderColor: UIColor.orange));
+                       type: DZCheckBoxType.circular, title: "CheckList 02", borderColor: UIColor.orange));
+        checkBoxList.addCheckBox(
+            DZCheckBox(frame: CGRect(x: 0, y: 0, width: 32, height: 32),
+                       type: DZCheckBoxType.circular, title: "CheckList 03", borderColor: UIColor.orange));
         checkBoxList.checkedIndexes = [0];
         checkBoxList.multipleCheckEnabled = true;
         self.view.addSubview(checkBoxList);
