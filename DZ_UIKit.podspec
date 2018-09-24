@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
     s.name             = "DZ_UIKit"
-    s.version          = "0.6.0"
+    s.version          = "0.6.1"
     s.summary          = "Custom UIs that be used in Topeko"
 
 # This description is used to generate tags and improve search results.
@@ -18,6 +18,9 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
 	s.description      = <<-DESC
+* 0.6.1
+Fix some bug in checkbox group
+---
 * 0.6.0
 Update to Swift4.
 ---

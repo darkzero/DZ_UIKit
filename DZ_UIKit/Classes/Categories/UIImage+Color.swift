@@ -8,20 +8,15 @@
 
 import UIKit
 
+enum GradientDirection: String {
+    case vertical   = "vertical"
+    case horizontal = "horizontal"
+}
+
 extension UIImage {
     
-// MARK: - Make image from color
-
-    @available(*, deprecated, message: "Will be deleted at version 1.1.0...")
-    public class func imageWithColor( _ color:UIColor ) -> UIImage
-    {
-        let size = CGSize(width: 1, height: 1);
-        let image = UIImage.imageWithColor(color, size: size);
-        return image;
-    }
-    
-    public class func imageWithColor( _ color:UIColor, size: CGSize? ) -> UIImage
-    {
+    /// Make image from color
+    public class func imageWithColor( _ color:UIColor, size: CGSize? = nil) -> UIImage {
         var rect:CGRect;
         if let _size = size {
             rect = CGRect(x: 0.0, y: 0.0, width: _size.width, height: _size.height);
@@ -39,5 +34,40 @@ extension UIImage {
         UIGraphicsEndImageContext();
         
         return image;
+    }
+    
+    /// Make image with layer
+    ///
+    /// - Parameter layer: layer
+    /// - Returns: Image(UIImage)
+    class func imageWithLayer(layer: CALayer) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(layer.frame.size, false, 0);
+        layer.render(in: UIGraphicsGetCurrentContext()!);
+        let outputImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        return outputImage!;
+    }
+    
+    /// Make image with gradient
+    /// default size is 64x64
+    ///
+    /// - Parameters:
+    ///   - direction: direction(GradientDirection.horizontal or .vertical
+    ///   - colors: colors(CGColor)
+    /// - Returns: UIImage
+    class func imageWithGradient(direction: GradientDirection = .horizontal, colors: CGColor...) -> UIImage {
+        let gradient = CAGradientLayer()
+        gradient.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: 64, height: 64));
+        gradient.colors = colors;
+        switch direction {
+        case .horizontal:
+            gradient.startPoint = CGPoint(x: 0, y: 0.5);
+            gradient.endPoint = CGPoint(x: 1, y: 0.5)
+        case .vertical:
+            gradient.startPoint = CGPoint(x: 0.5, y: 0);
+            gradient.endPoint = CGPoint(x: 0.5, y: 1)
+        }
+        let outputImage = UIImage.imageWithLayer(layer: gradient);
+        return outputImage;
     }
 }
