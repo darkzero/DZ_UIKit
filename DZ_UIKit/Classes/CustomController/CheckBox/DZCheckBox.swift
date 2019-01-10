@@ -62,7 +62,7 @@ public class DZCheckBox : UIControl {
                 //self.titleLabel?.text = title;
                 titleLabel.isHidden = false;
                 titleLabel.text = self.title;
-                let attributes = [NSAttributedStringKey.font : UIFont.systemFont(ofSize: frame.size.height-4)];
+                let attributes = [NSAttributedString.Key.font : UIFont.systemFont(ofSize: frame.size.height-4)];
                 let rect = NSString(string: self.title!).boundingRect(with: CGSize(width: 0, height: self.bounds.size.height),
                                                                      options: NSStringDrawingOptions.usesLineFragmentOrigin,
                                                                      attributes: attributes,
@@ -184,8 +184,7 @@ public class DZCheckBox : UIControl {
         
         // set border layer
         self.borderLayer = CALayer();
-        self.borderLayer.frame = UIEdgeInsetsInsetRect(self.expansionRect,
-                                                       UIEdgeInsetsMake(2, 2, 2, 2));
+        self.borderLayer.frame = self.expansionRect.inset(by: UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2));
         self.borderLayer.borderColor = UIColor.white.cgColor;//self.borderColor!.cgColor;
         self.borderLayer.borderWidth = 1;
         self.borderLayer.opacity = 1.0;
@@ -201,7 +200,7 @@ public class DZCheckBox : UIControl {
                                          height: self.expansionRect.size.height);
         self.addSubview(imageView);
         
-        self.addTarget(self, action: #selector(DZCheckBox.onCheckBoxTouched(_:)), for: UIControlEvents.touchUpInside);
+        self.addTarget(self, action: #selector(DZCheckBox.onCheckBoxTouched(_:)), for: .touchUpInside);
     }
     
     private func setTitle() {
@@ -209,7 +208,7 @@ public class DZCheckBox : UIControl {
         titleLabel.text = self.title;
         let font = UIFont.boldSystemFont(ofSize: frame.size.height/2)
         titleLabel.font = font
-        let attributes = [NSAttributedStringKey.font : font];
+        let attributes = [NSAttributedString.Key.font : font];
         let rect = NSString(string: self.title!).boundingRect(with: CGSize(width: CGFloat.infinity,
                                                                            height: self.bounds.size.height),
                                                               options: NSStringDrawingOptions.usesLineFragmentOrigin,
@@ -227,7 +226,7 @@ public class DZCheckBox : UIControl {
         let oldValue:Bool = self.checked;
         self.checked = !oldValue;
         if ( self.group == nil ) {
-            self.sendActions(for: UIControlEvents.valueChanged);
+            self.sendActions(for: .valueChanged);
         }
         else {
             self.group?.onCheckBoxCheckedChanged(self);
@@ -300,8 +299,7 @@ public class DZCheckBox : UIControl {
         uncheckedLayer.backgroundColor  = self.uncheckedColor.cgColor;
         checkedLayer.backgroundColor    = self.checkedColor.cgColor;
         
-        self.borderLayer.frame = UIEdgeInsetsInsetRect(self.expansionRect,
-                                                       UIEdgeInsetsMake(2, 2, 2, 2));
+        self.borderLayer.frame = self.expansionRect.inset(by: UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2));
         self.borderLayer.borderColor = self.borderColor.cgColor;
         self.borderLayer.borderWidth = 1;
         if ( self.hasBorder ) {

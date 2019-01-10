@@ -99,7 +99,7 @@ public class DZCheckBoxGroup : UIControl {
             }
         }
         
-        self.sendActions(for: UIControlEvents.valueChanged);
+        self.sendActions(for: .valueChanged);
     }
     
 

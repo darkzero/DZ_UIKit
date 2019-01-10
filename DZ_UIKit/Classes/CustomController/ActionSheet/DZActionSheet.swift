@@ -36,9 +36,9 @@ internal class DZActionSheet : UIControl {
     private var cancelButtonTitleColor: UIColor    = RGB(109, 109, 109);
     
     private var buttonArray                = [UIButton]();
-    private var cancelButton               = UIButton(type: UIButtonType.custom);
+    private var cancelButton               = UIButton(type: .custom);
     private var titleLabel:UILabel?;
-    private var buttonBgView               = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.light));
+    private var buttonBgView               = UIVisualEffectView(effect: UIBlurEffect(style: .light));
     
 // MARK: - delegate
     
@@ -74,9 +74,9 @@ internal class DZActionSheet : UIControl {
         self.cancelButton.frame            = CGRect(x: 0, y: 0, width: CANCEL_BUTTON_WIDTH, height: CANCEL_BUTTON_HEIGHT);
         self.cancelButton.backgroundColor  = RGB_HEX("ffffff", 1.0);
         self.cancelButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20.0);
-        self.cancelButton.setTitle(title, for: UIControlState());
-        self.cancelButton.setTitleColor(RGB(109, 109, 109), for: UIControlState());
-        self.cancelButton.addTarget(self, action: #selector(DZActionSheet.cancelButtonClicked(_:)), for: UIControlEvents.touchUpInside);
+        self.cancelButton.setTitle(title, for: .normal);
+        self.cancelButton.setTitleColor(RGB(109, 109, 109), for: .normal);
+        self.cancelButton.addTarget(self, action: #selector(DZActionSheet.cancelButtonClicked(_:)), for: .touchUpInside);
     }
     
     internal func addButton (title: String,
@@ -85,10 +85,10 @@ internal class DZActionSheet : UIControl {
                              imageHighlighted: String?,
                              imageDisabled: String?) -> Int {
             
-        let btn:UIButton! = UIButton(type: UIButtonType.custom);
+        let btn:UIButton! = UIButton(type: .custom);
         
-        btn.setTitle(title, for: UIControlState());
-        btn.setTitleColor(UIColor.darkGray, for: UIControlState());
+        btn.setTitle(title, for: .normal);
+        btn.setTitleColor(UIColor.darkGray, for: .normal);
         btn.titleLabel?.font = UIFont.systemFont(ofSize: 12.0);
         btn.titleLabel?.adjustsFontSizeToFitWidth = true;
         btn.backgroundColor = UIColor.clear;
@@ -115,47 +115,47 @@ internal class DZActionSheet : UIControl {
             lbl.text = String(initialChar);
             btn.imageView?.addSubview(lbl);
         }
-        btn.contentMode = UIViewContentMode.scaleAspectFill;
-        btn.setImage(btnImage, for: UIControlState());
+        btn.contentMode = .scaleAspectFill;
+        btn.setImage(btnImage, for: .normal);
         
         btn.layer.cornerRadius = 8.0;
         
         if ( imageHighlighted != nil ) {
-            btn.setImage(UIImage(named: imageHighlighted!), for: UIControlState.highlighted);
+            btn.setImage(UIImage(named: imageHighlighted!), for: .highlighted);
         }
         if ( imageDisabled != nil ) {
-            btn.setImage(UIImage(named: imageDisabled!), for: UIControlState.disabled);
+            btn.setImage(UIImage(named: imageDisabled!), for: .disabled);
         }
         btn.frame = BUTTON_FRAME;
         //btn.backgroundColor = UIColor.redColor();
     
         self.buttonArray.append(btn);
         
-        btn.contentHorizontalAlignment  = UIControlContentHorizontalAlignment.center;
-        btn.contentVerticalAlignment    = UIControlContentVerticalAlignment.top;
-        btn.imageEdgeInsets             = UIEdgeInsetsMake(0.0, 8.0, 22.0, 8.0);
-        btn.titleEdgeInsets             = UIEdgeInsetsMake(50, -1*btnImage.size.width, 0, 0);
+        btn.contentHorizontalAlignment  = .center;
+        btn.contentVerticalAlignment    = .top;
+        btn.imageEdgeInsets             = UIEdgeInsets(top: 0.0, left: 8.0, bottom: 22.0, right: 8.0);
+        btn.titleEdgeInsets             = UIEdgeInsets(top: 50, left: -1*btnImage.size.width, bottom: 0, right: 0);
         
         let index:Int = self.buttonArray.index(of: btn)!;
         btn.tag = index;
-        btn.addTarget(self, action: #selector(DZActionSheet.buttonClicked(_:)), for: UIControlEvents.touchUpInside);
+        btn.addTarget(self, action: #selector(DZActionSheet.buttonClicked(_:)), for: .touchUpInside);
         
         return index;
     }
     
-    internal func setButtonState(_ buttonState:UIControlState, AtIndex buttonIndex:Int) {
+    internal func setButtonState(_ buttonState: UIControl.State, AtIndex buttonIndex:Int) {
         let btn = self.buttonArray[buttonIndex];
         
         switch ( buttonState ) {
-        case UIControlState() :
+        case .normal :
             btn.isEnabled     = true;
             btn.isHighlighted = false;
             break;
-        case UIControlState.disabled :
+        case .disabled :
             btn.isEnabled     = false;
             btn.isHighlighted = false;
             break;
-        case UIControlState.highlighted :
+        case .highlighted :
             btn.isEnabled     = true;
             btn.isHighlighted = true;
             break;

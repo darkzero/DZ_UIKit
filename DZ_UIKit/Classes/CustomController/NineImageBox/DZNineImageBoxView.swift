@@ -107,7 +107,7 @@ open class DZNineImageBoxView: UIView {
                 imageView.contentMode = .scaleAspectFill;
                 imageView.clipsToBounds = true;
                 let url = URL(string: self.imageUrlList[i])!;
-                imageView.imageOfURL(url);
+                //imageView.imageOfURL(url);
                 imageView.tag = viewTag;
                 imageView.isUserInteractionEnabled = true;
                 let tap = UITapGestureRecognizer(target: self, action: #selector(DZNineImageBoxView.onTapImage(_:)));

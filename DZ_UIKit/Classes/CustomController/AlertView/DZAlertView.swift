@@ -84,7 +84,7 @@ open class DZAlertView : UIView {
         btn.tag             = CANCEL_BUTTON_TAG;
         btn.clipsToBounds = true;
         
-        btn.addTarget(self, action: #selector(cancelButtonClicked), for: UIControlEvents.touchUpInside);
+        btn.addTarget(self, action: #selector(cancelButtonClicked), for: .touchUpInside);
         self.buttonArray.append(btn);
     }
     
@@ -106,7 +106,7 @@ open class DZAlertView : UIView {
             btn = UIButton(type: .custom);
             btn.frame           = BUTTON_FRAME;
             btn.tag             = CANCEL_BUTTON_TAG;
-            btn.addTarget(self, action: #selector(cancelButtonClicked), for: UIControlEvents.touchUpInside);
+            btn.addTarget(self, action: #selector(cancelButtonClicked), for: .touchUpInside);
         }
         
         btn.setTitle(title, for: .normal);
@@ -125,7 +125,7 @@ open class DZAlertView : UIView {
     public func addButton(title: String, bgColor: UIColor? = nil, textColor: UIColor? = nil) -> Int {
         let btn = UIButton(type: .custom);
         
-        btn.setTitle(title, for: UIControlState());
+        btn.setTitle(title, for: .normal);
         
         self.buttonArray.append(btn);
         
@@ -142,7 +142,7 @@ open class DZAlertView : UIView {
         btn.tag     = index;
         btn.clipsToBounds = true;
         
-        btn.addTarget(self, action: #selector(buttonClicked(sender:)), for: UIControlEvents.touchUpInside);
+        btn.addTarget(self, action: #selector(buttonClicked(sender:)), for: .touchUpInside);
         
         return index;
     }
@@ -178,7 +178,7 @@ open class DZAlertView : UIView {
             let msgRect:CGRect = self.message!.boundingRect(
                 with: CGSize(width: ALERT_VIEW_WIDTH - 20, height: CGFloat.greatestFiniteMagnitude),
                 options: NSStringDrawingOptions.usesLineFragmentOrigin,
-                attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16.0)],
+                attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16.0)],
                 context: nil);
             
             rect = CGRect(x: 10, y: 10 + 40, width: ALERT_VIEW_WIDTH-20, height: msgRect.size.height);

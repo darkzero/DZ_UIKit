@@ -147,7 +147,7 @@ open class DZAnnularProgress: UIView {
             let paragraphStyle: NSMutableParagraphStyle = NSMutableParagraphStyle();
             paragraphStyle.lineBreakMode = NSLineBreakMode.byClipping;
             paragraphStyle.alignment = NSTextAlignment.center;
-            (self.title as NSString).draw(in: titleRect, withAttributes:[NSAttributedStringKey.font: self.titleFont, NSAttributedStringKey.paragraphStyle: paragraphStyle])
+            (self.title as NSString).draw(in: titleRect, withAttributes:[NSAttributedString.Key.font: self.titleFont, NSAttributedString.Key.paragraphStyle: paragraphStyle])
             break;
         case .progress :
             self.title = "\(self.currectValue)";
@@ -163,8 +163,8 @@ open class DZAnnularProgress: UIView {
             let paragraphStyle: NSMutableParagraphStyle = NSMutableParagraphStyle();
             paragraphStyle.lineBreakMode = NSLineBreakMode.byClipping;
             paragraphStyle.alignment = NSTextAlignment.center;
-            (self.title as NSString).draw(in: titleRect, withAttributes:[NSAttributedStringKey.font: self.titleFont, NSAttributedStringKey.paragraphStyle: paragraphStyle])// darw subtitle
-            (self.subtitle as NSString).draw(in: subtitleRect, withAttributes: [NSAttributedStringKey.font: self.subtitleFont, NSAttributedStringKey.paragraphStyle: paragraphStyle]);
+            (self.title as NSString).draw(in: titleRect, withAttributes:[NSAttributedString.Key.font: self.titleFont, NSAttributedString.Key.paragraphStyle: paragraphStyle])// darw subtitle
+            (self.subtitle as NSString).draw(in: subtitleRect, withAttributes: [NSAttributedString.Key.font: self.subtitleFont, NSAttributedString.Key.paragraphStyle: paragraphStyle]);
             break;
         default :
             break;
