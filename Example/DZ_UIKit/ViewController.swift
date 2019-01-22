@@ -8,6 +8,7 @@
 
 import UIKit
 import DZ_UIKit
+import DZPopupMessageView
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -134,6 +135,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             // DZButtonMenu
             self.performSegue(withIdentifier: "ShowDetail", sender: "DZButtonMenu");
             break;
+        case 9:
+            // DZPopupMessage
+            DZPopupMessageView.showPopupMessage("aaaa")
         default:
             break;
         }

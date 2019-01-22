@@ -10,27 +10,15 @@ import Foundation
 import UIKit
 
 // MARK: - delegate protocol
-
 internal protocol DZActionSheetDelegate {
     func onButtonClicked(atIndex index: Int);
     func onCancelButtonClicked();
 }
 
 internal class DZActionSheet : UIControl {
+    // MARK: - internal properties
     
-// MARK: - class define
-    
-    let BUTTON_FRAME: CGRect            = CGRect(x: 0.0, y: 0.0, width: 64.0, height: 70.0);
-    let CANCEL_BUTTON_HEIGHT: CGFloat   = 44.0;
-    let CANCEL_BUTTON_WIDTH: CGFloat    = min(SCREEN_BOUNDS().size.width, SCREEN_BOUNDS().size.height) - 20;
-    let VIEW_WIDTH: CGFloat             = min(SCREEN_BOUNDS().size.width, SCREEN_BOUNDS().size.height);
-    let BUTTON_ROW_HEIGHT: CGFloat      = 70.0;
-    let TITLE_LABEL_HEIGHT: CGFloat     = 30.0;
-    
-// MARK: - internal properties
-    
-// MARK: - private properties
-    
+    // MARK: - private properties
     private var title: String                      = "";
     private var cancelButtonBgColor: UIColor       = UIColor.white;
     private var cancelButtonTitleColor: UIColor    = RGB(109, 109, 109);
@@ -40,23 +28,25 @@ internal class DZActionSheet : UIControl {
     private var titleLabel:UILabel?;
     private var buttonBgView               = UIVisualEffectView(effect: UIBlurEffect(style: .light));
     
-// MARK: - delegate
+    // MARK: - private const
+    private let BUTTON_FRAME: CGRect            = CGRect(x: 0.0, y: 0.0, width: 64.0, height: 70.0);
+    private let CANCEL_BUTTON_HEIGHT: CGFloat   = 44.0;
+    private let CANCEL_BUTTON_WIDTH: CGFloat    = min(SCREEN_BOUNDS().size.width, SCREEN_BOUNDS().size.height) - 20;
+    private let VIEW_WIDTH: CGFloat             = min(SCREEN_BOUNDS().size.width, SCREEN_BOUNDS().size.height);
+    private let BUTTON_ROW_HEIGHT: CGFloat      = 70.0;
+    private let TITLE_LABEL_HEIGHT: CGFloat     = 30.0;
     
+    // MARK: - delegate
     var delegate: DZActionSheetDelegate?;
     
-// MARK: - init functions
-    
+    // MARK: - init functions
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     public override init(frame:CGRect) {
-        super.init(frame:frame);
+        super.init(frame:frame)
     }
-    
-//    public init() {
-//        super.init(frame: CGRect.zero);
-//    }
     
     public init(title: String, cancelTitle: String = "Cancel") {
         let rect:CGRect = CGRect(x: 0,
@@ -67,28 +57,36 @@ internal class DZActionSheet : UIControl {
         self.title = title;
         self.setCancelButton(title: cancelTitle);
     }
-    
-// MARK: - set Buttons
-    
-    internal func setCancelButton(title: String = "Cancel") {
+}
+
+// MARK: - cancel button
+extension DZActionSheet {
+    // MARK: - set Buttons
+    internal func setCancelButton(title: String = "Cancel", backgroundColor: UIColor? = nil) {
         self.cancelButton.frame            = CGRect(x: 0, y: 0, width: CANCEL_BUTTON_WIDTH, height: CANCEL_BUTTON_HEIGHT);
-        self.cancelButton.backgroundColor  = RGB_HEX("ffffff", 1.0);
+        self.cancelButton.backgroundColor  = backgroundColor ?? RGB_HEX("ffffff", 1.0);
         self.cancelButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20.0);
         self.cancelButton.setTitle(title, for: .normal);
-        self.cancelButton.setTitleColor(RGB(109, 109, 109), for: .normal);
-        self.cancelButton.addTarget(self, action: #selector(DZActionSheet.cancelButtonClicked(_:)), for: .touchUpInside);
+        self.cancelButton.setTitleColor(RGB(33, 33, 33), for: .normal);
+        self.cancelButton.addTarget(self, action: #selector(cancelButtonClicked(_:)), for: .touchUpInside);
     }
     
+    @objc internal func cancelButtonClicked(_ sender:AnyObject) {
+        self.delegate?.onCancelButtonClicked();
+        return;
+    }
+}
+
+// MARK: - button list
+extension DZActionSheet {
     internal func addButton (title: String,
                              characterColor: UIColor?,
                              imageNormal: String?,
                              imageHighlighted: String?,
                              imageDisabled: String?) -> Int {
-            
-        let btn:UIButton! = UIButton(type: .custom);
-        
-        btn.setTitle(title, for: .normal);
-        btn.setTitleColor(UIColor.darkGray, for: .normal);
+        let btn = UIButton(type: .custom)
+        btn.setTitle(title, for: .normal)
+        btn.setTitleColor(UIColor.darkGray, for: .normal)
         btn.titleLabel?.font = UIFont.systemFont(ofSize: 12.0);
         btn.titleLabel?.adjustsFontSizeToFitWidth = true;
         btn.backgroundColor = UIColor.clear;
@@ -127,7 +125,6 @@ internal class DZActionSheet : UIControl {
             btn.setImage(UIImage(named: imageDisabled!), for: .disabled);
         }
         btn.frame = BUTTON_FRAME;
-        //btn.backgroundColor = UIColor.redColor();
     
         self.buttonArray.append(btn);
         
@@ -170,17 +167,12 @@ internal class DZActionSheet : UIControl {
         return;
     }
     
-    @objc internal func cancelButtonClicked(_ sender:AnyObject) {
-        self.delegate?.onCancelButtonClicked();
-        return;
-    }
-    
+}
+
 // MARK: - layoutSubviews
-    
+extension DZActionSheet {
     override open func layoutSubviews() {
-        
         let _ = UITraitCollection(horizontalSizeClass: .regular);
-        
         let rect:CGRect = CGRect(x: 0.0, y: 0.0, width: CANCEL_BUTTON_WIDTH, height: TITLE_LABEL_HEIGHT);
         
         // calc the height

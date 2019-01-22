@@ -1,21 +1,26 @@
 PODS:
-  - DZ_UIKit (0.2.0)
-  - FBSnapshotTestCase (2.1.0):
-    - FBSnapshotTestCase/SwiftSupport (= 2.1.0)
-  - FBSnapshotTestCase/Core (2.1.0)
-  - FBSnapshotTestCase/SwiftSupport (2.1.0):
-    - FBSnapshotTestCase/Core
+  - DZ_UIKit (0.6.1)
+  - DZFiveStarBar (0.1.0)
+  - DZPopupMessageView (0.2.0)
 
 DEPENDENCIES:
   - DZ_UIKit (from `../`)
-  - FBSnapshotTestCase
+  - DZFiveStarBar (from `../../DZFiveStarBar`)
+  - DZPopupMessageView (from `../../DZPopupMessageView`)
 
 EXTERNAL SOURCES:
   DZ_UIKit:
-    :path: ../
+    :path: "../"
+  DZFiveStarBar:
+    :path: "../../DZFiveStarBar"
+  DZPopupMessageView:
+    :path: "../../DZPopupMessageView"
 
 SPEC CHECKSUMS:
-  DZ_UIKit: 14d063a0d08645445b8eca0a5373c147fcece09c
-  FBSnapshotTestCase: 366ecd378511d7716c79991cd8067d1eed23578d
+  DZ_UIKit: 7fd1af26535a2953fe533690a4f64c5cededaf29
+  DZFiveStarBar: fd15667d4a9565d1a73ce0360e6996780d085549
+  DZPopupMessageView: bbb235c8c61b505b99c46eca493b0c7e83ed214c
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: 838ea4dd88a85347a320f25bc4afa074572198b6
+
+COCOAPODS: 1.5.3

@@ -184,7 +184,7 @@ public class DZCheckBox : UIControl {
         
         // set border layer
         self.borderLayer = CALayer();
-        self.borderLayer.frame = self.expansionRect.inset(by: UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2));
+        self.borderLayer.frame = self.expansionRect.insetBy(dx: 2, dy: 2)// (by: UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2));
         self.borderLayer.borderColor = UIColor.white.cgColor;//self.borderColor!.cgColor;
         self.borderLayer.borderWidth = 1;
         self.borderLayer.opacity = 1.0;
@@ -299,7 +299,7 @@ public class DZCheckBox : UIControl {
         uncheckedLayer.backgroundColor  = self.uncheckedColor.cgColor;
         checkedLayer.backgroundColor    = self.checkedColor.cgColor;
         
-        self.borderLayer.frame = self.expansionRect.inset(by: UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2));
+        self.borderLayer.frame = self.expansionRect.insetBy(dx: 2, dy: 2) //inset(by: UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2));
         self.borderLayer.borderColor = self.borderColor.cgColor;
         self.borderLayer.borderWidth = 1;
         if ( self.hasBorder ) {

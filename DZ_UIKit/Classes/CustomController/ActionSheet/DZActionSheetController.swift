@@ -127,8 +127,7 @@ public class DZActionSheetController: UIViewController, DZActionSheetDelegate {
         self.dismiss();
     }
     
-// MARK: - delegate func
-    
+    // MARK: - delegate func
     internal func onButtonClicked(atIndex index: Int) {
         DebugLog("onButtonClicked at index \(index)");
         let handler = self.handlerDictionary[index];
@@ -143,15 +142,14 @@ public class DZActionSheetController: UIViewController, DZActionSheetDelegate {
     }
     
     internal func onCancelButtonClicked() {
-        DebugLog("onCancelButtonClicked");
+        DebugLog("");
         self.cancelHandler?();
         self.dismiss();
     }
     
-// MARK: - view transition
-    
+    // MARK: - view transition
     public override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        DebugLog("aaaa");
+        DebugLog("");
     }
     
     public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

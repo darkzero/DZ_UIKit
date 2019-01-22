@@ -38,5 +38,9 @@
 		<key>Name</key>
 		<string>DZButtonMenu</string>
 	</dict>
+	<dict>
+		<key>Name</key>
+		<string>DZPopupMessage</string>
+	</dict>
 </array>
 </plist>
