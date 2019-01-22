@@ -447,7 +447,7 @@ open class DZButtonMenu : UIView {
         
         self.superview?.addSubview(self.maskBg!);
         self.maskBg?.isHidden = false;
-        self.superview?.bringSubviewToFront(self);
+        self.superview?.bringSubview(toFront: self);
         
         UIView.animate(withDuration: ANIMATION_DURATION, delay: 0, options: UIView.AnimationOptions.curveEaseOut, animations: {
             
