@@ -301,14 +301,10 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-DZ_UIKit_Example/Pods-DZ_UIKit_Example-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/DZFiveStarBar/DZFiveStarBar.framework",
-				"${BUILT_PRODUCTS_DIR}/DZPopupMessageView/DZPopupMessageView.framework",
 				"${BUILT_PRODUCTS_DIR}/DZ_UIKit/DZ_UIKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DZFiveStarBar.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DZPopupMessageView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DZ_UIKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;

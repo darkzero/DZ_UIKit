@@ -1,26 +1,16 @@
 PODS:
   - DZ_UIKit (0.6.1)
-  - DZFiveStarBar (0.1.0)
-  - DZPopupMessageView (0.2.0)
 
 DEPENDENCIES:
   - DZ_UIKit (from `../`)
-  - DZFiveStarBar (from `../../DZFiveStarBar`)
-  - DZPopupMessageView (from `../../DZPopupMessageView`)
 
 EXTERNAL SOURCES:
   DZ_UIKit:
     :path: "../"
-  DZFiveStarBar:
-    :path: "../../DZFiveStarBar"
-  DZPopupMessageView:
-    :path: "../../DZPopupMessageView"
 
 SPEC CHECKSUMS:
   DZ_UIKit: 7fd1af26535a2953fe533690a4f64c5cededaf29
-  DZFiveStarBar: fd15667d4a9565d1a73ce0360e6996780d085549
-  DZPopupMessageView: bbb235c8c61b505b99c46eca493b0c7e83ed214c
 
-PODFILE CHECKSUM: 838ea4dd88a85347a320f25bc4afa074572198b6
+PODFILE CHECKSUM: e42dee5d059f3a4acbffb20b953c5bb1a7d8c6df
 
 COCOAPODS: 1.5.3

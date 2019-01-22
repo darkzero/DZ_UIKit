@@ -4,8 +4,8 @@ use_frameworks!
 
 target 'DZ_UIKit_Example' do
     pod 'DZ_UIKit', :path => '../'
-    pod 'DZPopupMessageView', :path => '../../DZPopupMessageView'
-    pod 'DZFiveStarBar', :path => '../../DZFiveStarBar'
+    #pod 'DZPopupMessageView', :path => '../../DZPopupMessageView'
+    #pod 'DZFiveStarBar', :path => '../../DZFiveStarBar'
 end
 
 target 'DZ_UIKit_Tests' do
