@@ -158,13 +158,13 @@ open class DZButtonMenu : UIView {
             // create buttons
             for i in 1 ... imageArray!.count {
                 let imgName             = imageArray![i-1];
-                let btn                 = UIButton(type: UIButton.ButtonType.custom);
+                let btn                 = UIButton(type: .custom);
                 btn.frame               = CGRect(x: 0, y: 0, width: BUTTON_DIAMETER, height: BUTTON_DIAMETER);
                 btn.backgroundColor     = COLOR_SEARCH_ITEM_OFF;
                 btn.layer.cornerRadius  = BUTTON_DIAMETER/2
                 btn.tag                 = TAG_MAIN_BUTTON + i;
                 btn.alpha               = 0.0;
-                btn.setImage(UIImage(named: imgName), for: UIControl.State());
+                btn.setImage(UIImage(named: imgName), for: .normal);
                 self.addSubview(btn);
                 
                 btn.addTarget(self, action: #selector(DZButtonMenu.buttonClicked(_:)), for: UIControl.Event.touchUpInside);
@@ -175,14 +175,14 @@ open class DZButtonMenu : UIView {
             // create buttons
             for i in 1 ... titleArray.count {
                 let title               = titleArray[i-1];
-                let btn                 = UIButton(type: UIButton.ButtonType.custom);
+                let btn                 = UIButton(type: .custom);
                 btn.frame               = CGRect(x: 0, y: 0, width: BUTTON_DIAMETER, height: BUTTON_DIAMETER);
                 btn.backgroundColor     = COLOR_SEARCH_ITEM_OFF;
                 btn.layer.cornerRadius  = BUTTON_DIAMETER/2
                 btn.tag                 = TAG_MAIN_BUTTON + i;
                 btn.alpha               = 0.0;
                 btn.titleLabel?.font    = UIFont.boldSystemFont(ofSize: 16);
-                btn.setTitle(title.prefix(1).uppercased(), for:UIControl.State());
+                btn.setTitle(title.prefix(1).uppercased(), for: .normal);
                 btn.titleLabel?.font = UIFont.systemFont(ofSize: 24.0);
                 self.addSubview(btn);
                 
@@ -239,13 +239,13 @@ open class DZButtonMenu : UIView {
         // create buttons
         for i in 1 ... imageArray.count {
             let imgName             = imageArray[i-1];
-            let btn                 = UIButton(type: UIButton.ButtonType.custom);
+            let btn                 = UIButton(type: .custom);
             btn.frame               = CGRect(x: 0, y: 0, width: BUTTON_DIAMETER, height: BUTTON_DIAMETER);
             btn.backgroundColor     = COLOR_SEARCH_ITEM_OFF;
             btn.layer.cornerRadius  = BUTTON_DIAMETER/2
             btn.tag                 = TAG_MAIN_BUTTON + i;
             btn.alpha               = 0.0;
-            btn.setImage(UIImage(named: imgName), for: UIControl.State());
+            btn.setImage(UIImage(named: imgName), for: .normal);
             self.addSubview(btn);
             
             btn.addTarget(self, action: #selector(DZButtonMenu.buttonClicked(_:)), for: UIControl.Event.touchUpInside);
@@ -286,7 +286,7 @@ open class DZButtonMenu : UIView {
     
     fileprivate func createMainButton(closeImage: String?, openImage: String?)
     {
-        let btnMain = UIButton(type: UIButton.ButtonType.custom);
+        let btnMain = UIButton(type: .custom);
         
         btnMain.frame           = CGRect(x: 0, y: 0, width: BUTTON_DIAMETER, height: BUTTON_DIAMETER);
         btnMain.backgroundColor = COLOR_SEARCH_ITEM_OFF;
@@ -447,7 +447,7 @@ open class DZButtonMenu : UIView {
         
         self.superview?.addSubview(self.maskBg!);
         self.maskBg?.isHidden = false;
-        self.superview?.bringSubview(toFront: self);
+        self.superview?.bringSubviewToFront(self);
         
         UIView.animate(withDuration: ANIMATION_DURATION, delay: 0, options: UIView.AnimationOptions.curveEaseOut, animations: {
             
@@ -515,10 +515,10 @@ open class DZButtonMenu : UIView {
         
         let mainBtn = self.viewWithTag(self.TAG_MAIN_BUTTON) as! UIButton;
         if ( self.closeImage != nil ) {
-            mainBtn.setImage(UIImage(named: self.closeImage!), for: UIControl.State());
+            mainBtn.setImage(UIImage(named: self.closeImage!), for: .normal);
         }
         else {
-            mainBtn.setTitle(MAIN_BTN_OPEN_STR, for:UIControl.State());
+            mainBtn.setTitle(MAIN_BTN_OPEN_STR, for: .normal);
         }
         self.menuState = .closed;
     }

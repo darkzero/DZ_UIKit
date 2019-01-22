@@ -31,7 +31,7 @@ class DetailViewController: UIViewController, DZNineImageBoxViewDelegate, DZButt
             progress1Ctrl1.maximumValue = 200;
             progress1Ctrl1.minimumValue = 1;
             progress1Ctrl1.tag = 102;
-            progress1Ctrl1.addTarget(self, action: #selector(DetailViewController.onProgressCtrlValueChanged(_:)), for: UIControlEvents.valueChanged);
+            progress1Ctrl1.addTarget(self, action: #selector(DetailViewController.onProgressCtrlValueChanged(_:)), for: UIControl.Event.valueChanged);
             
             let progress2 = DZAnnularProgress(frame: CGRect(x: 10, y: 160, width: 100, height: 100), annularWidth: 8, type: .percent);
             progress2.tag = 103;
@@ -43,7 +43,7 @@ class DetailViewController: UIViewController, DZNineImageBoxViewDelegate, DZButt
             progress1Ctrl2.maximumValue = 200;
             progress1Ctrl2.minimumValue = 1;
             progress1Ctrl2.tag = 104;
-            progress1Ctrl2.addTarget(self, action: #selector(DetailViewController.onProgressCtrlValueChanged(_:)), for: UIControlEvents.valueChanged);
+            progress1Ctrl2.addTarget(self, action: #selector(DetailViewController.onProgressCtrlValueChanged(_:)), for: UIControl.Event.valueChanged);
             
             self.mainView.addSubview(progress1);
             self.mainView.addSubview(progress1Ctrl1);
