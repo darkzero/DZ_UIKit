@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
     s.name             = "DZ_UIKit"
-    s.version          = "0.6.1"
+    s.version          = "0.6.2"
     s.summary          = "Custom UIs that be used in Topeko"
 
 # This description is used to generate tags and improve search results.
@@ -20,6 +20,9 @@ Pod::Spec.new do |s|
 	s.description      = <<-DESC
 * 0.6.1
 Fix some bug in checkbox group
+---
+* 0.6.2
+Update to Swift4.2
 ---
 * 0.6.0
 Update to Swift4.
