@@ -18,11 +18,11 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
 	s.description      = <<-DESC
-* 0.6.1
-Fix some bug in checkbox group
----
 * 0.6.2
 Update to Swift4.2
+---
+* 0.6.1
+Fix some bug in checkbox group
 ---
 * 0.6.0
 Update to Swift4.
