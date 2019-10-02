@@ -6,6 +6,7 @@
 [![Platform](https://img.shields.io/cocoapods/p/DZ_UIKit.svg?style=flat)](http://cocoapods.org/pods/DZ_UIKit)
 
 ## **deprecated 2019/10**
+> Please change to [DarkEggKit](https://github.com/darkzero/DarkEggKit)
 
 ## Example
 
