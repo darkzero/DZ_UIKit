@@ -8,7 +8,7 @@ skipCreatedBefore: false
 exemptLabels: []
 
 # Comment to post before closing or locking. Set to `false` to disable
-comment: false
+comment: true
 
 # Label to add before closing or locking. Set to `false` to disable
 label: false
